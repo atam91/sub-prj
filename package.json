@@ -1,0 +1,19 @@
+{
+  "name": "redux-experiments",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zh",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.13.4",
+    "i": "^0.3.5",
+    "webpack": "^1.13.0",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.10.0"
+  }
+}
