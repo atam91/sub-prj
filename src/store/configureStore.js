@@ -1,13 +1,8 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore } from 'redux'
 import rootReducer from '../reducers'
-import { ping } from './enhancers/ping'
 
 export default function configureStore(initialState) {
-  const store = createStore(
-    rootReducer, 
-    initialState,
-    applyMiddleware(ping)
-  )
+  const store = createStore(rootReducer, initialState)
 
   if (module.hot) {
     module.hot.accept('../reducers', () => {
