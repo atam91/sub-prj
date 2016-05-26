@@ -8,7 +8,7 @@ module.exports = {
   entry: [
     'webpack-hot-middleware/client',
     'babel-polyfill',
-    './src/index'
+    './app/index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -25,7 +25,7 @@ module.exports = {
         test: /\.js$/,
         loaders: ['eslint'],
         include: [
-          path.resolve(__dirname, "src"),
+          path.resolve(__dirname, "app"),
         ],
       }
     ],
@@ -33,7 +33,7 @@ module.exports = {
       {
         loaders: ['react-hot', 'babel-loader'],
         include: [
-          path.resolve(__dirname, "src"),
+          path.resolve(__dirname, "app"),
         ],
         test: /\.js$/,
         plugins: ['transform-runtime'],
