@@ -7,6 +7,7 @@ var precss = require('precss');
 module.exports = {
   devtool: 'source-map',
   entry: [
+    'bootstrap-webpack!./bootstrap.config.js',
     './app/index'
   ],
   output: {
@@ -44,7 +45,11 @@ module.exports = {
       {
         test:   /\.css$/,
         loader: "style-loader!css-loader!postcss-loader"
-      }
+      },
+      {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
+      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
+      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
+      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'}
     ]
   },
   postcss: function () {

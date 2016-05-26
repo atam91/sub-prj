@@ -22,5 +22,5 @@ if ('production' == process.env.NODE_ENV) {
 
   app.use('/dist', express.static('dist'));
 
-  console.log(`==> Browse http://localhost:${port}`);
+  console.log(`==> Browse http://localhost:${port}/`);
 }
