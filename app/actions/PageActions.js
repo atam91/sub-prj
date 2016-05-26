@@ -10,11 +10,13 @@ export function getPhotos(year) {
       payload: year
     });
 
-    setTimeout(() => {
-      dispatch({
-        type: GET_PHOTOS_SUCCESS,
-        payload: [1, 2, 3, 4, 5]
+    fetch('http://localhost:3000/counter')
+      .then(res => res.text())
+      .then(text => {
+        dispatch({
+          type: GET_PHOTOS_SUCCESS,
+          payload: Array(parseInt(text))
+        });
       });
-    }, 1000);
   }
 }
