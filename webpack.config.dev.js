@@ -13,11 +13,19 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: '/dist/'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
+      }
+    }),
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    })
   ],
   module: {
     preLoaders: [
@@ -31,11 +39,11 @@ module.exports = {
     ],
     loaders: [
       {
+        test: /\.js$/,
         loaders: ['react-hot', 'babel-loader'],
         include: [
           path.resolve(__dirname, "app"),
         ],
-        test: /\.js$/,
         plugins: ['transform-runtime'],
       },
       {
