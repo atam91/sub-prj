@@ -1,7 +1,8 @@
 import { 
   GET_PHOTOS_REQUEST, 
   GET_PHOTOS_SUCCESS 
-} from '../constants/Page'
+} from '../constants/Page';
+import API_URL from '../constants/Api';
 
 export function getPhotos(year) {
   return (dispatch) => {
@@ -10,7 +11,7 @@ export function getPhotos(year) {
       payload: year
     });
 
-    fetch('http://localhost:3000/counter')
+    fetch(API_URL + '/counter')
       .then(res => res.text())
       .then(text => {
         dispatch({

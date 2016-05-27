@@ -17,8 +17,6 @@ io.on('connection', function (socket) {
   });
 });
 
-
-
 if ('production' == process.env.NODE_ENV) {
   app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
