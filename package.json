@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node server.js",
     "build": "./node_modules/.bin/webpack --config ./webpack.config.prod.js --progress",
-    "dev": "./node_modules/.bin/nodemon server.js --watch server.js",
+    "dev": "./node_modules/.bin/nodemon server.js --watch server.js --watch ./api",
     "dev-server": "node dev-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
