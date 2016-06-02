@@ -6,9 +6,8 @@ var io = require('./api/socket')(server);
 
 const port = process.env.PORT || 3000;
 
-app.use(cors());
-app.listen(port);
-console.log(`--> Socket.io server listening on port ${port}`);
+server.listen(port);
+console.log(`==> Server listening on port ${port}`);
 
 if ('production' == process.env.NODE_ENV) {
   app.get('/', function (req, res) {
@@ -18,15 +17,6 @@ if ('production' == process.env.NODE_ENV) {
   app.use('/dist', express.static('dist'));
 
   console.log(`==> Browse http://localhost:${port}/`);
+} else {
+  app.use(cors());
 }
-
-var counter = 0;
-
-app.get('/counter', function (req, res) {
-  res.send(JSON.stringify(++counter));
-});
-
-app.get('/null', function (req, res) {
-  counter = 0;
-  res.send(JSON.stringify(counter));
-});
