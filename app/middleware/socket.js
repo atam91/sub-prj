@@ -1,9 +1,6 @@
 import io from 'socket.io-client';
 import API_URL from '../constants/Api';
-import { 
-  GET_PHOTOS_REQUEST, 
-  GET_PHOTOS_SUCCESS 
-} from '../constants/Page'
+import loginSocketService, {loginSocketMiddleware} from '../services/LoginSocketService'
 
 var socket = null;
 
@@ -11,25 +8,14 @@ export function socketMiddleware(store) {
   return next => action => {
     const result = next(action);
 
-    switch (action.type) {
-      case GET_PHOTOS_REQUEST:
-        socket.emit('counter');
-        break;
-    }
+    loginSocketMiddleware(socket, action);
 
     return result;
   };
 }
 
-export default function(store) {
+export default function startSocket(store) {
   socket = io.connect(API_URL, { path: '/io' });
 
-  socket.on('counter', data => {
-    console.log('counter=', data.counter);
-
-    store.dispatch({
-      type: GET_PHOTOS_SUCCESS,
-      payload: data.counter
-    });
-  });
+  loginSocketService(socket, store.dispatch);
 }

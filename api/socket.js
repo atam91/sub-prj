@@ -10,5 +10,10 @@ module.exports = function(server) {
     socket.on('counter', function (data) {
       socket.emit('counter', { counter: ++counter });
     });
+
+    socket.on('login_request', data => {
+      console.log('login_request', data);
+      socket.emit('login_response', {payload: data.name})
+    });
   });
 };
