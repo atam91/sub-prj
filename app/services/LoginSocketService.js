@@ -6,48 +6,17 @@ import {
   LOGOUT_SUCCESS
 } from '../constants/User'
 import { PARTICIPANTS } from '../constants/Socket'
+import SocketService, {generateMiddleware} from './SocketService'
 
-export function loginSocketMiddleware(socket, action) {
-  switch (action.type) {
-    case LOGIN_REQUEST:
-      socket.emit('login_request', {name: action.payload});
-      break;
-
-    case LOGOUT_REQUEST:
-      socket.emit('logout_request');
-      break;
-  }
-}
+const middleware = generateMiddleware([LOGIN_REQUEST, LOGOUT_REQUEST]);
+export { middleware as loginSocketMiddleware }
 
 export default function socketService(socket, dispatch) {
-  socket.on('login_response', data => {
-    if (data.error) {
-      dispatch({
-        type: LOGIN_FAILURE,
-        payload: data.error
-      });
-    } else {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: data.payload
-      });
-    }
-  });
+  const service = SocketService(socket, dispatch);
 
-  socket.on('logout_response', data => {
-    if (data.success) {
-      dispatch({ type: LOGOUT_SUCCESS });
-    }
-  });
+  service.handleSocketResponse('login_response', LOGIN_SUCCESS, LOGIN_FAILURE);
+  service.handleSocketResponse('logout_response', LOGOUT_SUCCESS);
 
-  socket.on('disconnect', () => {
-    dispatch({ type: LOGOUT_SUCCESS });
-  });
-
-  socket.on('participants', data => {
-    dispatch({
-      type: PARTICIPANTS,
-      payload: data.payload
-    });
-  });
+  service.handleSocketEvent('disconnect', LOGOUT_SUCCESS);
+  service.handleSocketEvent('participants', PARTICIPANTS, true);
 }

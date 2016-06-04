@@ -18,14 +18,14 @@ module.exports = function(io) {
     participants(socket);
 
     socket.on('login_request', data => {
-      const { name } = data;
+      const name = data.payload;
 
       if (name in users) {
         socket.emit('login_response', {error: 'Имя уже используется'})
       } else {
         users[name] = socket;
         socket.user = name;
-        socket.emit('login_response', {success: true, payload: data.name});
+        socket.emit('login_response', {payload: name, success: true});
         participants();
 
         socket.on('logout_request', data => {
