@@ -9,12 +9,13 @@ import * as userActions from '../actions/UserActions'
 
 class App extends Component {
   render() {
-    const { user, page } = this.props
+    const { user, page, participants } = this.props
     const { getPhotos } = this.props.pageActions
-    const { loginRequest } = this.props.userActions
+    const { loginRequest, logoutRequest } = this.props.userActions
 
     return <div>
-      <HeaderPanel user={user} login={loginRequest} />
+      <HeaderPanel user={user} login={loginRequest} logout={logoutRequest} />
+      <p>Participants: {participants.list.join(', ')}.</p>
       <Page photos={page.photos} year={page.year} getPhotos={getPhotos} fetching={page.fetching} />
       <User name={user.name} />
     </div>
@@ -24,7 +25,8 @@ class App extends Component {
 function mapStateToProps (state) {
   return {
     user: state.user,
-    page: state.page
+    page: state.page,
+    participants: state.participants
   }
 }
 
