@@ -3,20 +3,7 @@ module.exports = {
   // Default for the style loading
   styleLoader: 'style-loader!css-loader!less-loader',
     
-  scripts: {
-    'transition': true,
-    'alert': true,
-    'button': true,
-    'carousel': true,
-    'collapse': true,
-    'dropdown': true,
-    'modal': true,
-    'tooltip': true,
-    'popover': true,
-    'scrollspy': true,
-    'tab': true,
-    'affix': true
-  },
+  scripts: {},
   styles: {
     "mixins": true,
 
