@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 
-export default class FooterPanel extends Component {
+export default class Footer extends Component {
   render() {
     return <div className="navbar-fixed-bottom row-fluid">
       <div className="navbar-inner footer">

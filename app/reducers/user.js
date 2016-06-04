@@ -6,23 +6,24 @@ import {
 } from '../constants/User';
 
 const initialState = {
-  name: null,
-  error: null
+  auth: false,
+  name: '',
+  error: ''
 }
 
 export default function user(state = initialState, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
-      return {...state, error: null}
+      return { ...state, error: '' }
 
     case LOGIN_SUCCESS:
-      return {...state, name: action.payload};
+      return { ...state, name: action.payload, auth: true };
 
     case LOGIN_FAILURE:
-      return {...state, name: null, error: action.payload};
+      return { ...state, name: '', error: action.payload, auth: false };
 
     case LOGOUT_SUCCESS:
-      return {...state, name: null, error: null};
+      return { ...state, name: '', error: '', auth: false };
 
     default:
       return state;

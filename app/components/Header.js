@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import classNames from 'classnames'
 
-export default class HeaderPanel extends Component {
+export default class Header extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -10,14 +10,14 @@ export default class HeaderPanel extends Component {
   }
   submit(e) {
     e.preventDefault();
-    this.props.login(this.refs.username.value);
+    this.props.userActions.loginRequest(this.refs.username.value);
     this.setState({ resetError: false });
   }
   change() {
     this.setState({ resetError: true });
   }
   logout() {
-    this.props.logout();
+    this.props.userActions.logoutRequest();
   }
   render() {
     const { name } = this.props.user;
@@ -48,8 +48,13 @@ export default class HeaderPanel extends Component {
   }
 }
 
-HeaderPanel.propTypes = {
-  user: PropTypes.object.isRequired,
-  login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired
+Header.propTypes = {
+  user: React.PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    error: PropTypes.string.isRequired
+  }),
+  userActions: React.PropTypes.shape({
+    loginRequest: PropTypes.func.isRequired,
+    logoutRequest: PropTypes.func.isRequired
+  })
 }
