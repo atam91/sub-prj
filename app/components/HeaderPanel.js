@@ -39,7 +39,7 @@ export default class HeaderPanel extends Component {
     }
 
     return <div className="container-fluid header">
-      <div className="row">
+      <div className="row-fluid">
         <div className="col-md-4"></div>
         <div className="col-md-4">{loginForm}</div>
         <div className="col-md-4">{panel}</div>

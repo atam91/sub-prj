@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import User from '../components/User'
 import Page from '../components/Page'
 import HeaderPanel from '../components/HeaderPanel'
+import FooterPanel from '../components/FooterPanel'
 import Participants from '../components/Participants'
 import * as pageActions from '../actions/PageActions'
 import * as userActions from '../actions/UserActions'
@@ -14,6 +15,11 @@ class App extends Component {
     const { getPhotos } = this.props.pageActions
     const { loginRequest, logoutRequest } = this.props.userActions
 
+    var footer;
+    if (user.name) {
+      footer = <FooterPanel />
+    }
+
     return <div>
       <HeaderPanel user={user} login={loginRequest} logout={logoutRequest} />
       <div className="container">
@@ -21,6 +27,7 @@ class App extends Component {
           <Participants {...participants} />
         </div>
       </div>
+      {footer}
     </div>
   }
 }
