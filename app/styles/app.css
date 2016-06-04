@@ -2,3 +2,11 @@
   background-color: #eee;
   padding: 10px;
 }
+
+.small-v-padding {
+  padding: 5px 0px;
+}
+
+.separate {
+  margin-right: 10px;
+}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import User from '../components/User'
 import Page from '../components/Page'
 import HeaderPanel from '../components/HeaderPanel'
+import Participants from '../components/Participants'
 import * as pageActions from '../actions/PageActions'
 import * as userActions from '../actions/UserActions'
 
@@ -15,9 +16,11 @@ class App extends Component {
 
     return <div>
       <HeaderPanel user={user} login={loginRequest} logout={logoutRequest} />
-      <p>Participants: {participants.list.join(', ')}.</p>
-      <Page photos={page.photos} year={page.year} getPhotos={getPhotos} fetching={page.fetching} />
-      <User name={user.name} />
+      <div className="container">
+        <div className="row small-v-padding">
+          <Participants {...participants} />
+        </div>
+      </div>
     </div>
   }
 }

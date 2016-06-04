@@ -26,7 +26,10 @@ export default class HeaderPanel extends Component {
 
     var panel,loginForm;
     if (name) {
-      panel = <span>Привет, {name} <a onClick={::this.logout}>(выход)</a></span>;
+      panel = <div>
+        <span className="separate">Привет, {name}!</span>
+        <a className="btn btn-default" onClick={::this.logout}>Выйти</a>
+      </div>;
     } else {
       loginForm = <form className={classNames('form-signin', errorClass)} onSubmit={::this.submit}>
         <input ref="username" type="text" className={classNames('form-control', errorClass)} placeholder="nickname" onChange={::this.change} />
