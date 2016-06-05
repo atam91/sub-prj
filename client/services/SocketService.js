@@ -21,10 +21,10 @@ export default function socketService(socket, dispatch) {
     });
   };
 
-  const handleSocketEvent = (socketEvent, eventType, map) => {
+  const handleSocketEvent = (socketEvent, eventType) => {
     socket.on(socketEvent, data => {
-      var action = {type: eventType};
-      if (map) action.payload = data.payload;
+      var action = { type: eventType || socketEvent };
+      if (data.payload) action.payload = data.payload;
 
       dispatch(action);
     });
@@ -38,13 +38,13 @@ export default function socketService(socket, dispatch) {
   return service;
 }
 
-export function generateMiddleware(actions) {
+export function generateRequestMiddleware(actions) {
   return (socket, action) => {
     if (actions.indexOf(action.type) !== -1) {
       var data = {};
       if (action.payload) data.payload = action.payload;
 
-      socket.emit(action.type.toLowerCase(), data);
+      socket.emit(action.type, data);
     }
   };
 }

@@ -8,7 +8,7 @@ module.exports = {
   devtool: 'source-map',
   entry: [
     'bootstrap-webpack!./bootstrap.config.js',
-    './app/index'
+    './client/index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -36,7 +36,7 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [
-          path.resolve(__dirname, "app"),
+          path.resolve(__dirname, "client"),
         ]
       },
       {

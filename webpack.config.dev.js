@@ -9,7 +9,7 @@ module.exports = {
     'webpack-hot-middleware/client',
     'babel-polyfill',
     'bootstrap-webpack!./bootstrap.config.js',
-    './app/index'
+    './client/index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -32,7 +32,7 @@ module.exports = {
         test: /\.js$/,
         loaders: ['eslint'],
         include: [
-          path.resolve(__dirname, "app"),
+          path.resolve(__dirname, "client"),
         ],
       }
     ],
@@ -41,7 +41,7 @@ module.exports = {
         test: /\.js$/,
         loaders: ['react-hot', 'babel-loader'],
         include: [
-          path.resolve(__dirname, "app"),
+          path.resolve(__dirname, "client"),
         ],
         plugins: ['transform-runtime'],
       },

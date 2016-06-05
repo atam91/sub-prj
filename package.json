@@ -4,9 +4,9 @@
   "description": "chat & game rooms",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node server.js",
+    "start": "NODE_ENV=production node app.js",
     "build": "./node_modules/.bin/webpack --config ./webpack.config.prod.js --progress",
-    "dev": "./node_modules/.bin/nodemon server.js --watch server.js --watch ./api",
+    "dev": "./node_modules/.bin/nodemon app.js -w app.js -w ./server -w ./common",
     "dev-server": "node dev-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -48,8 +48,8 @@
     "babel-runtime": "6.9.0",
     "bootstrap": "3.3.6",
     "bootstrap-webpack": "0.0.5",
-    "classnames": "2.2.5",
     "cors": "2.7.1",
+    "node-constants": "0.0.2",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-redux": "4.4.5",

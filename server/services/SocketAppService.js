@@ -1,10 +1,18 @@
+const {
+  LOGIN_REQUEST,
+  LOGIN_RESPONSE,
+  LOGOUT_REQUEST,
+  LOGOUT_RESPONSE,
+  PARTICIPANTS
+} = require('../../common/constants/ApiEvents');
+
 module.exports = function(io) {
   var service = {};
 
   var users = {};
 
   const participants = function(socket) {
-    (socket || io).emit('participants', {payload: Object.keys(users)});
+    (socket || io).emit(PARTICIPANTS, {payload: Object.keys(users)});
   };
 
   const logout = function(socket) {
@@ -17,20 +25,20 @@ module.exports = function(io) {
   io.on('connection', function (socket) {
     participants(socket);
 
-    socket.on('login_request', data => {
+    socket.on(LOGIN_REQUEST, data => {
       const name = data.payload;
 
       if (name in users) {
-        socket.emit('login_response', {error: 'Имя уже используется'})
+        socket.emit(LOGIN_RESPONSE, {error: 'Имя уже используется'})
       } else {
         users[name] = socket;
         socket.user = name;
-        socket.emit('login_response', {payload: name, success: true});
+        socket.emit(LOGIN_RESPONSE, {payload: name, success: true});
         participants();
 
-        socket.on('logout_request', data => {
+        socket.on(LOGOUT_REQUEST, data => {
           logout(socket);
-          socket.emit('logout_response', {success: true});
+          socket.emit(LOGOUT_RESPONSE, {success: true});
         });
       }
     });

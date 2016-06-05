@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGOUT_REQUEST } from '../constants/User';
+import { LOGIN_REQUEST, LOGOUT_REQUEST } from '../../common/constants/ApiEvents';
 
 export function loginRequest(username) {
   return {

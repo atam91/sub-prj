@@ -1,4 +1,4 @@
-import { PARTICIPANTS } from '../constants/Socket';
+import { PARTICIPANTS } from '../../common/constants/ApiEvents';
 
 const initialState = {
   list: []

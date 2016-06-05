@@ -18,6 +18,7 @@ app.listen(port, function(error) {
   if (error) {
     console.error(error);
   } else {
-    console.info("--> Dev server listening on port %s. Browse http://localhost:%s/", port, port);
+    console.info("--> Dev server listening on port %s.", port);
+    console.info("==> Browse http://localhost:%s/", port);
   }
 });

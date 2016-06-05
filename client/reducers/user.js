@@ -3,7 +3,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SUCCESS
-} from '../constants/User';
+} from '../../common/constants/ApiEvents';
 
 const initialState = {
   auth: false,
