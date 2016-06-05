@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import classNames from 'classnames'
+import HeaderPanel from './HeaderPanel'
 
 export default class Header extends Component {
   constructor(props, context) {
@@ -38,13 +39,11 @@ export default class Header extends Component {
       </form>;
     }
 
-    return <div className="container-fluid header">
-      <div className="row-fluid">
-        <div className="col-md-4"></div>
-        <div className="col-md-4">{loginForm}</div>
-        <div className="col-md-4">{panel}</div>
-      </div>
-    </div>;
+    return <HeaderPanel>
+      <div className="col-md-4"></div>
+      <div className="col-md-4">{loginForm}</div>
+      <div className="col-md-4">{panel}</div>
+    </HeaderPanel>;
   }
 }
 
