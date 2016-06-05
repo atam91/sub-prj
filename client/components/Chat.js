@@ -1,19 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 
 export default class Chat extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      scrollTop: 0
-    };
-  }
-  componentDidUpdate(prevProps, prevState) {
-    if (this.refs.chat.scrollHeight != prevState.scrollTop) {
-      this.setState({
-        scrollTop: this.refs.chat.scrollHeight
-      });
-    }
-  }
   render() {
     const { list } = this.props;
 
@@ -21,7 +8,7 @@ export default class Chat extends Component {
       return <li key={id}><b>{name}:</b> {text}</li>;
     });
 
-    return <ul className="chat" ref="chat" scrollTop={this.state.scrollTop}>{items}</ul>;
+    return <ul className="chat">{items}</ul>;
   }
 }
 

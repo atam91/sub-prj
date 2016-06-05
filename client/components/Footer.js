@@ -7,6 +7,7 @@ export default class Footer extends Component {
     if (this.refs.message.value) {
       this.props.actions.messageSend(this.refs.message.value);
       this.refs.message.value = '';
+      this.props.scrollDown();
     }
   }
   render() {
@@ -26,5 +27,6 @@ export default class Footer extends Component {
 Footer.propTypes = {
   actions: React.PropTypes.shape({
     messageSend: PropTypes.func.isRequired
-  })
+  }),
+  scrollDown: PropTypes.func.isRequired
 }
