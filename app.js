@@ -2,7 +2,7 @@ var express = require('express');
 var cors = require('cors');
 var app = express();
 var server = require('http').Server(app);
-var io = require('./server/socket')(server);
+var io = require('./server/Socket')(server);
 
 const port = process.env.PORT || 3000;
 server.listen(port);

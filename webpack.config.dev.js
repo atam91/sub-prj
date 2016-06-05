@@ -33,6 +33,7 @@ module.exports = {
         loaders: ['eslint'],
         include: [
           path.resolve(__dirname, "client"),
+          path.resolve(__dirname, "common")
         ],
       }
     ],
@@ -42,6 +43,7 @@ module.exports = {
         loaders: ['react-hot', 'babel-loader'],
         include: [
           path.resolve(__dirname, "client"),
+          path.resolve(__dirname, "common")
         ],
         plugins: ['transform-runtime'],
       },

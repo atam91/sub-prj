@@ -37,6 +37,7 @@ module.exports = {
         loader: 'babel-loader',
         include: [
           path.resolve(__dirname, "client"),
+          path.resolve(__dirname, "common")
         ]
       },
       {
