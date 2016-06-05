@@ -10,3 +10,8 @@
 .separate {
   margin-right: 10px;
 }
+
+ul.chat {
+  list-style-type: none;
+  padding: 0px 0px 60px 0px;
+}

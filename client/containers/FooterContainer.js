@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Footer from '../components/Footer'
+import * as footerActions from '../actions/FooterActions'
 
 class FooterContainer extends Component {
   render() {
@@ -17,4 +18,10 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(FooterContainer)
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(footerActions, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FooterContainer)

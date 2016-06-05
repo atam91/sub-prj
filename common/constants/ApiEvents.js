@@ -5,8 +5,10 @@ define('LOGIN_RESPONSE');
 define('LOGIN_SUCCESS');
 define('LOGIN_FAILURE');
 
-define('LOGOUT_REQUEST');
-define('LOGOUT_RESPONSE');
-define('LOGOUT_SUCCESS');
+define('LOGOUT_SEND');
+define('LOGOUT_EVENT');
 
-define('PARTICIPANTS');
+define('PARTICIPANTS')
+define('MESSAGES')
+define('MESSAGE_SEND')
+define('MESSAGE_EVENT')

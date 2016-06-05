@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Header from '../components/Header'
-import * as userActions from '../actions/UserActions'
+import * as headerActions from '../actions/HeaderActions'
 
 class HeaderContainer extends Component {
   render() {
@@ -18,7 +18,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    userActions: bindActionCreators(userActions, dispatch)
+    headerActions: bindActionCreators(headerActions, dispatch)
   }
 }
 

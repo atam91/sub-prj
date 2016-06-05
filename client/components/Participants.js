@@ -11,5 +11,5 @@ export default class Participants extends Component {
 }
 
 Participants.propTypes = {
-  list: PropTypes.array.isRequired
+  list: React.PropTypes.arrayOf(PropTypes.string.isRequired)
 }

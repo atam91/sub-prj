@@ -1,8 +1,8 @@
 const {
   LOGIN_REQUEST,
   LOGIN_RESPONSE,
-  LOGOUT_REQUEST,
-  LOGOUT_RESPONSE,
+  LOGOUT_SEND,
+  LOGOUT_EVENT,
   PARTICIPANTS
 } = require('../common/constants/ApiEvents');
 const { describeSocketRequest } = require('./socketUtils');
@@ -49,7 +49,7 @@ module.exports = function(socketIO) {
       (LOGIN_REQUEST, LOGIN_RESPONSE, login(connection));
 
     describeSocketRequest(connection)
-      (LOGOUT_REQUEST, LOGOUT_RESPONSE, logout(connection));
+      (LOGOUT_SEND, LOGOUT_EVENT, logout(connection));
   };
 
   service.disconnect = (connection) => {

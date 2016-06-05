@@ -1,22 +1,30 @@
 import React, { PropTypes, Component } from 'react'
+import FooterPanel from './FooterPanel'
 
 export default class Footer extends Component {
-  render() {
-    return <div className="navbar-fixed-bottom row-fluid">
-      <div className="navbar-inner footer">
-        <div className="container">
-          <div className="row">
-            <form className="form">
-              <div className="col-md-10">
-                <input type="text" className="form-control" placeholder="Message" autofocus />
-              </div>
-              <div className="col-md-2">
-                <button type="submit" className="btn btn-default">Отправить</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+  submit(e) {
+    e.preventDefault();
+    if (this.refs.message.value) {
+      this.props.actions.messageSend(this.refs.message.value);
+      this.refs.message.value = '';
+    }
   }
+  render() {
+    return <FooterPanel>
+      <form className="form" onSubmit={::this.submit}>
+        <div className="col-md-10">
+          <input type="text" className="form-control" ref="message" placeholder="Message" autofocus />
+        </div>
+        <div className="col-md-2">
+          <button type="submit" className="btn btn-default">Отправить</button>
+        </div>
+      </form>
+    </FooterPanel>
+  }
+}
+
+Footer.propTypes = {
+  actions: React.PropTypes.shape({
+    messageSend: PropTypes.func.isRequired
+  })
 }

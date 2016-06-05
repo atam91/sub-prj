@@ -2,7 +2,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT_SUCCESS
+  LOGOUT_EVENT
 } from '../../common/constants/ApiEvents';
 
 const initialState = {
@@ -22,7 +22,7 @@ export default function user(state = initialState, action) {
     case LOGIN_FAILURE:
       return { ...state, name: '', error: action.payload, auth: false };
 
-    case LOGOUT_SUCCESS:
+    case LOGOUT_EVENT:
       return { ...state, name: '', error: '', auth: false };
 
     default:
