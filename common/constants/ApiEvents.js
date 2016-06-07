@@ -12,3 +12,5 @@ define('PARTICIPANTS')
 define('MESSAGES')
 define('MESSAGE_SEND')
 define('MESSAGE_EVENT')
+
+define('STATE')
