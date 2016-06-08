@@ -1,4 +1,21 @@
-const SocketApp = require('./lib/SocketApp');
+const SocketIO = require('socket.io');
+const { SocketApp } = require('./lib/SocketApp');
+const { loginSevice, chatService, Connection, stateReducer } = require('./SocketAppDefine');
+
+module.exports = function(server) {
+  const io = SocketIO(server, {path: '/io'});
+  
+  return 
+    SocketApp(
+      io,
+      Connection,
+      stateReducer,
+      { loginSevice, chatService }
+    );
+};
+
+
+
 const {
   LOGIN_REQUEST,
   LOGIN_RESPONSE,

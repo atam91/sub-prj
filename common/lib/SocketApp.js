@@ -1,92 +1,91 @@
-const {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT_SEND,
-  LOGOUT_EVENT,
-  PARTICIPANTS,
-  MESSAGE_SEND,
-  MESSAGE_EVENT,
-  STATE
-} = require('../constants/ApiEvents');
+const STATE = 'STATE';
 
-// try likea co
-
-const action(type, payload = null) => {
-  return { type, payload };
+const forEachKey = (obj, func) => {
+  Object.keys(obj).forEach((key) => {
+    func(key, obj[key])
+  });
 };
 
-const client = function() {
-  const requests = {
-    loginRequest:
-      (p) => action(LOGIN_REQUEST, p),
+const SocketConnection = function(socket, reducer) {
+  const connection = {};
 
-    logoutSend:
-      () => action(LOGOUT_SEND),
+  var state = reducer();
 
-    messsageSend:
-      (p) => action(MESSAGE_SEND, p)
+  connection.dispatch = (type, payload) => {
+    socket.emit(type, payload);
+    state = reducer(state, { type, payload });
   };
 
-  const listens = [
-    LOGIN_SUCCESS,
-    LOGIN_FAILURE,
-    LOGOUT_EVENT,
-    PARTICIPANTS,
-    MESSAGE_EVENT
-    //STATE
-  ];
+  connection.handleRequest = (type, handler) => {
+    socket.on(type, handler(connection));
+  };
 
-  return { requests, listens };
+  connection.getState = () => state;
+
+  connection.getSocket = () => socket;
+
+  return connection;
+};
+
+class SocketApp {
+  constructor(io, Connection, stateReducer, serverServices) {
+    this.io = io;
+    this.stateReducer = stateReducer;
+
+    this.services = 
+      Object.keys(serverServices)
+        .reduce((prev, key) => {
+          prev[key] = serverServices[key](this);
+        });
+
+    this.services = {};
+    forEachKey(serverServices, (key, value) => { this.services[key] = value(this); });
+
+    this.init(Connection);
+  }
+
+  emitState(connection) {
+    const connectionSocket = connection && connection.getSocket();
+    (connectionSocket || this.io).emit(STATE, this.state);
+  }
+
+  dispatch(type, payload) {
+    this.io.emit(type, payload);
+    this.state = this.stateReducer(this.state, { type, payload });
+  }
+
+  init(Connection) {
+    this.state = this.stateReducer();
+
+    this.io.on('connection', (socket) => {
+      var connection = Connection(socket);
+
+      this.emitState(connection);
+      this.connect(connection);
+
+      socket.on('disconnect', () => {
+        forEachKey(this.services, (name, service) => {
+          service.disconnect && service.disconnect(connection);
+        });
+
+        delete connection;
+      });
+    });
+  }
+
+  connect(connection) {
+    forEachKey(this.services, (name, service) => {
+      forEachKey(service.handlers, connection.handleRequest);
+    });
+  }
 }
 
+const clientSocketService = function(socket, dispatch) {
 
-
-const service = function(socketApp) {
-  const service = {};
-  const users = {};
-  var messageId = 1;
-
-  service.reducer = require('./reducers/state');
-  service.connectionReducer = require('./reducers/connection');
-
-  service.participants = () => {
-    socketApp.dispatch(PARTICIPANTS, Object.keys(users));
-  };
-
-  service.disconnect = (connection) => {
-    delete users[connection.getUsername()];
-    service.participants();
-  };
-
-  const handlers = {
-    LOGIN_REQUEST:
-      (connection) => (name) => {
-        if (name in users) {
-          connection.dispatch(LOGIN_FAILURE, 'Имя уже используется');
-        } else {
-          users[name] = connection.socket.id;
-          connection.dispatch(LOGIN_SUCCESS, name);
-          service.participants();
-        }
-      },
-
-    LOGOUT_SEND:
-      (connection) => () => {
-        service.disconnect(connection);
-        connection.dispatch(LOGOUT_EVENT);
-      },
-
-    MESSAGE_SEND:
-      (connection) => (text) => {
-        socketApp.dispatch(MESSAGE_EVENT, {
-          id: messageId++,
-          name: connection.getUsername(),
-          text
-        });
-      }
-  };
-
-  return { ...service, handlers };
 };
 
+const clientSocketMiddleware = function(socket, action) {
+
+};
+
+module.exports = { SocketApp, SocketConnection, STATE };
