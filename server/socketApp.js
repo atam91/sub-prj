@@ -1,8 +1,11 @@
+const SocketIO = require('socket.io');
 const { SocketApp } = require('../common/lib/SocketApp');
-const { serverService, Connection } = require('../common/SocketAppDefine');
+
+const stateReducer = require('../common/reducers/state');
+const { serverServices, ServerConnection } = require('../common/AppDefine');
 
 module.exports = function(server) {
   const io = SocketIO(server, {path: '/io'});
   
-  return SocketApp(io, Connection, serverService);
+  return new SocketApp(io, stateReducer, serverServices, ServerConnection);
 };

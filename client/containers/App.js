@@ -22,13 +22,13 @@ class App extends Component {
     }
   }
   render() {
-    const { participants, chat } = this.props
+    const { participants, messages } = this.props.main
 
     return <div>
       <HeaderContainer />
       <View>
-        <Participants { ...participants } />
-        <Chat { ...chat } />
+        <Participants list={participants} />
+        <Chat list={messages} />
       </View>
       <FooterContainer scrollDown={::this.scrollDown} />
     </div>
@@ -37,8 +37,7 @@ class App extends Component {
 
 function mapStateToProps (state) {
   return {
-    participants: state.participants,
-    chat: state.chat
+    main: state.main
   }
 }
 

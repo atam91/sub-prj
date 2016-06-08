@@ -1,22 +1,24 @@
 const {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT_EVENT,
+  LOGOUT_EVENT
 } = require('../constants/ApiEvents');
 
-const initialState = {
+const user = {
   auth: false,
-  username: ''
-}
+  name: ''
+};
 
-module.exports = function(state = initialState, { type, payload }) {
-  switch (type) {
+const initialState = { user };
+
+module.exports = function(state = initialState, action = {}) {
+  switch (action.type) {
     case LOGIN_SUCCESS:
-      return { ...state, auth: true, username: payload };
+      return { ...state, user: action.payload };
 
     case LOGOUT_EVENT:
     case LOGIN_FAILURE:
-      return { ...state, auth: false, username: '' };
+      return { ...state, user };
 
     default:
       return state;

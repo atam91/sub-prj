@@ -1,4 +1,4 @@
-const define = require('./constants')(module.exports);
+const define = require('./define')(module.exports);
 
 define('LOGIN_REQUEST');
 define('LOGIN_RESPONSE');

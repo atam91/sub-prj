@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux'
 import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import rootReducer from '../reducers'
-import startSocket, {socketMiddleware} from '../middleware/socket'
+import socketMiddleware, { startSocketService } from '../middleware/socket'
 
 export default function configureStore(initialState) {
   const store = createStore(
@@ -11,7 +11,8 @@ export default function configureStore(initialState) {
     applyMiddleware(thunk, createLogger(), socketMiddleware)
   );
 
-  startSocket(store);
+  console.log(store.getState());
+  startSocketService(store);
 
   if ((process.env.NODE_ENV == 'development') && module.hot) {
     module.hot.accept('../reducers', () => {

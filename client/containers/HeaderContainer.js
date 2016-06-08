@@ -6,13 +6,14 @@ import * as headerActions from '../actions/HeaderActions'
 
 class HeaderContainer extends Component {
   render() {
-    return <Header {...this.props} />;
+    return <Header {  ...this.props } />;
   }
 }
 
 function mapStateToProps (state) {
   return {
-    user: state.user
+    user: state.connection.user,
+    loginError: state.requestErrors.login
   }
 }
 

@@ -1,8 +1,9 @@
-var express = require('express');
-var cors = require('cors');
-var app = express();
-var server = require('http').Server(app);
-var io = require('./server/Socket')(server);
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+const server = require('http').Server(app);
+const socketApp = require('./server/socketApp')(server);
 
 const port = process.env.PORT || 3000;
 server.listen(port);

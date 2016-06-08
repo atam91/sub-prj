@@ -1,12 +1,8 @@
+const { forEachKey } = require('./utils');
+
 const STATE = 'STATE';
 
-const forEachKey = (obj, func) => {
-  Object.keys(obj).forEach((key) => {
-    func(key, obj[key])
-  });
-};
-
-const SocketConnection = function(socket, reducer) {
+const StatefulSocketConnection = function(socket, reducer) {
   const connection = {};
 
   var state = reducer();
@@ -27,16 +23,11 @@ const SocketConnection = function(socket, reducer) {
   return connection;
 };
 
+
 class SocketApp {
-  constructor(io, Connection, stateReducer, serverServices) {
+  constructor(io, stateReducer, serverServices, Connection) {
     this.io = io;
     this.stateReducer = stateReducer;
-
-    this.services = 
-      Object.keys(serverServices)
-        .reduce((prev, key) => {
-          prev[key] = serverServices[key](this);
-        });
 
     this.services = {};
     forEachKey(serverServices, (key, value) => { this.services[key] = value(this); });
@@ -55,10 +46,10 @@ class SocketApp {
   }
 
   init(Connection) {
-    this.state = this.stateReducer();
+    this.state = this.stateReducer(undefined, {});
 
     this.io.on('connection', (socket) => {
-      var connection = Connection(socket);
+      const connection = Connection(socket);
 
       this.emitState(connection);
       this.connect(connection);
@@ -67,8 +58,6 @@ class SocketApp {
         forEachKey(this.services, (name, service) => {
           service.disconnect && service.disconnect(connection);
         });
-
-        delete connection;
       });
     });
   }
@@ -80,12 +69,41 @@ class SocketApp {
   }
 }
 
-const clientSocketService = function(socket, dispatch) {
+const client = function(clientDescription) {
+  var requestActions = {};
+  forEachKey(clientDescription.requests, (name, action) => {
+    requestActions[action().type] = true;
+  });
 
+  const socketService = (socket, dispatch) => {
+    clientDescription.listens.forEach((type) => {
+      socket.on(type, (payload) => {
+        dispatch({ type, payload });
+      });
+    });
+
+    socket.on('disconnect', (payload) => {
+      dispatch({
+        type: clientDescription.disconnectAction,
+        payload: {}
+      });
+    });
+  };
+
+  const socketRequestMiddleware = (socket, { type, payload }) => {
+    console.log(type, requestActions, (type in requestActions));
+    if (type in requestActions) {
+      socket.emit(type, payload);
+    }
+  };
+
+  return { socketService, socketRequestMiddleware };
 };
 
-const clientSocketMiddleware = function(socket, action) {
 
+module.exports = {
+  STATE,
+  SocketApp,
+  StatefulSocketConnection,
+  client
 };
-
-module.exports = { SocketApp, SocketConnection, STATE };

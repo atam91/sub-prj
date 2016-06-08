@@ -22,7 +22,7 @@ export default class Header extends Component {
   }
   render() {
     const { name } = this.props.user;
-    const error = !this.state.resetError && this.props.user.error;
+    const error = !this.state.resetError && this.props.loginError;
     const errorClass = error ? 'has-error' : null;
 
     var panel,loginForm;
@@ -49,8 +49,8 @@ export default class Header extends Component {
 
 Header.propTypes = {
   user: React.PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    error: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired
+    //error: PropTypes.string.isRequired
   }),
   headerActions: React.PropTypes.shape({
     loginRequest: PropTypes.func.isRequired,

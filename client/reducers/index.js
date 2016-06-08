@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux'
-import user from './user'
-import participants from './participants'
-import chat from './chat'
+
+import main from '../../common/reducers/state'
+import connection from '../../common/reducers/connection'
+import requestErrors from './requestErrors'
 
 export default combineReducers({
-  user,
-  participants,
-  chat
+  main,
+  connection,
+  requestErrors
 })

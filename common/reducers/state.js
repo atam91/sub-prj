@@ -1,6 +1,7 @@
 const {
   PARTICIPANTS,
-  MESSAGE_EVENT
+  MESSAGE_EVENT,
+  STATE
 } = require('../constants/ApiEvents');
 
 const initialState = {
@@ -8,17 +9,18 @@ const initialState = {
   messages: []
 }
 
-const reducer = (state = initialState, { type, payload }) {
+module.exports = function(state = initialState, action = {}) {
   switch (action.type) {
+    case STATE:
+      return action.payload;
+
     case PARTICIPANTS:
       return { ...state, participants: action.payload };
 
     case MESSAGE_EVENT:
-      return { ...state, messages: [ ...state.messages, payload ] };
+      return { ...state, messages: [ ...state.messages, action.payload ] };
 
     default:
       return state;
   }
 };
-
-module.exports = reducer;
