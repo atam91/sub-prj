@@ -11,7 +11,6 @@ export default function configureStore(initialState) {
     applyMiddleware(thunk, createLogger(), socketMiddleware)
   );
 
-  console.log(store.getState());
   startSocketService(store);
 
   if ((process.env.NODE_ENV == 'development') && module.hot) {

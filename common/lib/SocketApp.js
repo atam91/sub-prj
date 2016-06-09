@@ -23,7 +23,6 @@ const StatefulSocketConnection = function(socket, reducer) {
   return connection;
 };
 
-
 class SocketApp {
   constructor(io, stateReducer, serverServices, Connection) {
     this.io = io;
@@ -46,7 +45,7 @@ class SocketApp {
   }
 
   init(Connection) {
-    this.state = this.stateReducer(undefined, {});
+    this.state = this.stateReducer();
 
     this.io.on('connection', (socket) => {
       const connection = Connection(socket);
@@ -84,16 +83,17 @@ const client = function(clientDescription) {
       });
     });
 
-    socket.on('disconnect', (payload) => {
-      dispatch({
-        type: clientDescription.disconnectAction,
-        payload: {}
+    if (clientDescription.disconnectAction) {
+      socket.on('disconnect', () => {
+        dispatch({
+          type: clientDescription.disconnectAction,
+          payload: {}
+        });
       });
-    });
+    }
   };
 
   const socketRequestMiddleware = (socket, { type, payload }) => {
-    console.log(type, requestActions, (type in requestActions));
     if (type in requestActions) {
       socket.emit(type, payload);
     }
@@ -101,7 +101,6 @@ const client = function(clientDescription) {
 
   return { socketService, socketRequestMiddleware };
 };
-
 
 module.exports = {
   STATE,

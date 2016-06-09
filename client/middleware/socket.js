@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import { client } from '../../common/lib/SocketApp'
 
 import API_URL from '../constants/Api';
-import { clientDescription } from '../../common/AppDefine';
+import clientDescription from '../../common/clientDescription';
 
 const {
   socketService,
@@ -16,11 +16,9 @@ export function startSocketService(store) {
 }
 
 export default function() {
-  console.log('soc mid');
   return next => action => {
     const result = next(action);
 
-    console.log('mid:', action.type);
     socketRequestMiddleware(socket, action);
 
     return result;

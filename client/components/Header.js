@@ -11,14 +11,14 @@ export default class Header extends Component {
   }
   submit(e) {
     e.preventDefault();
-    this.props.headerActions.loginRequest(this.refs.username.value);
+    this.props.requestActions.login(this.refs.username.value);
     this.setState({ resetError: false });
   }
   change() {
     this.setState({ resetError: true });
   }
   logout() {
-    this.props.headerActions.logoutSend();
+    this.props.requestActions.logout();
   }
   render() {
     const { name } = this.props.user;
@@ -52,8 +52,8 @@ Header.propTypes = {
     name: PropTypes.string.isRequired
     //error: PropTypes.string.isRequired
   }),
-  headerActions: React.PropTypes.shape({
-    loginRequest: PropTypes.func.isRequired,
-    logoutSend: PropTypes.func.isRequired
+  requestActions: React.PropTypes.shape({
+    login: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired
   })
 }

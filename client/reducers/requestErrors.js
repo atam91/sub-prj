@@ -2,7 +2,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE
- } from '../../common/constants/ApiEvents';
+ } from '../../common/constants/SocketEvents';
 
 const initialState = {
   login: ''

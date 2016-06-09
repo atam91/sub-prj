@@ -1,8 +1,8 @@
+const { STATE } = require('../lib/SocketApp');
 const {
   PARTICIPANTS,
-  MESSAGE_EVENT,
-  STATE
-} = require('../constants/ApiEvents');
+  MESSAGE_EVENT
+} = require('../constants/SocketEvents');
 
 const initialState = {
   participants: [],

@@ -2,7 +2,7 @@ const {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_EVENT
-} = require('../constants/ApiEvents');
+} = require('../constants/SocketEvents');
 
 const user = {
   auth: false,
