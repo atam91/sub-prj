@@ -14,6 +14,7 @@ const loginService = function(socketApp) {
   const users = {};
 
   service.participants = () => {
+    console.log('PARTICIPANTS', Object.keys(users));
     socketApp.dispatch(PARTICIPANTS, Object.keys(users));
   };
 
@@ -22,7 +23,7 @@ const loginService = function(socketApp) {
     service.participants();
   };
 
-  const handlers = {
+  service.handlers = {
     LOGIN_REQUEST:
       (connection) => (name) => {
         if (name in users) {
@@ -44,7 +45,7 @@ const loginService = function(socketApp) {
       }
   };
 
-  return { ...service, handlers };
+  return service;
 };
 
 const chatService = function(socketApp) {

@@ -4,21 +4,26 @@ const {
   LOGOUT_EVENT
 } = require('../constants/SocketEvents');
 
-const user = {
+// USE ONLY combine({}, ...) for immutable states
+const combine = Object.assign;
+
+const initialUser = {
   auth: false,
   name: ''
 };
 
-const initialState = { user };
+const initialState = {
+  user: initialUser
+};
 
-module.exports = function(state = initialState, action = {}) {
-  switch (action.type) {
+module.exports = function(state = initialState, { type, payload }) {
+  switch (type) {
     case LOGIN_SUCCESS:
-      return { ...state, user: action.payload };
+      return combine({}, state, { user: payload });
 
     case LOGOUT_EVENT:
     case LOGIN_FAILURE:
-      return { ...state, user };
+      return combine({}, state, { user: initialUser });
 
     default:
       return state;

@@ -22,7 +22,7 @@ class App extends Component {
     }
   }
   render() {
-    const { participants, messages } = this.props.main
+    const { participants, messages } = this.props.main;
 
     return <div>
       <HeaderContainer />

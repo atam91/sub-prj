@@ -22,8 +22,10 @@ export default function(store) {
   return next => action => {
     const result = next(action);
 
-    if (action.type == MESSAGE_EVENT && !focus) {
-      updateTitle(++counter);
+    switch (action.type) {
+      case MESSAGE_EVENT:
+        !focus && updateTitle(++counter);
+        break;
     }
 
     return result;

@@ -4,21 +4,26 @@ const {
   MESSAGE_EVENT
 } = require('../constants/SocketEvents');
 
+// USE ONLY combine({}, ...) for immutable states
+const combine = Object.assign;
+
 const initialState = {
   participants: [],
   messages: []
 }
 
-module.exports = function(state = initialState, action = {}) {
-  switch (action.type) {
+module.exports = function(state = initialState, { type, payload }) {
+  switch (type) {
     case STATE:
-      return action.payload;
+      return payload;
 
     case PARTICIPANTS:
-      return { ...state, participants: action.payload };
+      return combine({}, state, { participants: payload });
 
     case MESSAGE_EVENT:
-      return { ...state, messages: [ ...state.messages, action.payload ] };
+      return combine({}, state, { 
+        messages: state.messages.concat(payload)
+      });
 
     default:
       return state;
