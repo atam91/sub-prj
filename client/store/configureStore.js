@@ -3,12 +3,18 @@ import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import rootReducer from '../reducers'
 import socketMiddleware, { startSocketService } from '../middleware/socket'
+import statusTitleMiddleware from '../middleware/statusTitle'
 
 export default function configureStore(initialState) {
   const store = createStore(
     rootReducer, 
     initialState, 
-    applyMiddleware(thunk, createLogger(), socketMiddleware)
+    applyMiddleware(
+      thunk,
+      createLogger(),
+      socketMiddleware,
+      statusTitleMiddleware
+    )
   );
 
   startSocketService(store);
