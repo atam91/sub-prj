@@ -3,7 +3,7 @@ import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import rootReducer from '../reducers'
 import socketMiddleware, { startSocketService } from '../middleware/socket'
-import statusTitleMiddleware from '../middleware/statusTitle'
+import notifierMiddleware from '../middleware/notifier'
 
 export default function configureStore(initialState) {
   const store = createStore(
@@ -13,7 +13,7 @@ export default function configureStore(initialState) {
       thunk,
       createLogger(),
       socketMiddleware,
-      statusTitleMiddleware
+      notifierMiddleware
     )
   );
 
