@@ -1,4 +1,4 @@
-const { date } = require('./lib/utils');
+const { date } = require('../../common/lib/utils');
 
 const {
   LOGIN_REQUEST,
@@ -6,12 +6,10 @@ const {
   LOGIN_FAILURE,
   LOGOUT_SEND,
   LOGOUT_EVENT,
-  PARTICIPANTS,
-  MESSAGE_SEND,
-  MESSAGE_EVENT
-} = require('./constants/SocketEvents');
+  PARTICIPANTS
+} = require('../../common/constants/SocketEvents');
 
-const loginService = function(socketApp) {
+module.exports = function(socketApp) {
   const service = {};
   const users = {};
 
@@ -48,26 +46,4 @@ const loginService = function(socketApp) {
   };
 
   return service;
-};
-
-const chatService = function(socketApp) {
-  var index = 1;
-
-  const handlers = {
-    MESSAGE_SEND:
-      (connection) => (text) => {
-        socketApp.dispatch(MESSAGE_EVENT, {
-          id: index++,
-          name: connection.getUsername(),
-          text
-        });
-      }
-  };
-
-  return { handlers };
-}
-
-module.exports = {
-  login: loginService,
-  chat: chatService
 };

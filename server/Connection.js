@@ -1,5 +1,5 @@
-const { StatefulSocketConnection } = require('./lib/SocketApp');
-const connectionReducer = require('./reducers/connection');
+const { StatefulSocketConnection } = require('../common/lib/SocketApp');
+const connectionReducer = require('../common/reducers/connection');
 
 module.exports = function(socket) {
   const connection = StatefulSocketConnection(socket, connectionReducer);
