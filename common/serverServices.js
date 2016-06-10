@@ -1,3 +1,5 @@
+const { date } = require('./lib/utils');
+
 const {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -14,7 +16,7 @@ const loginService = function(socketApp) {
   const users = {};
 
   service.participants = () => {
-    console.log('PARTICIPANTS', Object.keys(users));
+    console.log(date(), 'PARTICIPANTS', Object.keys(users));
     socketApp.dispatch(PARTICIPANTS, Object.keys(users));
   };
 

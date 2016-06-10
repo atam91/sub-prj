@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 
+console.log('run app.js');
+
 const app = express();
 const server = require('http').Server(app);
 const socketApp = require('./server/socketApp')(server);

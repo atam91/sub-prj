@@ -4,7 +4,7 @@
   "description": "chat & game rooms",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node app.js",
+    "start": "NODE_ENV=production node app.js >> app.log",
     "build": "./node_modules/.bin/webpack --config ./webpack.config.prod.js --progress",
     "dev": "./node_modules/.bin/nodemon app.js -w app.js -w ./server -w ./common",
     "dev-server": "node dev-server.js",

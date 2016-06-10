@@ -40,10 +40,16 @@ const setFavicon = (name) => {
   favicon = name;
 };
 
+var pos = 0;
+const maxPos = 3;
 const updateFavicon = (name = 'favicon') => {
-  if (name != favicon) {
-    setFavicon(name);
+  if (name == 'alarm') {
+    pos++;
+    if (pos > maxPos) pos = 0;
   }
+
+  setFavicon(name + pos);
+  favicon = name;
 };
 
 export function tick() {

@@ -1,4 +1,4 @@
-const { forEachKey } = require('./utils');
+const { forEachKey, date } = require('./utils');
 
 const STATE = 'STATE';
 
@@ -45,13 +45,13 @@ class SocketApp {
   }
 
   init(Connection) {
-    console.log('init main state');
+    console.log(date(), 'INIT MAIN STATE');
     this.state = this.stateReducer(undefined, {});
 
     var i = 0;
     this.io.on('connection', (socket) => {
       let j = i++;
-      console.log('connect #', j);
+      console.log(date(), 'connect #', j);
       const connection = Connection(socket);
       const clojure = { connection };
 
@@ -59,7 +59,7 @@ class SocketApp {
       this.connect(clojure.connection);
 
       socket.on('disconnect', () => {
-        console.log('disconnecting #', j);
+        console.log(date(), 'disconnecting #', j);
         forEachKey(this.services, (name, service) => {
           service.disconnect && service.disconnect(clojure.connection);
         });

@@ -8,7 +8,12 @@ const action = (type, payload = null) => {
   return { type, payload };
 };
 
+const date = () => {
+  return new Date().toJSON();
+};
+
 module.exports = {
   forEachKey,
-  action
+  action,
+  date
 };
