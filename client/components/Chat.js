@@ -1,6 +1,7 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes } from 'react'
+import ScrollingContent from './ScrollingContent'
 
-export default class Chat extends Component {
+export default class Chat extends ScrollingContent {
   render() {
     const { list } = this.props;
 
@@ -8,7 +9,7 @@ export default class Chat extends Component {
       return <li key={id}><b>{name}:</b> {text}</li>;
     });
 
-    return <ul className="chat">{items}</ul>;
+    return <ul id="chat" className="content" ref="content">{items}</ul>;
   }
 }
 

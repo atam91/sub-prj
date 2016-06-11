@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import { scrollDown } from '../services/scrollDown'
 
 export default class Footer extends Component {
   submit(e) {
@@ -6,7 +7,7 @@ export default class Footer extends Component {
     if (this.refs.message.value) {
       this.props.requestActions.send(this.refs.message.value);
       this.refs.message.value = '';
-      this.props.scrollDown();
+      scrollDown('chat');
     }
   }
   render() {
@@ -22,6 +23,5 @@ export default class Footer extends Component {
 Footer.propTypes = {
   requestActions: React.PropTypes.shape({
     send: PropTypes.func.isRequired
-  }),
-  scrollDown: PropTypes.func.isRequired
+  })
 }

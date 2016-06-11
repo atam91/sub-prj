@@ -74,7 +74,7 @@ body {
   margin: 0 auto;
 }
 
-ul.chat {
+ul#chat {
   list-style-type: none;
   padding: 0px;
 }

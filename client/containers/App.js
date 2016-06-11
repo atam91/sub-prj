@@ -7,20 +7,6 @@ import HeaderContainer from './HeaderContainer'
 import FooterContainer from './FooterContainer'
 
 class App extends Component {
-  scrollDown() {
-    this.forceScrollDown = true;
-  }
-  componentWillUpdate() {
-    const scrollWithOffset = document.body.scrollTop + document.body.offsetHeight;
-    this.shouldScrollBottom = 
-      document.body.offsetHeight && (document.body.scrollHeight === scrollWithOffset);
-  }
-  componentDidUpdate() {
-    if (this.shouldScrollBottom || this.forceScrollDown) {
-      window.scrollTo(0, document.body.scrollHeight);
-      this.forceScrollDown = false;
-    }
-  }
   render() {
     const { participants, messages } = this.props.main;
 
@@ -28,11 +14,9 @@ class App extends Component {
       <HeaderContainer />
       <Participants list={participants} />
       <View>
-        <div className="content">
-          <Chat list={messages} />
-        </div>
+        <Chat list={messages} />
       </View>
-      <FooterContainer scrollDown={::this.scrollDown} />
+      <FooterContainer />
     </div>
   }
 }

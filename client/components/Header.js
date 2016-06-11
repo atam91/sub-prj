@@ -22,7 +22,6 @@ export default class Header extends Component {
   render() {
     const { name } = this.props.user;
     const error = !this.state.resetError && this.props.loginError;
-    const errorClass = error ? 'has-error' : null;
 
     var panel,loginForm;
     if (name) {
@@ -31,7 +30,7 @@ export default class Header extends Component {
         <a className="btn btn-default" onClick={::this.logout}>Выйти</a>
       </div>;
     } else {
-      loginForm = <form className={classNames('form-signin', 'login-form', errorClass)} onSubmit={::this.submit}>
+      loginForm = <form className={classNames('form-signin', 'login-form', { 'has-error': error })} onSubmit={::this.submit}>
         <input ref="username"  onChange={::this.change} type="text" className="form-control" placeholder="nickname" />
         <span id="helpBlock" className="help-block">{error}</span>
         <button className="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
