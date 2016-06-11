@@ -1,7 +1,7 @@
 const { STATE } = require('../lib/SocketApp');
 const {
   PARTICIPANTS,
-  MESSAGE_EVENT
+  MESSAGE
 } = require('../constants/SocketEvents');
 
 // USE ONLY combine({}, ...) for immutable states
@@ -20,7 +20,7 @@ module.exports = function(state = initialState, { type, payload }) {
     case PARTICIPANTS:
       return combine({}, state, { participants: payload });
 
-    case MESSAGE_EVENT:
+    case MESSAGE:
       return combine({}, state, { 
         messages: state.messages.concat(payload)
       });

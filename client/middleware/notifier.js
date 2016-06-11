@@ -1,7 +1,7 @@
 import { tick } from '../services/notifier'
 
 import {
-  MESSAGE_EVENT
+  MESSAGE
 } from '../../common/constants/SocketEvents';
 
 
@@ -10,7 +10,7 @@ export default function(store) {
     const result = next(action);
 
     switch (action.type) {
-      case MESSAGE_EVENT:
+      case MESSAGE:
         tick();
         break;
     }

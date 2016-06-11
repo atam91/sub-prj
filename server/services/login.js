@@ -26,7 +26,9 @@ module.exports = function(socketApp) {
   service.handlers = {
     LOGIN_REQUEST:
       (connection) => (name) => {
-        if (name in users) {
+        if (!name.trim()) {
+          connection.dispatch(LOGIN_FAILURE, 'Empty name');
+        } else if (name in users) {
           connection.dispatch(LOGIN_FAILURE, 'Name alredy in use');
         } else {
           users[name] = connection.getSocket().id;

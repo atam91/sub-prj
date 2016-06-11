@@ -53,17 +53,15 @@ class SocketApp {
       let j = i++;
       console.log(date(), 'connect #', j);
       const connection = Connection(socket);
-      const clojure = { connection };
 
-      this.emitState(clojure.connection);
-      this.connect(clojure.connection);
+      this.emitState(connection);
+      this.connect(connection);
 
       socket.on('disconnect', () => {
         console.log(date(), 'disconnecting #', j);
         forEachKey(this.services, (name, service) => {
-          service.disconnect && service.disconnect(clojure.connection);
+          service.disconnect && service.disconnect(connection);
         });
-        delete clojure.connection;
       });
     });
   }

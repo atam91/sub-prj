@@ -9,7 +9,7 @@ define('LOGOUT_EVENT');
 
 define('PARTICIPANTS');
 
-define('MESSAGE_SEND');
-define('MESSAGE_EVENT');
+define('SEND');
+define('MESSAGE');
 
 define('RELOAD');

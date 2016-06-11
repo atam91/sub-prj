@@ -8,8 +8,9 @@ const {
   LOGOUT_SEND,
   LOGOUT_EVENT,
   PARTICIPANTS,
-  MESSAGE_SEND,
-  MESSAGE_EVENT
+  SEND,
+  MESSAGE,
+  RELOAD
 } = require('./constants/SocketEvents');
 
 
@@ -21,8 +22,8 @@ module.exports = function() {
     logout:
       () => action(LOGOUT_SEND),
 
-    message:
-      (p) => action(MESSAGE_SEND, p)
+    send:
+      (p) => action(SEND, p)
   };
 
   const listens = [
@@ -30,8 +31,9 @@ module.exports = function() {
     LOGIN_FAILURE,
     LOGOUT_EVENT,
     PARTICIPANTS,
-    MESSAGE_EVENT,
-    STATE
+    MESSAGE,
+    STATE,
+    RELOAD
   ];
 
   const disconnectAction = LOGOUT_EVENT;

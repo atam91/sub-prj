@@ -5,7 +5,7 @@ export default class Footer extends Component {
   submit(e) {
     e.preventDefault();
     if (this.refs.message.value) {
-      this.props.requestActions.message(this.refs.message.value);
+      this.props.requestActions.send(this.refs.message.value);
       this.refs.message.value = '';
       this.props.scrollDown();
     }
@@ -26,7 +26,7 @@ export default class Footer extends Component {
 
 Footer.propTypes = {
   requestActions: React.PropTypes.shape({
-    message: PropTypes.func.isRequired
+    send: PropTypes.func.isRequired
   }),
   scrollDown: PropTypes.func.isRequired
 }
