@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react'
-import FooterPanel from './FooterPanel'
 
 export default class Footer extends Component {
   submit(e) {
@@ -11,16 +10,12 @@ export default class Footer extends Component {
     }
   }
   render() {
-    return <FooterPanel>
-      <form className="form" onSubmit={::this.submit}>
-        <div className="col-md-10">
-          <input type="text" className="form-control" ref="message" placeholder="Message" autofocus />
-        </div>
-        <div className="col-md-2">
-          <button type="submit" className="btn btn-default">Отправить</button>
-        </div>
+    return <div className="footer">
+      <form className="form row-area" onSubmit={::this.submit}>
+        <input ref="message" type="text" className="form-control separate" placeholder="Message" />
+        <button type="submit" className="btn btn-default">Отправить</button>
       </form>
-    </FooterPanel>
+    </div>;
   }
 }
 

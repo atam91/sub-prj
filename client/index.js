@@ -9,9 +9,7 @@ const store = configureStore()
 
 render(
   <Provider store={store}>
-    <div className="app">
-      <App />
-    </div>
+    <App />
   </Provider>,
   document.getElementById('root')
 )

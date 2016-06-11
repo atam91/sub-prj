@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react'
 import classNames from 'classnames'
-import HeaderPanel from './HeaderPanel'
 
 export default class Header extends Component {
   constructor(props, context) {
@@ -27,31 +26,30 @@ export default class Header extends Component {
 
     var panel,loginForm;
     if (name) {
-      panel = <div>
+      panel = <div className="right">
         <span className="separate">Привет, {name}!</span>
         <a className="btn btn-default" onClick={::this.logout}>Выйти</a>
       </div>;
     } else {
-      loginForm = <form className={classNames('form-signin', errorClass)} onSubmit={::this.submit}>
-        <input ref="username" type="text" className={classNames('form-control', errorClass)} placeholder="nickname" onChange={::this.change} />
+      loginForm = <form className={classNames('form-signin', 'login-form', errorClass)} onSubmit={::this.submit}>
+        <input ref="username"  onChange={::this.change} type="text" className="form-control" placeholder="nickname" />
         <span id="helpBlock" className="help-block">{error}</span>
         <button className="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
       </form>;
     }
 
-    return <HeaderPanel>
-      <div className="col-md-4"></div>
-      <div className="col-md-4">{loginForm}</div>
-      <div className="col-md-4">{panel}</div>
-    </HeaderPanel>;
+    return <div className="header">
+      {loginForm}
+      {panel}
+    </div>;
   }
 }
 
 Header.propTypes = {
   user: React.PropTypes.shape({
     name: PropTypes.string.isRequired
-    //error: PropTypes.string.isRequired
   }),
+  loginError: PropTypes.string.isRequired,
   requestActions: React.PropTypes.shape({
     login: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired

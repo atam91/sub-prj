@@ -24,11 +24,13 @@ class App extends Component {
   render() {
     const { participants, messages } = this.props.main;
 
-    return <div>
+    return <div className="app">
       <HeaderContainer />
+      <Participants list={participants} />
       <View>
-        <Participants list={participants} />
-        <Chat list={messages} />
+        <div className="content">
+          <Chat list={messages} />
+        </div>
       </View>
       <FooterContainer scrollDown={::this.scrollDown} />
     </div>

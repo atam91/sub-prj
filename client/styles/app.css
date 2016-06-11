@@ -1,21 +1,85 @@
-html, body {
+html, body, #root {
+  width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.header, .footer {
-  background-color: #eee;
-  padding: 10px;
+body {
+  background: #444;
+  color: #ccc;
+  font-size: 14px;
+  font-family: Courier monospace;
 }
 
-.view {
-  padding: 60px 0px;
+.app {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+
+  background: rgba(255, 255, 255, .1);
+}
+
+.flexbox-item-grow {
+  flex: 1;
+}
+
+.row-area {
+  display: flex;
+  flex-direction: row;
+  
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+.content {
+  background: rgba(0, 0, 0, .3);
+  border: 1px solid #000000;
+  overflow: auto; 
+  height: 100%;
+  width: 100%;
+}
+
+.block {
+  padding: 8px;
 }
 
 .separate {
   margin-right: 10px;
 }
 
+.right {
+  float: right;
+}
+
+.form {
+  margin-bottom: 0px;
+}
+
+.header, .footer {
+  background: rgba(255, 255, 255, .8);
+  color: #333;
+  padding: 10px;
+}
+
+.login-form {
+  width: 400px;
+  margin: 0 auto;
+}
+
 ul.chat {
   list-style-type: none;
   padding: 0px;
+}
+
+.game {
+  max-width: 600px;
+  max-height: 600px;
 }

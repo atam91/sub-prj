@@ -6,7 +6,9 @@ export default class Participants extends Component {
 
     if (!list.length) return null;
 
-    return <p>Участники: {list.join(', ')}.</p>
+    return <div className="block">
+      Участники: {list.join(', ')}.
+    </div>;
   }
 }
 
