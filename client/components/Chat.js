@@ -9,7 +9,7 @@ export default class Chat extends ScrollingContent {
       return <li key={id}><b>{name}:</b> {text}</li>;
     });
 
-    return <ul id="chat" className="content" ref="content">{items}</ul>;
+    return <ul id="chat" className="block content" ref="content">{items}</ul>;
   }
 }
 

@@ -41,18 +41,22 @@ body {
 
 .content {
   background: rgba(0, 0, 0, .3);
-  border: 1px solid #000000;
+  border: 2px solid #000000;
   overflow: auto; 
   height: 100%;
   width: 100%;
 }
 
 .block {
-  padding: 8px;
+  padding: 4px;
+}
+
+.sep {
+  margin: 2px;
 }
 
 .separate {
-  margin-right: 10px;
+  margin-right: 6px;
 }
 
 .right {
@@ -76,10 +80,21 @@ body {
 
 ul#chat {
   list-style-type: none;
-  padding: 0px;
+  padding: inherit;
+  margin: 0px;
 }
 
 .game {
   max-width: 600px;
   max-height: 600px;
+}
+
+#participants {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+
+  max-width: 200px;
 }

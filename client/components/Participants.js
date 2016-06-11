@@ -6,8 +6,12 @@ export default class Participants extends Component {
 
     if (!list.length) return null;
 
-    return <div className="block">
-      Участники: {list.join(', ')}.
+    const items = list.map((name) => {
+      return <span className="sep label label-default" key={name}>{name}</span>;
+    });
+
+    return <div id="participants" className="block content separate">
+      {items}
     </div>;
   }
 }

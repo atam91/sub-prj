@@ -12,8 +12,8 @@ class App extends Component {
 
     return <div className="app">
       <HeaderContainer />
-      <Participants list={participants} />
       <View>
+        <Participants list={participants} />
         <Chat list={messages} />
       </View>
       <FooterContainer />
