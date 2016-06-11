@@ -10,6 +10,7 @@ const {
   PARTICIPANTS,
   SEND,
   MESSAGE,
+  CLEAR,
   RELOAD
 } = require('./constants/SocketEvents');
 
@@ -32,6 +33,7 @@ module.exports = function() {
     LOGOUT_EVENT,
     PARTICIPANTS,
     MESSAGE,
+    CLEAR,
     STATE,
     RELOAD
   ];

@@ -24,12 +24,15 @@ const StatefulSocketConnection = function(socket, reducer) {
 };
 
 class SocketApp {
-  constructor(io, stateReducer, serverServices, Connection) {
+  constructor(io, stateReducer, requestServices, services, Connection) {
     this.io = io;
     this.stateReducer = stateReducer;
 
+    this.requestServices = {};
+    forEachKey(requestServices, (key, value) => { this.requestServices[key] = value(this); });
+
     this.services = {};
-    forEachKey(serverServices, (key, value) => { this.services[key] = value(this); });
+    forEachKey(services, (key, value) => { this.services[key] = value(this); });
 
     this.init(Connection);
   }
@@ -59,7 +62,7 @@ class SocketApp {
 
       socket.on('disconnect', () => {
         console.log(date(), 'disconnecting #', j);
-        forEachKey(this.services, (name, service) => {
+        forEachKey(this.requestServices, (name, service) => {
           service.disconnect && service.disconnect(connection);
         });
       });
@@ -67,7 +70,7 @@ class SocketApp {
   }
 
   connect(connection) {
-    forEachKey(this.services, (name, service) => {
+    forEachKey(this.requestServices, (name, service) => {
       forEachKey(service.handlers, connection.handleRequest);
     });
   }

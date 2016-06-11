@@ -4,7 +4,7 @@ const {
   LOGOUT_EVENT
 } = require('../constants/SocketEvents');
 
-// USE ONLY combine({}, ...) for immutable states
+// USE ONLY combine({}, state, ...) for immutable states, like { ...state, ... }
 const combine = Object.assign;
 
 const initialUser = {

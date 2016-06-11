@@ -1,10 +1,11 @@
 const { STATE } = require('../lib/SocketApp');
 const {
   PARTICIPANTS,
-  MESSAGE
+  MESSAGE,
+  CLEAR
 } = require('../constants/SocketEvents');
 
-// USE ONLY combine({}, ...) for immutable states
+// USE ONLY combine({}, state, ...) for immutable states, like { ...state, ... }
 const combine = Object.assign;
 
 const initialState = {
@@ -24,6 +25,9 @@ module.exports = function(state = initialState, { type, payload }) {
       return combine({}, state, { 
         messages: state.messages.concat(payload)
       });
+
+    case CLEAR:
+      return combine({}, state, { messages: [] });
 
     default:
       return state;

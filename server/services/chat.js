@@ -13,7 +13,5 @@ module.exports = function(socketApp) {
     });
   };
 
-  const handlers = {};
-
-  return { handlers, sendMessage };
+  return { sendMessage };
 }

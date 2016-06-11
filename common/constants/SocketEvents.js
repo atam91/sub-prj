@@ -11,5 +11,6 @@ define('PARTICIPANTS');
 
 define('SEND');
 define('MESSAGE');
+define('CLEAR');
 
 define('RELOAD');
