@@ -1,7 +1,11 @@
-const controller = require('./controller');
+const router = require('./router');
+const login = require('./login');
 const chat = require('./chat');
+const controller = require('./controller');
 
 module.exports = {
-  controller,
-  chat
+  router,
+  login,
+  chat,
+  controller
 };

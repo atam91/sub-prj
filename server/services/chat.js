@@ -2,16 +2,20 @@ const {
   MESSAGE
 } = require('../../common/constants/SocketEvents');
 
-module.exports = function(socketApp) {
-  var index = 1;
+var socketApp;
+const setSocketApp = (app) => { socketApp = app; };
 
-  const sendMessage = (connection, text) => {
-    socketApp.dispatch(MESSAGE, {
-      id: index++,
-      name: connection.getUsername(),
-      text
-    });
-  };
+var index = 1;
 
-  return { sendMessage };
-}
+const sendMessage = (connection, text) => {
+  socketApp.dispatch(MESSAGE, {
+    id: index++,
+    name: connection.getUsername(),
+    text
+  });
+};
+
+module.exports = {
+  setSocketApp,
+  sendMessage
+};
