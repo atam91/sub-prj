@@ -89,7 +89,6 @@ const client = function(clientDescription) {
 
     if (clientDescription.disconnectAction) {
       socket.on('disconnect', () => {
-        console.log('socket disconnected');
         dispatch({
           type: clientDescription.disconnectAction,
           payload: {}

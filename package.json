@@ -1,14 +1,18 @@
 {
-  "name": "prj",
+  "name": "sub-prj",
   "version": "0.0.1",
-  "description": "chat & game rooms",
-  "main": "index.js",
+  "description": "React/Redux Socket.IO Application; Experimental space",
+  "main": "app.js",
   "scripts": {
     "start": "NODE_ENV=production node app.js",
     "build": "./node_modules/.bin/webpack --config ./webpack.config.prod.js --progress",
     "dev": "./node_modules/.bin/nodemon app.js -w app.js -w ./server -w ./common",
     "dev-server": "node dev-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atam91/sub-prj"
   },
   "author": "zh",
   "license": "ISC",
