@@ -19,10 +19,14 @@ const participants = () => {
   socketApp.dispatch(PARTICIPANTS, Object.keys(users));
 };
 
+const prepareName = (payload) => payload.trim().replace(/\s+/g, ' ');
+
 const handlers = {
   LOGIN_REQUEST:
     (connection) => (payload) => {
-      const name = payload.trim();
+      if (connection.getAuth()) return;
+
+      const name = prepareName(payload);
       if (!name) {
         connection.dispatch(LOGIN_FAILURE, 'Empty name');
       } else if (name in users) {
@@ -40,7 +44,6 @@ const handlers = {
   LOGOUT_SEND:
     (connection) => () => {
       disconnect(connection);
-      connection.dispatch(LOGOUT_EVENT);
     }
 };
 
@@ -51,6 +54,7 @@ const connect = (connection) => {
 const disconnect = (connection) => {
   delete users[connection.getUsername()];
   participants();
+  connection.dispatch(LOGOUT_EVENT);
 };
 
 module.exports = {

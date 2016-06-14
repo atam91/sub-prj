@@ -1,6 +1,7 @@
 const { forEachKey, date } = require('./utils');
 
 const STATE = 'STATE';
+const DISCONNECT = 'DISCONNECT';
 
 const StatefulSocketConnection = function(socket, reducer) {
   const connection = {};
@@ -67,6 +68,7 @@ class SocketApp {
         forEachKey(this.services, (name, service) => {
           service.disconnect && service.disconnect(connection);
         });
+        socket.emit(DISCONNECT);
       });
     });
   }
@@ -87,6 +89,7 @@ const client = function(clientDescription) {
 
     if (clientDescription.disconnectAction) {
       socket.on('disconnect', () => {
+        console.log('socket disconnected');
         dispatch({
           type: clientDescription.disconnectAction,
           payload: {}
@@ -106,6 +109,7 @@ const client = function(clientDescription) {
 
 module.exports = {
   STATE,
+  DISCONNECT,
   SocketApp,
   StatefulSocketConnection,
   client

@@ -1,4 +1,4 @@
-const { STATE } = require('./lib/SocketApp');
+const { STATE, DISCONNECT } = require('./lib/SocketApp');
 const { action } = require('./lib/utils');
 
 const {
@@ -31,6 +31,7 @@ module.exports = function() {
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
     LOGOUT_EVENT,
+    DISCONNECT,
     PARTICIPANTS,
     MESSAGE,
     CLEAR,
