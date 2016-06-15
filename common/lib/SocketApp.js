@@ -6,7 +6,7 @@ const DISCONNECT = 'DISCONNECT';
 const StatefulSocketConnection = function(socket, reducer) {
   const connection = {};
 
-  var state = reducer(undefined, {});
+  let state = reducer(undefined, {});
 
   connection.dispatch = (type, payload) => {
     socket.emit(type, payload);
@@ -51,9 +51,9 @@ class SocketApp {
     console.log(date(), 'INIT MAIN STATE');
     this.state = this.stateReducer(undefined, {});
 
-    var i = 0;
+    let i = 0;
     this.io.on('connection', (socket) => {
-      let j = i++;
+      const j = i++;
       console.log(date(), 'connect #', j);
       const connection = Connection(socket);
 
@@ -69,6 +69,10 @@ class SocketApp {
           service.disconnect && service.disconnect(connection);
         });
         socket.emit(DISCONNECT);
+      });
+
+      socket.on('error', (e) => {
+        console.log('SOCKET ERROR:', e);
       });
     });
   }
