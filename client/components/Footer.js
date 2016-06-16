@@ -13,7 +13,7 @@ export default class Footer extends Component {
   render() {
     return <div className="footer">
       <form className="form row-area" onSubmit={::this.submit}>
-        <input ref="message" type="text" className="form-control separate" placeholder="Message" />
+        <input ref="message" type="text" className="form-control sep-r" placeholder="Message" />
         <button type="submit" className="btn btn-default">Отправить</button>
       </form>
     </div>;

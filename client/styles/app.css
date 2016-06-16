@@ -16,18 +16,16 @@ body {
   width: 100%;
   height: 100%;
 
+  background: rgba(255, 255, 255, .1);
+}
+
+.app, .column-area {
   display: flex;
   flex-direction: column;
   
   justify-content: flex-start;
   align-items: stretch;
   align-content: stretch;
-
-  background: rgba(255, 255, 255, .1);
-}
-
-.flexbox-item-grow {
-  flex: 1;
 }
 
 .row-area {
@@ -37,6 +35,10 @@ body {
   justify-content: flex-start;
   align-items: stretch;
   align-content: stretch;
+}
+
+.flexbox-item-grow {
+  flex: 1;
 }
 
 .content {
@@ -55,8 +57,12 @@ body {
   margin: 2px;
 }
 
-.separate {
+.sep-r {
   margin-right: 6px;
+}
+
+.sep-b {
+  margin-bottom: 6px;
 }
 
 .right {
@@ -65,6 +71,10 @@ body {
 
 .form {
   margin-bottom: 0px;
+}
+
+.center {
+  margin: 0 auto;
 }
 
 .header, .footer {
@@ -80,21 +90,48 @@ body {
 
 ul#chat {
   list-style-type: none;
-  padding: inherit;
   margin: 0px;
 }
 
 .game {
-  max-width: 600px;
-  max-height: 600px;
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.game table td {
+  border: 2px solid #000000;
+}
+
+.game table td {
+  width: 80px;
+  height: 80px;
+  font-size: 50px;
+  text-align: center;
+}
+
+.game table td.available {
+  background: rgba(0, 255, 0, .1);
+}
+
+.game table td.available:hover {
+  background: rgba(0, 255, 0, .2);
+}
+
+.game .center {
+  text-align: center;
 }
 
 #participants {
   display: flex;
   flex-flow: row wrap;
+
   justify-content: flex-start;
   align-content: flex-start;
   align-items: flex-start;
 
-  max-width: 200px;
+  max-height: 80px;
 }
+
+/*
+background: rgba(0, 255, 0, .8);
+*/

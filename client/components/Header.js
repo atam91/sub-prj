@@ -26,7 +26,7 @@ export default class Header extends Component {
     var panel,loginForm;
     if (name) {
       panel = <div className="right">
-        <span className="separate">Привет, {name}!</span>
+        <span className="sep-r">Привет, {name}!</span>
         <a className="btn btn-default" onClick={::this.logout}>Выйти</a>
       </div>;
     } else {
@@ -38,6 +38,7 @@ export default class Header extends Component {
     }
 
     return <div className="header">
+
       {loginForm}
       {panel}
     </div>;

@@ -10,7 +10,7 @@ export default class Participants extends Component {
       return <span className="sep label label-default" key={name}>{name}</span>;
     });
 
-    return <div id="participants" className="block content separate">
+    return <div id="participants" className="block content sep-b">
       {items}
     </div>;
   }
