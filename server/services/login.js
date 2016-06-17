@@ -9,7 +9,7 @@ const {
   PARTICIPANTS
 } = require('../../common/constants/SocketEvents');
 
-var socketApp;
+let socketApp;
 const setSocketApp = (app) => { socketApp = app; };
 
 const users = {};

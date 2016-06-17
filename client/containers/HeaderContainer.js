@@ -10,17 +10,13 @@ class HeaderContainer extends Component {
   }
 }
 
-function mapStateToProps (state) {
-  return {
-    user: state.connection.user,
-    loginError: state.requestErrors.login
-  }
-}
+const mapStateToProps = (state) => ({
+  user: state.connection.user,
+  loginError: state.requestErrors.login
+});
 
-function mapDispatchToProps(dispatch) {
-  return {
-    requestActions: bindActionCreators(requestActions, dispatch)
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  requestActions: bindActionCreators(requestActions, dispatch)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer)

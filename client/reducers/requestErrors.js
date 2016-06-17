@@ -12,10 +12,10 @@ export default function participants(state = initialState, { type, payload }) {
   switch (type) {
     case LOGIN_REQUEST:
     case LOGIN_SUCCESS:
-      return {...state, login: '' };
+      return { ...state, login: '' };
 
     case LOGIN_FAILURE:
-      return {...state, login: payload };
+      return { ...state, login: payload };
 
     default:
       return state;

@@ -12,16 +12,14 @@ class FooterContainer extends Component {
   }
 }
 
-function mapStateToProps (state) {
-  return {
-    user: state.connection.user
-  }
-}
+const mapStateToProps = (state) => ({
+  user: state.connection.user
+});
 
-function mapDispatchToProps(dispatch) {
-  return {
-    requestActions: bindActionCreators(requestActions, dispatch)
-  }
-}
+
+
+const mapDispatchToProps = (dispatch) => ({
+  requestActions: bindActionCreators(requestActions, dispatch)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(FooterContainer)

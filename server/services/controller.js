@@ -5,7 +5,7 @@ const {
   CLEAR
 } = require('../../common/constants/SocketEvents');
 
-var socketApp;
+let socketApp;
 const setSocketApp = (app) => { socketApp = app; };
 
 const cmd = (connection, text) => {

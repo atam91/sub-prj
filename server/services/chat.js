@@ -2,10 +2,10 @@ const {
   MESSAGE
 } = require('../../common/constants/SocketEvents');
 
-var socketApp;
+let socketApp;
 const setSocketApp = (app) => { socketApp = app; };
 
-var index = 1;
+let index = 1;
 
 const sendMessage = (connection, text) => {
   socketApp.dispatch(MESSAGE, {
