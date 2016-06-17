@@ -16,8 +16,6 @@ const mapStateToProps = (state) => ({
   user: state.connection.user
 });
 
-
-
 const mapDispatchToProps = (dispatch) => ({
   requestActions: bindActionCreators(requestActions, dispatch)
 });
