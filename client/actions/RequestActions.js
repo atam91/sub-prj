@@ -1,5 +1,3 @@
-import clientDescription from '../../common/clientDescription';
+import { requests } from '../../common/clientDescription';
 
-const client = clientDescription();
-
-export default client.requests;
+export default requests;

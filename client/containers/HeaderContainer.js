@@ -15,8 +15,4 @@ const mapStateToProps = (state) => ({
   loginError: state.requestErrors.login
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  requestActions: bindActionCreators(requestActions, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer)
+export default connect(mapStateToProps, requestActions)(HeaderContainer)

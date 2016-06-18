@@ -7,7 +7,7 @@ import clientDescription from '../../common/clientDescription';
 const {
   socketService,
   socketRequestMiddleware
-} = client(clientDescription());
+} = client(clientDescription);
 
 const socket = io.connect(API_URL, { path: '/io' });
 

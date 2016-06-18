@@ -19,21 +19,23 @@ class App extends Component {
             <b>player1: X</b>
           </div>
           <table className="center">
-            <tr>
-              <td className="available"></td>
-              <td className="available">O</td>
-              <td className="available">X</td>
-            </tr>
-            <tr>
-              <td>O</td>
-              <td>X</td>
-              <td>X</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td>O</td>
-              <td>X</td>
-            </tr>
+            <tbody>
+              <tr>
+                <td className="available"></td>
+                <td className="available">O</td>
+                <td className="available">X</td>
+              </tr>
+              <tr>
+                <td>O</td>
+                <td>X</td>
+                <td>X</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>O</td>
+                <td>X</td>
+              </tr>
+            </tbody>
           </table>
           <div className="center">
             <span>player2: O</span>

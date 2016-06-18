@@ -10,14 +10,14 @@ export default class Header extends Component {
   }
   submit(e) {
     e.preventDefault();
-    this.props.requestActions.login(this.refs.username.value);
+    this.props.login(this.refs.username.value);
     this.setState({ resetError: false });
   }
   change() {
     this.setState({ resetError: true });
   }
   logout() {
-    this.props.requestActions.logout();
+    this.props.logout();
   }
   render() {
     const { name } = this.props.user;
@@ -49,9 +49,7 @@ Header.propTypes = {
   user: React.PropTypes.shape({
     name: PropTypes.string.isRequired
   }),
-  loginError: PropTypes.string.isRequired,
-  requestActions: React.PropTypes.shape({
-    login: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired
-  })
+  login: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+  loginError: PropTypes.string.isRequired
 }

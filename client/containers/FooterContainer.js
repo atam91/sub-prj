@@ -16,8 +16,4 @@ const mapStateToProps = (state) => ({
   user: state.connection.user
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  requestActions: bindActionCreators(requestActions, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FooterContainer)
+export default connect(mapStateToProps, requestActions)(FooterContainer)
