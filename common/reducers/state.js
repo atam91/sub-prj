@@ -1,35 +1,42 @@
-const { STATE } = require('../lib/SocketApp');
-const {
+import { combineReducers } from 'redux'
+import { STATE } from '../lib/SocketApp'
+import {
   PARTICIPANTS,
   MESSAGE,
   CLEAR
-} = require('../constants/SocketEvents');
+} from '../constants/SocketEvents'
 
-// USE ONLY combine({}, state, ...) for immutable states, like { ...state, ... }
-const combine = Object.assign;
-
-const initialState = {
-  participants: [],
-  messages: []
-}
-
-module.exports = function(state = initialState, { type, payload }) {
-  switch (type) {
-    case STATE:
-      return payload;
-
+const participants = (state = [], action) => {
+  switch (action.type) {
     case PARTICIPANTS:
-      return combine({}, state, { participants: payload });
-
-    case MESSAGE:
-      return combine({}, state, { 
-        messages: state.messages.concat(payload)
-      });
-
-    case CLEAR:
-      return combine({}, state, { messages: [] });
+      return action.payload;
 
     default:
       return state;
   }
 };
+
+const messages = (state = [], action) => {
+  switch (action.type) {
+    case MESSAGE:
+      return [ ...state, action.payload ];
+
+    case CLEAR:
+      return [];
+
+    default:
+      return state;
+  }
+};
+
+const stateReducer = combineReducers({ participants, messages });
+
+export default (state, action) => {
+  switch (action.type) {
+    case STATE:
+      return action.payload;
+
+    default:
+      return stateReducer(state, action);
+  }
+}

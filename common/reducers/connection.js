@@ -1,31 +1,27 @@
-const {
+import { combineReducers } from 'redux'
+import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_EVENT
-} = require('../constants/SocketEvents');
-
-// USE ONLY combine({}, state, ...) for immutable states, like { ...state, ... }
-const combine = Object.assign;
+} from '../constants/SocketEvents'
 
 const initialUser = {
   auth: false,
   name: ''
 };
 
-const initialState = {
-  user: initialUser
-};
-
-module.exports = function(state = initialState, { type, payload }) {
-  switch (type) {
+const user = (state = initialUser, action) => {
+  switch(action.type) {
     case LOGIN_SUCCESS:
-      return combine({}, state, { user: payload });
+      return action.payload;
 
     case LOGOUT_EVENT:
     case LOGIN_FAILURE:
-      return combine({}, state, { user: initialUser });
+      return initialUser;
 
     default:
       return state;
   }
 };
+
+export default combineReducers({user})

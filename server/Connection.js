@@ -1,7 +1,7 @@
-const { StatefulSocketConnection } = require('../common/lib/SocketApp');
-const connectionReducer = require('../common/reducers/connection');
+import { StatefulSocketConnection } from '../common/lib/SocketApp';
+import connectionReducer from '../common/reducers/connection';
 
-module.exports = function(socket) {
+export default (socket) => {
   const connection = StatefulSocketConnection(socket, connectionReducer);
 
   connection.getAuth = () => connection.getState().user.auth;

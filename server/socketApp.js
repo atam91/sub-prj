@@ -1,9 +1,8 @@
-const SocketIO = require('socket.io');
-const { SocketApp } = require('../common/lib/SocketApp');
-
-const stateReducer = require('../common/reducers/state');
-const services = require('./services');
-const Connection = require('./Connection');
+import SocketIO from 'socket.io'
+import { SocketApp } from '../common/lib/SocketApp'
+import stateReducer from '../common/reducers/state'
+import services from './services';
+import Connection from './Connection'
 
 module.exports = function(server) {
   const io = SocketIO(server, {path: '/io'});

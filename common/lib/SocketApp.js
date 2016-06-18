@@ -5,7 +5,7 @@ const DISCONNECT = 'DISCONNECT';
 
 const StatefulSocketConnection = function(socket, reducer) {
   const connection = {};
-
+  
   let state = reducer(undefined, {});
 
   connection.dispatch = (type, payload) => {
