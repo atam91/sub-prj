@@ -15,12 +15,10 @@ export function startSocketService(store) {
   socketService(socket, store.dispatch);
 }
 
-export default function() {
-  return next => action => {
-    const result = next(action);
+export default () => next => action => {
+  const result = next(action);
 
-    socketRequestMiddleware(socket, action);
+  socketRequestMiddleware(socket, action);
 
-    return result;
-  };
+  return result;
 }
