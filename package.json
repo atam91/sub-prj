@@ -4,9 +4,9 @@
   "description": "React/Redux Socket.IO Application; Experimental space",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=production node app.js",
+    "start": "NODE_ENV=production ./node_modules/.bin/babel-node app.js",
     "build": "./node_modules/.bin/webpack --config ./webpack.config.prod.js --progress",
-    "dev": "./node_modules/.bin/nodemon app.js -w app.js -w ./server -w ./common",
+    "dev": "./node_modules/.bin/babel-watch app.js -w app.js -w ./server -w ./common",
     "dev-server": "node dev-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,6 +25,7 @@
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
+    "babel-watch": "2.0.2",
     "clean-webpack-plugin": "0.1.9",
     "css-loader": "0.23.1",
     "eslint": "^2.10.2",
@@ -34,7 +35,6 @@
     "file-loader": "0.8.5",
     "less": "2.7.1",
     "less-loader": "2.2.3",
-    "nodemon": "1.9.2",
     "postcss-loader": "0.9.1",
     "precss": "1.4.0",
     "react-hot-loader": "^1.3.0",
@@ -45,6 +45,7 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
+    "babel-cli": "6.10.1",
     "babel-core": "6.9.0",
     "babel-plugin-transform-runtime": "6.9.0",
     "babel-polyfill": "6.9.0",
