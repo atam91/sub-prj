@@ -11,14 +11,7 @@ const {
 
 const socket = io.connect(API_URL, { path: '/io' });
 
-export function startSocketService(store) {
-  socketService(socket, store.dispatch);
-}
+const start = (dispatch) => socketService(socket, dispatch);
+const requestMiddleware = (action) => socketRequestMiddleware(socket, action);
 
-export default () => next => action => {
-  const result = next(action);
-
-  socketRequestMiddleware(socket, action);
-
-  return result;
-}
+export { start, requestMiddleware }
