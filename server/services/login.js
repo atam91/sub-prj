@@ -16,50 +16,55 @@ const users = {};
 
 const participants = () => {
   console.log(date(), 'PARTICIPANTS', Object.keys(users));
-  socketApp.dispatch(PARTICIPANTS, Object.keys(users));
+  socketApp.dispatch({
+    type: PARTICIPANTS, 
+    payload: Object.keys(users)
+  });
 };
 
-const prepareName = (payload) => payload.trim().replace(/\s+/g, ' ');
+const getName = (action) => action.payload.trim().replace(/\s+/g, ' ');
 
-const handlers = {
-  LOGIN_REQUEST:
-    (connection) => (payload) => {
-      if (connection.getAuth()) return;
+const handler = (connection, action) => {
+  const loginFailure = (error) => connection.dispatch({
+    type: LOGIN_FAILURE,
+    error
+  });
 
-      const name = prepareName(payload);
+  const loginSuccess = (name) => connection.dispatch({
+    type: LOGIN_SUCCESS,
+    name
+  });
+
+  switch (action.type) {
+    case LOGIN_REQUEST:
+      if (connection.isAuth()) return;
+
+      const name = getName(action);
       if (!name) {
-        connection.dispatch(LOGIN_FAILURE, 'Empty name');
+        loginFailure('Empty name');
       } else if (name in users) {
-        connection.dispatch(LOGIN_FAILURE, 'Name alredy in use');
+        loginFailure('Name alredy in use');
       } else {
         users[name] = connection.getSocket().id;
-        connection.dispatch(
-          LOGIN_SUCCESS,
-          { auth: true, name: name }
-        );
+        loginSuccess(name);
         participants();
       }
-    },
+      break;
 
-  LOGOUT_SEND:
-    (connection) => () => {
+    case LOGOUT_SEND:
       disconnect(connection);
-    }
-};
-
-const connect = (connection) => {
-  forEachKey(handlers, connection.handleRequest);
+      break;
+  }
 };
 
 const disconnect = (connection) => {
   delete users[connection.getUsername()];
   participants();
-  connection.dispatch(LOGOUT_EVENT);
+  connection.dispatch({ type: LOGOUT_EVENT });
 };
 
 module.exports = {
   setSocketApp,
-  connect,
-  disconnect,
-  participants
+  handler,
+  disconnect
 };

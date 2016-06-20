@@ -1,5 +1,3 @@
-const { forEachKey } = require('../../common/lib/utils');
-
 const {
   SEND
 } = require('../../common/constants/SocketEvents');
@@ -7,19 +5,16 @@ const {
 const controller = require('./controller');
 const chat = require('./chat');
 
-const handlers = {
-  SEND:
-    (connection) => (text) => {
-      if (text.startsWith('/do')) {
-        controller.cmd(connection, text);
-      } else {
+const handler = (connection, action) => {
+  switch (action.type) {
+    case SEND:
+      const text = action.payload;
+
+      text.startsWith('/do') ?
+        controller.cmd(connection, text) :
         chat.sendMessage(connection, text);
-      }
-    }
+      break;
+  }
 };
 
-const connect = (connection) => {
-  forEachKey(handlers, connection.handleRequest);
-};
-
-module.exports = { connect };
+module.exports = { handler };

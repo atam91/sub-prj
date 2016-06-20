@@ -1,4 +1,3 @@
-import { DISCONNECT } from '../../common/lib/SocketApp'
 import { RELOAD } from '../../common/constants/SocketEvents'
 
 export default () => next => action => {
@@ -6,7 +5,6 @@ export default () => next => action => {
 
   switch (action.type) {
     case RELOAD:
-    case DISCONNECT:
       window.location.reload(false);
   }
 

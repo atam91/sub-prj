@@ -1,11 +1,12 @@
 import { StatefulSocketConnection } from '../common/lib/SocketApp';
-import connectionReducer from '../common/reducers/connection';
+import reducer, * as fromConnection from '../common/reducers/connection';
 
 export default (socket) => {
-  const connection = StatefulSocketConnection(socket, connectionReducer);
+  const connection = StatefulSocketConnection(socket, reducer);
+  const state = () => connection.getState();
 
-  connection.getAuth = () => connection.getState().user.auth;
-  connection.getUsername = () => connection.getState().user.name;
+  connection.isAuth = () => fromConnection.isAuth(state());
+  connection.getUsername = () => fromConnection.getUsername(state());
 
   return connection;
 };

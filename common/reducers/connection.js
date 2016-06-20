@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { DISCONNECT } from '../lib/SocketApp'
 import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
@@ -13,10 +14,14 @@ const initialUser = {
 const user = (state = initialUser, action) => {
   switch(action.type) {
     case LOGIN_SUCCESS:
-      return action.payload;
+      return {
+        auth: true,
+        name: action.name
+      };
 
     case LOGOUT_EVENT:
     case LOGIN_FAILURE:
+    case DISCONNECT:
       return initialUser;
 
     default:
@@ -25,3 +30,7 @@ const user = (state = initialUser, action) => {
 };
 
 export default combineReducers({user})
+
+export const isAuth = (state) => state.user.auth;
+
+export const getUsername = (state) => state.user.name;

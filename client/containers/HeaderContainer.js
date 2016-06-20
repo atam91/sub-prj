@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Header from '../components/Header'
-import requestActions from '../actions/RequestActions'
+import * as requestActions from '../actions/RequestActions'
 
 class HeaderContainer extends Component {
   render() {

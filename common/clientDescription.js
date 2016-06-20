@@ -24,18 +24,6 @@ const requests = {
     (p) => action(SEND, p)
 };
 
-const listens = [
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT_EVENT,
-  DISCONNECT,
-  PARTICIPANTS,
-  MESSAGE,
-  CLEAR,
-  STATE,
-  RELOAD
-];
-
 const disconnectAction = LOGOUT_EVENT;
 
-module.exports = { requests, listens, disconnectAction };
+module.exports = { requests, disconnectAction };

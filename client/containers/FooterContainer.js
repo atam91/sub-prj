@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Footer from '../components/Footer'
-import requestActions from '../actions/RequestActions'
+import * as requestActions from '../actions/RequestActions'
 
 class FooterContainer extends Component {
   render() {

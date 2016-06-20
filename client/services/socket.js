@@ -1,17 +1,42 @@
 import io from 'socket.io-client';
-import { client } from '../../common/lib/SocketApp'
-
+import {
+  STATE,
+  ACTION,
+  REQUEST,
+  DISCONNECT
+} from '../../common/lib/SocketApp'
 import API_URL from '../constants/Api';
-import clientDescription from '../../common/clientDescription';
 
-const {
-  socketService,
-  socketRequestMiddleware
-} = client(clientDescription);
+let dispatch;
+let socket;
 
-const socket = io.connect(API_URL, { path: '/io' });
+const setDispatch = (storeDispatch) => {
+  dispatch = storeDispatch;
+  if (!socket) connect();
+};
 
-const start = (dispatch) => socketService(socket, dispatch);
-const requestMiddleware = (action) => socketRequestMiddleware(socket, action);
+const connect = () => {
+  socket = io.connect(API_URL, { path: '/io' });
 
-export { start, requestMiddleware }
+  socket.on(ACTION, (action) => dispatch(action));
+
+  socket.on(STATE, (payload) => dispatch({ type: STATE, payload }));
+
+  socket.on('disconnect', () => dispatch({ type: DISCONNECT }));
+
+  socket.on(DISCONNECT, () => connect());
+};
+
+const requestMiddleware = (action) => {
+  if (action.socket_request) {
+    let cleanAction = { ...action };
+    delete cleanAction.socket_request;
+    
+    socket.emit(REQUEST, cleanAction);
+  }
+};
+
+export { setDispatch, requestMiddleware }
+
+
+

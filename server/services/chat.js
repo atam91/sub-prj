@@ -7,11 +7,17 @@ const setSocketApp = (app) => { socketApp = app; };
 
 let index = 1;
 
+const message = (name, text) => ({
+  id: index++,
+  name,
+  text
+});
+
 const sendMessage = (connection, text) => {
-  socketApp.dispatch(MESSAGE, {
-    id: index++,
-    name: connection.getUsername(),
-    text
+  //abc.def();
+  socketApp.dispatch({
+    type: MESSAGE,
+    payload: message(connection.getUsername(), text)
   });
 };
 
