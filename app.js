@@ -1,7 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 
-console.log('run app.js');
+const version = require('./version');
+const console = require('./common/lib/console')('app', 'cyan');
+const bold = console.bold;
+console.info(version, 'starting...');
 
 const app = express();
 const server = require('http').Server(app);
@@ -18,9 +21,9 @@ if ('production' == process.env.NODE_ENV) {
   app.use('/dist', express.static('dist'));
   app.use('/static', express.static('static'));
 
-  console.log(`--> App server listening on port ${port}`);
-  console.log(`==> Browse http://localhost:${port}/`);
+  console.info(`--> App server listening on port ${port}`);
+  console.info(bold(`==> Browse http://localhost:${port}/`));
 } else {
-  console.log(`--> API server listening on port ${port}`);
+  console.info(`--> API server listening on port ${port}`);
   app.use(cors());
 }

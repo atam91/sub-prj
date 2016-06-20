@@ -6,10 +6,10 @@ import {
 
 const socket_request = true;
 
-export const login = (payload) => ({
+export const login = (name) => ({
   type: LOGIN_REQUEST,
   socket_request,
-  payload
+  name
 })
 
 export const logout = () => ({

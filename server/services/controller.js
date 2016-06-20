@@ -1,4 +1,5 @@
-const { date } = require('../../common/lib/utils');
+const console = require('../../common/lib/console')('controller', 'yellow');
+const bold = console.bold;
 
 const {
   RELOAD,
@@ -13,13 +14,13 @@ const cmd = (connection, text) => {
 
   switch (text) {
     case '/do force reload':
-      console.log(date(), RELOAD);
-      socketApp.dispatch(RELOAD);
+      console.log(bold(RELOAD));
+      socketApp.dispatch({ type: RELOAD });
       break;
 
     case '/do clear':
-      console.log(date(), CLEAR);
-      socketApp.dispatch(CLEAR);
+      console.log(bold(CLEAR));
+      socketApp.dispatch({ type: CLEAR });
       break;
   };
 };

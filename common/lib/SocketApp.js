@@ -1,29 +1,27 @@
-const { forEachKey, date } = require('./utils');
+const { forEachKey } = require('./utils');
+const console = require('./console')('SocketApp', 'bold');
+const bold = console.bold;
 
-const STATE = 'STATE';
 const ACTION = 'ACTION';
 const REQUEST = 'REQUEST';
 const DISCONNECT = 'DISCONNECT';
 
 const StatefulSocketConnection = function(socket, reducer) {
-  const connection = {};
-  
   let state = reducer(undefined, {});
 
-  connection.dispatch = (action) => {
+  const getState = () => state;
+  const getSocket = () => socket;
+
+  const dispatch = (action) => {
     socket.emit(ACTION, action);
     state = reducer(state, action);
   };
 
-  connection.handleRequest = (type, handler) => {
-    socket.on(type, handler(connection));
+  return {
+    dispatch,
+    getState,
+    getSocket
   };
-
-  connection.getState = () => state;
-
-  connection.getSocket = () => socket;
-
-  return connection;
 };
 
 class SocketApp {
@@ -31,14 +29,26 @@ class SocketApp {
     this.io = io;
     this.stateReducer = stateReducer;
     this.services = services;
+    this.Connection = Connection;
+
+    let online = 0;
+    this.online = {
+      inc: (id) => {
+        online++;
+        console.log(`(+ #${id})`, 'ONLINE:', bold(online));
+      },
+      dec: (id) => {
+        online--;
+        console.log(`(- #${id})`, 'ONLINE:', bold(online));
+      }
+    };
 
     this.servicesCall('setSocketApp', this);
-    this.init(Connection);
+    this.init();
   }
 
-  emitState(connection) {
-    const connectionSocket = connection && connection.getSocket();
-    (connectionSocket || this.io).emit(STATE, this.state);
+  getState() {
+    return this.state || {};
   }
 
   dispatch(action) {
@@ -52,70 +62,41 @@ class SocketApp {
     });
   }
 
-  init(Connection) {
-    console.log(date(), 'INIT MAIN STATE');
+  init() {
+    console.info('INIT MAIN STATE');
     this.state = this.stateReducer(undefined, {});
+    console.log('state_reduced');
 
-    let i = 0;
-    this.io.on('connection', (socket) => {
-      const j = i++;
-      console.log(date(), 'connect #', j);
-      const connection = Connection(socket);
+    let index = 0;
+    this.io.on('connection', (socket) => this.connect(socket, index++));
+  }
 
-      this.emitState(connection);
+  connect(socket, id) {
+    const connection = this.Connection(socket);
+    this.online.inc(id);
 
-      this.servicesCall('connect', connection);
+    this.servicesCall('connect', connection);
 
-      socket.on(REQUEST, (action) => {
-        this.servicesCall('handler', connection, action);
-      });
+    socket.on(REQUEST, (action) => {
+      this.servicesCall('handler', connection, action);
+    });
 
-      socket.on('disconnect', () => {
-        console.log(date(), 'disconnecting #', j);
-        this.servicesCall('disconnect', connection);
-        socket.emit(DISCONNECT);
-      });
+    socket.on('error', (e) => {
+      console.error('SOCKET ERROR:', e);
+    });
 
-      socket.on('error', (e) => {
-        console.log('SOCKET ERROR:', e);
-      });
+    socket.on('disconnect', () => {
+      this.servicesCall('disconnect', connection);
+      socket.emit(DISCONNECT);
+      this.online.dec(id);
     });
   }
 }
 
-const client = function(clientDescription) {
-  let requestActions = {};
-  forEachKey(clientDescription.requests, (name, action) => {
-    requestActions[action().type] = true;
-  });
-
-  const socketService = (socket, dispatch) => {
-    socket.on(ACTION, (action) => dispatch(action));
-
-    socket.on(STATE, (payload) => dispatch({ type: STATE, payload }));
-
-    socket.on('disconnect', () => dispatch({ type: DISCONNECT }));
-
-    socket.on(DISCONNECT, () => {
-      //RECONNECT
-    });
-  };
-
-  const socketRequestMiddleware = (socket, { type, payload }) => {
-    if (type in requestActions) {
-      socket.emit(type, payload);
-    }
-  };
-
-  return { socketService, socketRequestMiddleware };
-};
-
 module.exports = {
-  STATE,
   ACTION,
   REQUEST,
   DISCONNECT,
   SocketApp,
-  StatefulSocketConnection,
-  client
+  StatefulSocketConnection
 };

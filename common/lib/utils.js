@@ -12,8 +12,21 @@ const date = () => {
   return new Date().toJSON();
 };
 
-module.exports = {
+const objectFilterKey = (obj, filter) => {
+  return Object.keys(obj)
+    .filter(filter)
+    .reduce((prev, key) => (
+      Object.assign(prev, { [key]: obj[key] })
+    ), {});
+};
+
+const notFilter = ( ...args ) => 
+  (item) => (args.indexOf(item) === -1);
+
+export {
   forEachKey,
   action,
-  date
-};
+  date,
+  objectFilterKey,
+  notFilter
+}

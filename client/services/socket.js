@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import { objectFilterKey, notFilter } from '../../common/lib/utils'
 import {
   STATE,
   ACTION,
@@ -12,10 +13,10 @@ let socket;
 
 const setDispatch = (storeDispatch) => {
   dispatch = storeDispatch;
-  if (!socket) connect();
 };
 
 const connect = () => {
+  socket && socket.disconnect();
   socket = io.connect(API_URL, { path: '/io' });
 
   socket.on(ACTION, (action) => dispatch(action));
@@ -27,16 +28,16 @@ const connect = () => {
   socket.on(DISCONNECT, () => connect());
 };
 
+const socket_request = 'socket_request';
+
 const requestMiddleware = (action) => {
-  if (action.socket_request) {
-    let cleanAction = { ...action };
-    delete cleanAction.socket_request;
-    
-    socket.emit(REQUEST, cleanAction);
-  }
+  action[socket_request] && socket.emit(
+    REQUEST,
+    objectFilterKey(action, notFilter(socket_request))
+  );
 };
 
-export { setDispatch, requestMiddleware }
+export { setDispatch, connect, requestMiddleware }
 
 
 

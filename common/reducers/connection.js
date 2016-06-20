@@ -19,8 +19,8 @@ const user = (state = initialUser, action) => {
         name: action.name
       };
 
-    case LOGOUT_EVENT:
     case LOGIN_FAILURE:
+    case LOGOUT_EVENT:
     case DISCONNECT:
       return initialUser;
 

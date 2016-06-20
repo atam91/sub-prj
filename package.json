@@ -53,6 +53,7 @@
     "babel-runtime": "6.9.0",
     "bootstrap": "3.3.6",
     "bootstrap-webpack": "0.0.5",
+    "colors": "1.1.2",
     "cors": "2.7.1",
     "node-constants": "0.0.2",
     "react": "^15.0.2",
