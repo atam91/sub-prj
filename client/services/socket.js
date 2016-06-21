@@ -1,12 +1,13 @@
 import io from 'socket.io-client';
-import { objectFilterKey, notFilter } from '../../common/lib/utils'
+import { objectFilterKey, notFilter } from '../../common/utils';
+
+import API_URL from '../constants/API_URL';
 import {
   STATE,
   ACTION,
   REQUEST,
   DISCONNECT
-} from '../../common/lib/SocketApp'
-import API_URL from '../constants/Api';
+} from '../../common/constants';
 
 let dispatch;
 let socket;

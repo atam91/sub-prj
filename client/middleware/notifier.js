@@ -2,7 +2,7 @@ import { tick } from '../services/notifier'
 
 import {
   MESSAGE
-} from '../../common/constants/SocketEvents';
+} from '../../common/constants';
 
 
 export default (store) => (next) => (action) => {

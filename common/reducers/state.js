@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-import { STATE } from '../lib/SocketApp'
 import {
+  STATE,
   PARTICIPANTS,
   MESSAGE,
   CLEAR
-} from '../constants/SocketEvents'
+} from '../constants'
 
 const participants = (state = [], action) => {
   switch (action.type) {

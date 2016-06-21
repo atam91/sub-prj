@@ -1,10 +1,10 @@
-const console = require('../../common/lib/console')('controller', 'yellow');
+const console = require('../lib/console')('controller', 'yellow');
 const bold = console.bold;
 
 const {
   RELOAD,
   CLEAR
-} = require('../../common/constants/SocketEvents');
+} = require('../../common/constants');
 
 let socketApp;
 const setSocketApp = (app) => { socketApp = app; };

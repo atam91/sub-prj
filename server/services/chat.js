@@ -2,7 +2,7 @@ import { v4 } from 'node-uuid'
 
 const {
   MESSAGE
-} = require('../../common/constants/SocketEvents');
+} = require('../../common/constants');
 
 let socketApp;
 const setSocketApp = (app) => { socketApp = app; };

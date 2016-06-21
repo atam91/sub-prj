@@ -1,4 +1,4 @@
-import { RELOAD } from '../../common/constants/SocketEvents'
+import { RELOAD } from '../../common/constants'
 
 export default () => next => action => {
   const result = next(action);

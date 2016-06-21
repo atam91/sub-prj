@@ -1,4 +1,4 @@
-import { StatefulSocketConnection } from '../common/lib/SocketApp';
+import { StatefulSocketConnection } from './lib/SocketApp';
 import reducer, * as fromConnection from '../common/reducers/connection';
 
 export default (socket) => {

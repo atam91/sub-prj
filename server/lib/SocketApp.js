@@ -1,12 +1,14 @@
-const { forEachKey } = require('./utils');
+const { forEachKey } = require('../../common/utils');
 const console = require('./console')('SocketApp', 'bold');
 const bold = console.bold;
 
-const INIT = 'INIT';
-const STATE = 'STATE';
-const ACTION = 'ACTION';
-const REQUEST = 'REQUEST';
-const DISCONNECT = 'DISCONNECT';
+const {
+  INIT,
+  STATE,
+  ACTION,
+  REQUEST,
+  DISCONNECT
+} = require('../../common/constants')
 
 const StatefulSocketConnection = function(socket, reducer) {
   let state = reducer(undefined, {});
@@ -32,6 +34,7 @@ class SocketApp {
     this.stateReducer = stateReducer;
     this.services = services;
     this.Connection = Connection;
+    this.listeners = [];
 
     let online = 0;
     this.online = {
@@ -49,17 +52,12 @@ class SocketApp {
     this.init();
   }
 
-  getState() {
-    return this.state || {};
-  }
+  init() {
+    console.info('INIT MAIN STATE');
+    this.state = this.stateReducer(undefined, { type: INIT });
 
-  dispatch(action) {
-    this.io.emit(ACTION, action);
-    this.dispatchSilent(action);
-  }
-
-  dispatchSilent(action) {
-    this.state = this.stateReducer(this.state, action);
+    let index = 0;
+    this.io.on('connection', (socket) => this.connect(socket, index++));
   }
 
   servicesCall(method, ...args ) {
@@ -68,16 +66,30 @@ class SocketApp {
     });
   }
 
-  emitState(connection) {
-    connection.dispatch({ type: STATE, ...this.state });
+  getState() {
+    return this.state || {};
   }
 
-  init() {
-    console.info('INIT MAIN STATE');
-    this.state = this.stateReducer(undefined, { type: INIT });
+  subscribeToDispatch(listener) {
+    this.listeners.push(listener);
 
-    let index = 0;
-    this.io.on('connection', (socket) => this.connect(socket, index++));
+    return () => {
+      this.listeners = this.listeners.filter(l => l !== listener);
+    };
+  }
+
+  dispatch(action) {
+    this.io.emit(ACTION, action);
+    this.listeners.forEach(listener => listener(action));
+    this.dispatchSilent(action);
+  }
+
+  dispatchSilent(action) {
+    this.state = this.stateReducer(this.state, action);
+  }
+
+  emitState(connection) {
+    connection.dispatch({ type: STATE, ...this.state });
   }
 
   connect(socket, id) {
@@ -104,10 +116,6 @@ class SocketApp {
 }
 
 module.exports = {
-  STATE,
-  ACTION,
-  REQUEST,
-  DISCONNECT,
   SocketApp,
   StatefulSocketConnection
 };

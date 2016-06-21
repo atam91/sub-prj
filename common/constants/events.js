@@ -6,12 +6,10 @@ define('LOGIN_FAILURE');
 
 define('LOGOUT_SEND');
 define('LOGOUT_EVENT');
-
 define('PARTICIPANTS');
 
 define('SEND');
 define('MESSAGE');
-define('MESSAGES');
-define('CLEAR');
 
+define('CLEAR');
 define('RELOAD');

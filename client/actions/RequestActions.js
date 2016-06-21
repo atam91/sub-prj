@@ -2,7 +2,7 @@ import {
   LOGIN_REQUEST,
   LOGOUT_SEND,
   SEND
-} from '../../common/constants/SocketEvents';
+} from '../../common/constants';
 
 const socket_request = true;
 

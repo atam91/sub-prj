@@ -1,6 +1,6 @@
 const {
   SEND
-} = require('../../common/constants/SocketEvents');
+} = require('../../common/constants');
 
 const controller = require('./controller');
 const chat = require('./chat');

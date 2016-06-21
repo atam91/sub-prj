@@ -1,34 +1,22 @@
-const { ACTION } = require('../../common/lib/SocketApp');
-const console = require('../../common/lib/console')('login', 'green');
-const bold = console.bold;
-
 const {
+  ACTION,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SEND,
   LOGOUT_EVENT,
   PARTICIPANTS
-} = require('../../common/constants/SocketEvents');
+} = require('../../common/constants');
 
 let socketApp;
 const setSocketApp = (app) => { socketApp = app; };
 
 const users = {};
 
-const participants = (participants = getParticipants()) => ({ 
+const participants = () => ({ 
   type: PARTICIPANTS,
-  participants
+  participants: Object.keys(users)
 });
-
-const getParticipants = () => Object.keys(users);
-
-const sendParticipants = () => {
-  console.log('PARTICIPANTS:', bold(getParticipants()));
-  socketApp.dispatch(participants());
-};
-
-const normalizeName = ({ name }) => name.trim().replace(/\s+/g, ' ');
 
 const loginFailure = (error) => ({
   type: LOGIN_FAILURE,
@@ -40,6 +28,8 @@ const loginSuccess = (name) => ({
   name
 });
 
+const normalizeName = ({ name }) => name.trim().replace(/\s+/g, ' ');
+
 const handler = (connection, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
@@ -47,19 +37,13 @@ const handler = (connection, action) => {
 
       const name = normalizeName(action);
       if (!name) {
-        connection.dispatch(
-          loginFailure('Empty name')
-        );
+        connection.dispatch(loginFailure('Empty name'));
       } else if (name in users) {
-        connection.dispatch(
-          loginFailure('Name alredy in use')
-        );
+        connection.dispatch(loginFailure('Name alredy in use'));
       } else {
         users[name] = connection.getSocket().id;
-        connection.dispatch(
-          loginSuccess(name)
-        );
-        sendParticipants();
+        connection.dispatch(loginSuccess(name));
+        socketApp.dispatch(participants());
       }
       break;
 
@@ -70,20 +54,15 @@ const handler = (connection, action) => {
   }
 };
 
-const connect = (connection) => {
-  connection.dispatch(participants());
-};
-
 const disconnect = (connection) => {
   if (connection.isAuth()) {
     delete users[connection.getUsername()];
-    sendParticipants();
+    socketApp.dispatch(participants());
   }
 };
 
 module.exports = {
   setSocketApp,
-  connect,
   handler,
   disconnect
 };

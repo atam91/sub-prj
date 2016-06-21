@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
-import { DISCONNECT } from '../lib/SocketApp'
 import {
+  DISCONNECT,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_EVENT
-} from '../constants/SocketEvents'
+} from '../constants'
 
 const initialUser = {
   auth: false,

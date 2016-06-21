@@ -15,7 +15,7 @@ export default class Chat extends ScrollingContent {
 
 Chat.propTypes = {
   list: React.PropTypes.arrayOf(React.PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired
   }))

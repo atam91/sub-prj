@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const console = require('./common/lib/console')('app', 'cyan');
+const console = require('./server/lib/console')('app', 'cyan');
 const bold = console.bold;
 console.info('starting...');
 

@@ -1,5 +1,5 @@
 const colors = require('colors/safe');
-const { date } = require('./utils');
+const { date } = require('../../common/utils');
 
 const red = colors.red;
 const bold = colors.bold;
@@ -10,7 +10,7 @@ module.exports = (name = '', color = 'white') => {
   const styledName = colors[color](name);
 
   const log = ( ...args ) => {
-    console.log(styledName, gray.bold(date()), ...args);
+    console.log(styledName, gray(date()), ...args);
   };
 
   const info = ( ...args ) => {
@@ -18,7 +18,7 @@ module.exports = (name = '', color = 'white') => {
   };
 
   const error = ( title = 'ERROR', ...args ) => {
-    console.log(styledName, gray.bold(date()), red.bold(title), ...args);
+    console.log(styledName, gray(date()), red.bold(title), ...args);
   };
 
   return { log, info, error, red, bold };
