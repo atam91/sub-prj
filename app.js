@@ -1,10 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 
-const version = require('./version');
 const console = require('./common/lib/console')('app', 'cyan');
 const bold = console.bold;
-console.info(version, 'starting...');
+console.info('starting...');
 
 const app = express();
 const server = require('http').Server(app);

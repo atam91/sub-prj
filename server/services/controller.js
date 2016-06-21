@@ -20,6 +20,11 @@ const cmd = (connection, text) => {
 
     case '/do clear':
       console.log(bold(CLEAR));
+      socketApp.dispatchSilent({ type: CLEAR });
+      break;
+
+    case '/do force clear':
+      console.log(bold('FORCE', CLEAR));
       socketApp.dispatch({ type: CLEAR });
       break;
   };

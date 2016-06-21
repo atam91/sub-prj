@@ -1,39 +1,27 @@
-import * as fromState from '../../common/reducers/state';
-const version = require('../../version');
+import { v4 } from 'node-uuid'
+
 const {
-  MESSAGE,
-  MESSAGES
+  MESSAGE
 } = require('../../common/constants/SocketEvents');
 
 let socketApp;
 const setSocketApp = (app) => { socketApp = app; };
 const state = () => socketApp.getState();
 
-let index = 1;
-const message = (name, text) => ({
-  id: version + '_m_' + index++,
-  name,
+const message = (connection, text) => ({
+  id: v4(),
+  name: connection.getUsername(),
   text
 });
 
 const sendMessage = (connection, text) => {
   socketApp.dispatch({
     type: MESSAGE,
-    payload: message(connection.getUsername(), text)
-  });
-};
-
-const connect = (connection) => {
-  const messages = fromState.getMessages(state());
-
-  messages && connection.dispatch({
-    type: MESSAGES,
-    messages
+    payload: message(connection, text)
   });
 };
 
 module.exports = {
   setSocketApp,
-  connect,
   sendMessage
 };

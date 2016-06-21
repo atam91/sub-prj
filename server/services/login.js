@@ -16,7 +16,10 @@ const setSocketApp = (app) => { socketApp = app; };
 
 const users = {};
 
-const participants = (payload = getParticipants()) => ({ type: PARTICIPANTS, payload });
+const participants = (participants = getParticipants()) => ({ 
+  type: PARTICIPANTS,
+  participants
+});
 
 const getParticipants = () => Object.keys(users);
 

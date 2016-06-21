@@ -2,6 +2,8 @@ const { forEachKey } = require('./utils');
 const console = require('./console')('SocketApp', 'bold');
 const bold = console.bold;
 
+const INIT = 'INIT';
+const STATE = 'STATE';
 const ACTION = 'ACTION';
 const REQUEST = 'REQUEST';
 const DISCONNECT = 'DISCONNECT';
@@ -53,6 +55,10 @@ class SocketApp {
 
   dispatch(action) {
     this.io.emit(ACTION, action);
+    this.dispatchSilent(action);
+  }
+
+  dispatchSilent(action) {
     this.state = this.stateReducer(this.state, action);
   }
 
@@ -62,10 +68,13 @@ class SocketApp {
     });
   }
 
+  emitState(connection) {
+    connection.dispatch({ type: STATE, ...this.state });
+  }
+
   init() {
     console.info('INIT MAIN STATE');
-    this.state = this.stateReducer(undefined, {});
-    console.log('state_reduced');
+    this.state = this.stateReducer(undefined, { type: INIT });
 
     let index = 0;
     this.io.on('connection', (socket) => this.connect(socket, index++));
@@ -75,6 +84,7 @@ class SocketApp {
     const connection = this.Connection(socket);
     this.online.inc(id);
 
+    this.emitState(connection);
     this.servicesCall('connect', connection);
 
     socket.on(REQUEST, (action) => {
@@ -94,6 +104,7 @@ class SocketApp {
 }
 
 module.exports = {
+  STATE,
   ACTION,
   REQUEST,
   DISCONNECT,

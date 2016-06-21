@@ -3,14 +3,14 @@ import { STATE } from '../lib/SocketApp'
 import {
   PARTICIPANTS,
   MESSAGE,
-  MESSAGES,
   CLEAR
 } from '../constants/SocketEvents'
 
 const participants = (state = [], action) => {
   switch (action.type) {
+    case STATE:
     case PARTICIPANTS:
-      return action.payload;
+      return action.participants;
 
     default:
       return state;
@@ -22,7 +22,7 @@ const messages = (state = [], action) => {
     case MESSAGE:
       return [ ...state, action.payload ];
 
-    case MESSAGES:
+    case STATE:
       return [ ...state, ...action.messages ];
 
     case CLEAR:
@@ -33,16 +33,6 @@ const messages = (state = [], action) => {
   }
 };
 
-const stateReducer = combineReducers({ participants, messages });
-
-export default (state, action) => {
-  switch (action.type) {
-    case STATE:
-      return action.payload;
-
-    default:
-      return stateReducer(state, action);
-  }
-}
+export default combineReducers({ participants, messages });
 
 export const getMessages = ({ messages }) => messages;
