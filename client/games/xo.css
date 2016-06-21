@@ -1,0 +1,18 @@
+#xo-game table td {
+  border: 2px solid #000000;
+}
+
+#xo-game table td {
+  width: 80px;
+  height: 80px;
+  font-size: 50px;
+  text-align: center;
+}
+
+#xo-game table td.available {
+  background: rgba(0, 255, 0, .1);
+}
+
+#xo-game table td.available:hover {
+  background: rgba(0, 255, 0, .2);
+}

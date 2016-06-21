@@ -77,6 +77,14 @@ body {
   margin: 0 auto;
 }
 
+.text-center {
+  text-align: center;
+}
+
+.bold {
+  font-weight: bold;
+}
+
 .header, .footer {
   background: rgba(255, 255, 255, .8);
   color: #333;
@@ -93,34 +101,6 @@ ul#chat {
   margin: 0px;
 }
 
-.game {
-  max-width: 300px;
-  max-height: 300px;
-}
-
-.game table td {
-  border: 2px solid #000000;
-}
-
-.game table td {
-  width: 80px;
-  height: 80px;
-  font-size: 50px;
-  text-align: center;
-}
-
-.game table td.available {
-  background: rgba(0, 255, 0, .1);
-}
-
-.game table td.available:hover {
-  background: rgba(0, 255, 0, .2);
-}
-
-.game .center {
-  text-align: center;
-}
-
 #participants {
   display: flex;
   flex-flow: row wrap;
@@ -132,6 +112,3 @@ ul#chat {
   max-height: 80px;
 }
 
-/*
-background: rgba(0, 255, 0, .8);
-*/

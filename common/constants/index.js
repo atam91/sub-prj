@@ -1,7 +1,7 @@
 const events = require('./events');
-const lib = require('./lib');
+const SocketApp = require('./SocketApp');
 
 module.exports = {
   ...events,
-  ...lib
+  ...SocketApp
 };
