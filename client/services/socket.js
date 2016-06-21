@@ -6,7 +6,8 @@ import {
   STATE,
   ACTION,
   REQUEST,
-  DISCONNECT
+  DISCONNECT,
+  SOCKET_REQUEST
 } from '../../common/constants';
 
 let dispatch;
@@ -29,16 +30,11 @@ const connect = () => {
   socket.on(DISCONNECT, () => connect());
 };
 
-const socket_request = 'socket_request';
-
-const requestMiddleware = (action) => {
-  action[socket_request] && socket.emit(
+const requestListener = (action) => {
+  action[SOCKET_REQUEST] && socket.emit(
     REQUEST,
-    objectFilterKey(action, notFilter(socket_request))
+    objectFilterKey(action, notFilter(SOCKET_REQUEST))
   );
 };
 
-export { setDispatch, connect, requestMiddleware }
-
-
-
+export { setDispatch, connect, requestListener }

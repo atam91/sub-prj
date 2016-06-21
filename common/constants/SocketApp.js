@@ -5,3 +5,5 @@ define('STATE');
 define('ACTION');
 define('REQUEST');
 define('DISCONNECT');
+define('SOCKET_REQUEST');
+define('SILENT_DISPATCH');

@@ -1,24 +1,23 @@
 import {
+  SOCKET_REQUEST,
   LOGIN_REQUEST,
   LOGOUT_SEND,
   SEND
 } from '../../common/constants';
 
-const socket_request = true;
-
 export const login = (name) => ({
   type: LOGIN_REQUEST,
-  socket_request,
+  SOCKET_REQUEST,
   name
 })
 
 export const logout = () => ({
   type: LOGOUT_SEND,
-  socket_request
+  SOCKET_REQUEST
 })
 
 export const send = (payload) => ({
   type: SEND,
-  socket_request,
+  SOCKET_REQUEST,
   payload
 })

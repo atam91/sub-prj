@@ -9,20 +9,21 @@ import Connection from './Connection';
 
 module.exports = function(server) {
   const io = SocketIO(server, {path: '/io'});
-  
-  const socketApp = new SocketApp(
-    io,
-    stateReducer,
-    services,
-    Connection
-  );
 
-  socketApp.subscribeToDispatch((action) => {
+  const logger = (action) => {
     switch (action.type) {
       case PARTICIPANTS:
         console.log(PARTICIPANTS, bold(action.participants));
     }
-  });
+  };
+  
+  const socketApp = new SocketApp(
+    io,
+    Connection,
+    services,
+    stateReducer,
+    logger
+  );
 
   return socketApp;
 };

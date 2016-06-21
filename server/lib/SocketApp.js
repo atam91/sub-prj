@@ -1,41 +1,76 @@
-const { forEachKey } = require('../../common/utils');
 const console = require('./console')('SocketApp', 'bold');
 const bold = console.bold;
-
+const {
+  forEachKey,
+  objectFilterKey,
+  notFilter
+} = require('../../common/utils');
 const {
   INIT,
   STATE,
   ACTION,
   REQUEST,
-  DISCONNECT
+  DISCONNECT,
+  SILENT_DISPATCH
 } = require('../../common/constants')
 
-const StatefulSocketConnection = function(socket, reducer) {
-  let state = reducer(undefined, {});
+const Store = (reducer, ...listeners) => {
+  let state;
 
-  const getState = () => state;
-  const getSocket = () => socket;
+  const getState = () => state || {};
 
   const dispatch = (action) => {
-    socket.emit(ACTION, action);
+    if (action[SILENT_DISPATCH]) {
+      action = objectFilterKey(action, notFilter(SILENT_DISPATCH));
+    } else {
+      listeners && listeners.forEach(l => l(action));
+    }
     state = reducer(state, action);
   };
 
+  dispatch({ SILENT_DISPATCH, type: INIT });
+
+  return { dispatch, getState };
+};
+
+const StatefulSocketConnection = function(socket, reducer) {
+  const sendAction = (action) => {
+    socket.emit(ACTION, action)
+  };
+  const getSocket = () => socket;
+
+  const store = Store(reducer, sendAction);
+
   return {
-    dispatch,
-    getState,
-    getSocket
+    getSocket,
+    sendAction,
+    dispatch: store.dispatch,
+    getState: store.getState
   };
 };
 
 class SocketApp {
-  constructor(io, stateReducer, services, Connection) {
+  constructor(io, Connection, services, reducer, ...listeners) {
     this.io = io;
-    this.stateReducer = stateReducer;
-    this.services = services;
     this.Connection = Connection;
-    this.listeners = [];
+    this.services = services;
 
+    console.info('INIT MAIN STATE');
+    const store = Store(reducer, ::this.sendAction, ...listeners);
+    this.dispatch = store.dispatch;
+    this.getState = store.getState;
+
+    this.servicesCall('setSocketApp', this);
+    this.init();
+  }
+
+  servicesCall(method, ...args ) {
+    forEachKey(this.services, (key, service) => {
+      service[method] && service[method]( ...args );
+    });
+  }
+
+  init() {
     let online = 0;
     this.online = {
       inc: (id) => {
@@ -48,48 +83,8 @@ class SocketApp {
       }
     };
 
-    this.servicesCall('setSocketApp', this);
-    this.init();
-  }
-
-  init() {
-    console.info('INIT MAIN STATE');
-    this.state = this.stateReducer(undefined, { type: INIT });
-
     let index = 0;
     this.io.on('connection', (socket) => this.connect(socket, index++));
-  }
-
-  servicesCall(method, ...args ) {
-    forEachKey(this.services, (key, service) => {
-      service[method] && service[method]( ...args );
-    });
-  }
-
-  getState() {
-    return this.state || {};
-  }
-
-  subscribeToDispatch(listener) {
-    this.listeners.push(listener);
-
-    return () => {
-      this.listeners = this.listeners.filter(l => l !== listener);
-    };
-  }
-
-  dispatch(action) {
-    this.io.emit(ACTION, action);
-    this.listeners.forEach(listener => listener(action));
-    this.dispatchSilent(action);
-  }
-
-  dispatchSilent(action) {
-    this.state = this.stateReducer(this.state, action);
-  }
-
-  emitState(connection) {
-    connection.dispatch({ type: STATE, ...this.state });
   }
 
   connect(socket, id) {
@@ -113,9 +108,18 @@ class SocketApp {
       this.online.dec(id);
     });
   }
+
+  emitState(connection) {
+    connection.dispatch({ type: STATE, ...this.getState() });
+  }
+
+  sendAction(action) {
+    this.io.emit(ACTION, action);
+  }
 }
 
 module.exports = {
+  Store,
   SocketApp,
   StatefulSocketConnection
 };
