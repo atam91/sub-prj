@@ -1,21 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import * as requestActions from '../actions/RequestActions'
 import Xo from '../games/Xo'
 
 class Game extends Component {
   render() {
-    const { user } = this.props;
+    const { user, game, gameState, joinGame } = this.props;
+
+    if (!game.game) return null;
+    
+    const state = gameState[game.id];
+    if (!state) return null;
+
+    const join = (player) => () => {
+      joinGame(game.id, player);
+    };
 
     return <div className="sep-r">
-      <Xo user={user} />
+      <Xo game={game} user={user} state={state} join={join} />
     </div>;
   }
 }
 
 const mapStateToProps = (state) => ({
   user: state.connection.user,
-  state: 1,
-  request: 2
+  game: state.connection.game,
+  gameState: state.game
 });
 
-export default connect(mapStateToProps)(Game)
+export default connect(mapStateToProps, requestActions)(Game)

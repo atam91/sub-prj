@@ -24,23 +24,26 @@ const Field = (field) => (
   </table>
 );
 
-const Player = (name, sign, active = false) => (
-  <div className="text-center">
-    <span className={classNames({ bold: active })}>
-      {name}: {sign}
+const Player = (state, join, number) => {
+  const player = state.players[number];
+  const name = player.name || <a onClick={join(number)}>join</a>;
+
+  return <div className="text-center">
+    <span className={classNames({ bold: 0 })}>
+      {name}: {player.sign}
     </span>
-  </div>
-);
+  </div>;
+};
 
 export default class Xo extends Component {
   render() {
-    const { user, state, request } = this.props;
+    const { user, state, request, join } = this.props;
 
 
     return <div id="xo-game" className="block content" style={{width: '300px', height: '300px'}}>
-      {Player(user.name || 'player1', 'X', true)}
+      {Player(state, join, 0)}
       {Field()}
-      {Player('player2', 'O')}
+      {Player(state, join, 1)}
     </div>;
   }
 }

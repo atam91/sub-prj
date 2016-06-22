@@ -15,7 +15,9 @@ define('CLEAR');
 define('RELOAD');
 
 define('GAME');
+define('GAME_START');
 define('GAME_WATCH');
+define('WATCH_GAME');
 define('GAME_STATE');
 define('GAME_JOIN');
 define('GAME_MOVE');

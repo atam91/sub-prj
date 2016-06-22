@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import {
+  WATCH_GAME,
   DISCONNECT,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
@@ -9,6 +10,21 @@ import {
 const initialUser = {
   auth: false,
   name: ''
+};
+
+const initialGame = {
+  id: null,
+  game: null
+}
+
+const game = (state = initialGame, action) => {
+  switch (action.type) {
+    case WATCH_GAME:
+      return { id: action.id, game: action.game };
+
+    default:
+      return state;
+  }
 };
 
 const user = (state = initialUser, action) => {
@@ -29,7 +45,7 @@ const user = (state = initialUser, action) => {
   }
 };
 
-export default combineReducers({user})
+export default combineReducers({user, game})
 
 export const getUser = (state) => state.user;
 export const getAuth = (state) => state.user.auth;

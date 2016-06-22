@@ -9,7 +9,7 @@ const initialPlayer = (sign) => ({
   sign
 });
 
-const initialState {
+const initialState = {
   players: [
     initialPlayer('X'),
     initialPlayer('O')

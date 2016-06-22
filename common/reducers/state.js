@@ -3,6 +3,7 @@ import {
   STATE,
   PARTICIPANTS,
   MESSAGE,
+  GAME,
   CLEAR
 } from '../constants'
 
@@ -17,13 +18,14 @@ const participants = (state = [], action) => {
   }
 };
 
-const messages = (state = [], action) => {
+const chat = (state = [], action) => {
   switch (action.type) {
+    case GAME:
     case MESSAGE:
       return [ ...state, action.payload ];
 
     case STATE:
-      return [ ...state, ...action.messages ];
+      return [ ...state, ...action.chat ];
 
     case CLEAR:
       return [];
@@ -33,6 +35,4 @@ const messages = (state = [], action) => {
   }
 };
 
-export default combineReducers({ participants, messages });
-
-export const getMessages = ({ messages }) => messages;
+export default combineReducers({ participants, chat });

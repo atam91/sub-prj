@@ -1,7 +1,8 @@
 import { v4 } from 'node-uuid'
 
 const {
-  MESSAGE
+  MESSAGE,
+  GAME
 } = require('../../common/constants');
 
 let socketApp;
@@ -10,6 +11,7 @@ const state = () => socketApp.getState();
 
 const message = (connection, text) => ({
   id: v4(),
+  type: 'text',
   name: connection.getUsername(),
   text
 });
@@ -21,7 +23,19 @@ const sendMessage = (connection, text) => {
   });
 };
 
+const sendGame = (connection, game) => {
+  socketApp.dispatch({
+    type: GAME,
+    payload: {
+      ...game,
+      type: 'game',
+      name: connection.getUsername()
+    }
+  });
+};
+
 module.exports = {
   setSocketApp,
-  sendMessage
+  sendMessage,
+  sendGame
 };

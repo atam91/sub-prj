@@ -69,6 +69,10 @@ body {
   float: right;
 }
 
+.left {
+  float: left;
+}
+
 .form {
   margin-bottom: 0px;
 }

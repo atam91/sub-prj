@@ -19,15 +19,23 @@ export default class Header extends Component {
   logout() {
     this.props.logout();
   }
+  startXo() {
+    this.props.startGame('xo');
+  }
   render() {
     const { name } = this.props.user;
     const error = !this.state.resetError && this.props.loginError;
 
     var panel,loginForm;
     if (name) {
-      panel = <div className="right">
-        <span className="sep-r">Привет, {name}!</span>
-        <a className="btn btn-default" onClick={::this.logout}>Выйти</a>
+      panel = <div>
+        <div className="left">
+          <a className="btn btn-default" onClick={::this.startXo}>Xo</a>
+        </div>
+        <div className="right">
+          <span className="sep-r">Привет, {name}!</span>
+          <a className="btn btn-default" onClick={::this.logout}>Выйти</a>
+        </div>
       </div>;
     } else {
       loginForm = <form className={classNames('form-signin', 'login-form', { 'has-error': error })} onSubmit={::this.submit}>
@@ -51,5 +59,6 @@ Header.propTypes = {
   }),
   login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+  startGame: PropTypes.func.isRequired,
   loginError: PropTypes.string.isRequired
 }
