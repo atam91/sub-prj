@@ -20,4 +20,5 @@ define('GAME_WATCH');
 define('WATCH_GAME');
 define('GAME_STATE');
 define('GAME_JOIN');
+define('JOIN_GAME');
 define('GAME_MOVE');

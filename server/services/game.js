@@ -32,7 +32,6 @@ const startGame = (connection, type) => {
 
   states[game.id] = game;
   chat.sendGame(connection, game);
-  console
 };
 
 const gameState = (id) => ({

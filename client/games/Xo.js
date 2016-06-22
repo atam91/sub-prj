@@ -2,34 +2,36 @@ import React, { Component } from 'react'
 import classNames from 'classnames'
 import './xo.css'
 
-const Field = (field) => (
-  <table className="center">
+const Cell = (x, value, active, move) => {
+  if (active && !value) {
+    return <td key={x} className="available" onClick={move}></td>;
+  } else {
+    return <td key={x}>{value}</td>;
+  }
+};
+
+const Board = (state, move, user) => {
+  const active = state.moves === user.name;
+
+  const body = 
+    state.board.map((row, y) => (<tr key={y}>
+      {row.map((cell, x) => Cell(x, cell, active, move({ x, y })))}
+    </tr>));
+
+  return <table className="center">
     <tbody>
-      <tr>
-        <td className="available"></td>
-        <td className="available">O</td>
-        <td className="available">X</td>
-      </tr>
-      <tr>
-        <td>O</td>
-        <td>X</td>
-        <td>X</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>O</td>
-        <td>X</td>
-      </tr>
+      {body}
     </tbody>
   </table>
-);
+};
 
 const Player = (state, join, number) => {
   const player = state.players[number];
   const name = player.name || <a onClick={join(number)}>join</a>;
+  const active = player.name === state.moves;
 
   return <div className="text-center">
-    <span className={classNames({ bold: 0 })}>
+    <span className={classNames({ bold: active })}>
       {name}: {player.sign}
     </span>
   </div>;
@@ -37,12 +39,12 @@ const Player = (state, join, number) => {
 
 export default class Xo extends Component {
   render() {
-    const { user, state, request, join } = this.props;
+    const { user, state, request, join, move } = this.props;
 
 
     return <div id="xo-game" className="block content" style={{width: '300px', height: '300px'}}>
       {Player(state, join, 0)}
-      {Field()}
+      {Board(state, move, user)}
       {Player(state, join, 1)}
     </div>;
   }

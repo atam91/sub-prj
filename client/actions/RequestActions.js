@@ -5,7 +5,8 @@ import {
   SEND,
   GAME_START,
   GAME_WATCH,
-  GAME_JOIN
+  GAME_JOIN,
+  GAME_MOVE
 } from '../../common/constants';
 
 export const login = (name) => ({
@@ -42,4 +43,11 @@ export const joinGame = (id, player) => ({
   SOCKET_REQUEST,
   id,
   player
+})
+
+export const moveGame = (id, move) => ({
+  type: GAME_MOVE,
+  SOCKET_REQUEST,
+  id,
+  move
 })

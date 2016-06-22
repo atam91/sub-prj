@@ -5,7 +5,7 @@ import Xo from '../games/Xo'
 
 class Game extends Component {
   render() {
-    const { user, game, gameState, joinGame } = this.props;
+    const { user, game, gameState, joinGame, moveGame } = this.props;
 
     if (!game.game) return null;
     
@@ -16,8 +16,12 @@ class Game extends Component {
       joinGame(game.id, player);
     };
 
+    const move = (move) => () => {
+      moveGame(game.id, move);
+    };
+
     return <div className="sep-r">
-      <Xo game={game} user={user} state={state} join={join} />
+      <Xo key={game.id} game={game} user={user} state={state} join={join} move={move} />
     </div>;
   }
 }
