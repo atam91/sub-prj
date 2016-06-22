@@ -31,6 +31,6 @@ const user = (state = initialUser, action) => {
 
 export default combineReducers({user})
 
-export const isAuth = (state) => state.user.auth;
-
+export const getUser = (state) => state.user;
+export const getAuth = (state) => state.user.auth;
 export const getUsername = (state) => state.user.name;

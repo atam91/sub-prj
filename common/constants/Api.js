@@ -13,3 +13,9 @@ define('MESSAGE');
 
 define('CLEAR');
 define('RELOAD');
+
+define('GAME');
+define('GAME_WATCH');
+define('GAME_STATE');
+define('GAME_JOIN');
+define('GAME_MOVE');

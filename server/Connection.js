@@ -5,7 +5,8 @@ export default (socket) => {
   const connection = StatefulSocketConnection(socket, reducer);
   const state = () => connection.getState();
 
-  connection.isAuth = () => fromConnection.isAuth(state());
+  connection.getUser = () => fromConnection.getUser(state());
+  connection.isAuth = () => fromConnection.getAuth(state());
   connection.getUsername = () => fromConnection.getUsername(state());
 
   return connection;

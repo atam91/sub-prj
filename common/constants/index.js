@@ -1,7 +1,7 @@
-const events = require('./events');
+const Api = require('./Api');
 const SocketApp = require('./SocketApp');
 
 module.exports = {
-  ...events,
+  ...Api,
   ...SocketApp
 };
