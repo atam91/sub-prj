@@ -39,7 +39,7 @@ const Player = (state, join, number) => {
 
 export default class Xo extends Component {
   render() {
-    const { user, state, request, join, move } = this.props;
+    const { user, state, join, move } = this.props;
 
 
     return <div id="xo-game" className="block content" style={{width: '300px', height: '300px'}}>

@@ -12,7 +12,7 @@ import Game from './Game'
 class App extends Component {
   render() {
     const { watchGame } = this.props;
-    const { participants, chat } = this.props.main;
+    const { participants, chat, messages, games } = this.props;
 
     return <div className="app">
       <Header />
@@ -20,7 +20,11 @@ class App extends Component {
         <Game />
         <Column>
           <Participants list={participants} />
-          <Chat list={chat} watchGame={watchGame} />
+          <Chat
+            list={chat}
+            games={games}
+            messages={messages}
+            watchGame={watchGame} />
         </Column>
       </View>
       <Footer />
@@ -29,7 +33,10 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  main: state.main
+  chat: state.main.chat,
+  games: state.main.games,
+  messages: state.main.messages,
+  participants: state.main.participants
 });
 
 export default connect(mapStateToProps, requestActions)(App)

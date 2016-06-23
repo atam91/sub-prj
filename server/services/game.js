@@ -1,7 +1,7 @@
 const console = require('../lib/console')('game', 'magenta');
 import { v4 } from 'node-uuid'
 import * as fromConnection from '../../common/reducers/connection';
-const games = require('../games');
+const gameReducers = require('../games');
 const {
   INIT,
   GAME,
@@ -18,49 +18,50 @@ const chat = require('./chat');
 let socketApp;
 const setSocketApp = (app) => { socketApp = app; };
 
-const states = {};
+const games = {};
 
-const createGame = (game, state) => ({
+const createGame = (connection, type) => ({
+  from: connection.getUsername(),
   id: v4(),
-  state,
-  game
+  type
 });
 
 const startGame = (connection, type) => {
-  const state = games[type].reducer(undefined, { type: INIT });
-  const game = createGame(type, state);
+  const reducer = gameReducers[type].reducer;
+  const state = reducer(undefined, { type: INIT });
+  const game = createGame(connection, type);
 
-  states[game.id] = game;
-  chat.sendGame(connection, game);
+  games[game.id] = {
+    state,
+    reducer
+  };
+  chat.sendGame(game);
 };
 
 const gameState = (id) => ({
   type: GAME_STATE,
-  state: states[id].state,
+  state: games[id].state,
   id
 });
 
 const watchGame = (id) => ({
   type: WATCH_GAME,
-  game: states[id].game,
   id
 });
 
 const gameAction = (connection, action) => {
   const id = action.id;
-  if (!states[id]) {
+  if (!games[id]) {
     console.log('WRONG REQUEST', `no data for ${id}`);
     return;
   }
-
-  const game = games[states[id].game];
-  const state = states[id].state;
+  const game = games[id];
 
   action.user = connection.getUser();
-  const newState = game.reducer(state, action);
+  const newState = game.reducer(game.state, action);
 
-  if (newState !== state) {
-    states[id].state = newState;
+  if (newState !== game.state) {
+    games[id].state = newState;
     socketApp.io.to(id).emit(ACTION, gameState(id));
   }
 };

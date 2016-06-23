@@ -6,25 +6,35 @@ export default class Chat extends ScrollingContent {
     return () => this.props.watchGame(id);
   }
   render() {
-    const { list } = this.props;
+    const { list, messages, games } = this.props;
 
-    const message = ({ name, text }) => (<span>
-      <b>{name}:</b> {text}
-    </span>);
+    const message = (id) => {
+      if (!messages[id]) return null;
 
-    const game = ({ id, name, game }) => (<span>
-      <b>{name}:</b> <a onClick={this.watchGame(id)}>[Game {game}]</a>
-    </span>);
+      const { from, text } = messages[id];
+      return <span><b>{from}:</b> {text}</span>;
+    }
+
+    const game = (id) => {
+      if (!games[id]) return null;
+
+      const { from, type } = games[id];
+      return <span>
+        <b>{from}:</b> <a onClick={this.watchGame(id)}>[{type} game]</a>
+      </span>;
+    }
 
     const item = (item) => {
       switch (item.type) {
-        case 'text':
-          return message(item);
+        case 'message':
+          return message(item.id);
 
         case 'game':
-          return game(item);
+          return game(item.id);
       }
     };
+
+    console.log('list', list);
 
     const items = list.map(i => (<li key={i.id}>{item(i)}</li>));
 
@@ -35,8 +45,7 @@ export default class Chat extends ScrollingContent {
 Chat.propTypes = {
   list: React.PropTypes.arrayOf(React.PropTypes.shape({
     id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    text: PropTypes.string
+    type: PropTypes.string.isRequired
   })),
   watchGame: PropTypes.func.isRequired
 }

@@ -18,11 +18,48 @@ const participants = (state = [], action) => {
   }
 };
 
+const messages = (state = {}, action) => {
+  switch (action. type) {
+    case MESSAGE:
+      return { ...state, [action.id]: action.payload };
+
+    case STATE:
+      return { ...state, ...action.messages };
+
+    case CLEAR:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
+const games = (state = {}, action) => {
+  switch (action. type) {
+    case GAME:
+      return { ...state, [action.id]: action.payload };
+
+    case STATE:
+      return action.games;
+
+    case CLEAR:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
+const game = ({ id }) => ({ id, type: 'game' });
+const message = ({ id }) => ({ id, type: 'message' });
+
 const chat = (state = [], action) => {
   switch (action.type) {
     case GAME:
+      return [ ...state, game(action)];
+
     case MESSAGE:
-      return [ ...state, action.payload ];
+      return [ ...state, message(action)];
 
     case STATE:
       return [ ...state, ...action.chat ];
@@ -35,4 +72,9 @@ const chat = (state = [], action) => {
   }
 };
 
-export default combineReducers({ participants, chat });
+export default combineReducers({
+  participants,
+  messages,
+  games,
+  chat
+});

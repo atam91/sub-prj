@@ -17,10 +17,13 @@ const initialGame = {
   game: null
 }
 
-const game = (state = initialGame, action) => {
+const gameId = (state = null, action) => {
   switch (action.type) {
     case WATCH_GAME:
-      return { id: action.id, game: action.game };
+      return action.id;
+
+    case DISCONNECT:
+      return null;
 
     default:
       return state;
@@ -45,7 +48,7 @@ const user = (state = initialUser, action) => {
   }
 };
 
-export default combineReducers({user, game})
+export default combineReducers({ user, gameId })
 
 export const getUser = (state) => state.user;
 export const getAuth = (state) => state.user.auth;

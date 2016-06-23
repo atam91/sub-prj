@@ -9,28 +9,27 @@ let socketApp;
 const setSocketApp = (app) => { socketApp = app; };
 const state = () => socketApp.getState();
 
-const message = (connection, text) => ({
+const createMessage = (connection, text) => ({
+  from: connection.getUsername(),
   id: v4(),
-  type: 'text',
-  name: connection.getUsername(),
   text
 });
 
 const sendMessage = (connection, text) => {
+  const message = createMessage(connection, text);
+
   socketApp.dispatch({
     type: MESSAGE,
-    payload: message(connection, text)
+    id: message.id,
+    payload: message
   });
 };
 
-const sendGame = (connection, game) => {
+const sendGame = (game) => {
   socketApp.dispatch({
     type: GAME,
-    payload: {
-      ...game,
-      type: 'game',
-      name: connection.getUsername()
-    }
+    id: game.id,
+    payload: game
   });
 };
 
