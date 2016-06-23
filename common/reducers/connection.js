@@ -9,7 +9,7 @@ import {
 
 const initialUser = {
   auth: false,
-  name: ''
+  name: 'guest'
 };
 
 const initialGame = {
@@ -17,7 +17,20 @@ const initialGame = {
   game: null
 }
 
-const gameId = (state = null, action) => {
+const games = (state = [], action) => {
+  switch (action.type) {
+    case WATCH_GAME:
+      return [ ...state, action.id ];
+
+    case DISCONNECT:
+      return [];
+
+    default:
+      return state;
+  }
+}
+
+const activeGame = (state = null, action) => {
   switch (action.type) {
     case WATCH_GAME:
       return action.id;
@@ -48,7 +61,7 @@ const user = (state = initialUser, action) => {
   }
 };
 
-export default combineReducers({ user, gameId })
+export default combineReducers({ user, activeGame, games })
 
 export const getUser = (state) => state.user;
 export const getAuth = (state) => state.user.auth;

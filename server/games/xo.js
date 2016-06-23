@@ -1,3 +1,4 @@
+const { all } = require('../../common/utils');
 const {
   INIT,
   GAME_JOIN,
@@ -21,46 +22,30 @@ const initState = () => ({
     [null, null, null],
     [null, null, null]
   ],
-  moves: null
+  moves: -1
 });
 
 const join = (state, { user, player }) => {
   if (state.players[player].name) return;
-  if (!user.name || getPlayer(state, user.name)) return;
+  const name = user.name || 'guest';
   let newState = { ...state };
 
-  newState.players[player].name = user.name;
-
-  if (newState.players.reduce(
-    (prev, player) => (prev && player.name),
-    true
-  )) {
-    newState.moves = user.name;
+  newState.players[player].name = name;
+  if (all(newState.players, p => p.name)) {
+    newState.moves = player;
   }
 
   return newState;
 };
 
-const getPlayer = (state, name) => {
-  let result;
-
-  state.players.forEach((player, index) => {
-    if (player.name === name) {
-      result = player;
-    }
-  });
-
-  return result;
-};
-
 const move = (state, { user, move }) => {
-  if (state.moves !== user.name) return;
+  if (state.players[state.moves].name !== user.name) return;
   let newState = { ...state };
 
   const { x, y } = move;
-  const player = getPlayer(state, user.name);
+  const player = state.players[state.moves];
   newState.board[y][x] = player.sign;
-  newState.moves = state.players[player.next].name;
+  newState.moves = player.next;
 
   return newState;
 };

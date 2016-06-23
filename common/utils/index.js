@@ -19,7 +19,13 @@ const objectFilterKey = (obj, filter) => {
 const notFilter = ( ...args ) => 
   (item) => (args.indexOf(item) === -1);
 
+const all = (list, cond) => list.reduce(
+  (prev, item) => prev && cond(item),
+  true
+);
+
 export {
+  all,
   date,
   forEachKey,
   objectFilterKey,

@@ -3,11 +3,11 @@ import { combineReducers } from 'redux'
 import main from '../../common/reducers/state'
 import connection from '../../common/reducers/connection'
 import requestErrors from './requestErrors'
-import game from './game'
+import games from './games'
 
 export default combineReducers({
   main,
-  game,
+  games,
   connection,
   requestErrors
 })

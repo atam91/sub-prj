@@ -5,11 +5,11 @@ import Xo from '../games/Xo'
 
 class Game extends Component {
   render() {
-    const { user, gameId, gameState, joinGame, moveGame } = this.props;
+    const { user, gameId, games, joinGame, moveGame } = this.props;
 
     if (!gameId) return null;
     
-    const state = gameState[gameId];
+    const state = games[gameId];
     if (!state) return null;
 
     const join = (player) => () => {
@@ -28,8 +28,8 @@ class Game extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.connection.user,
-  gameId: state.connection.gameId,
-  gameState: state.game
+  gameId: state.connection.activeGame,
+  games: state.games
 });
 
 export default connect(mapStateToProps, requestActions)(Game)

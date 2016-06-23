@@ -11,7 +11,8 @@ const Cell = (x, value, active, move) => {
 };
 
 const Board = (state, move, user) => {
-  const active = state.moves === user.name;
+  const active = (state.moves != -1)
+    && user.name === state.players[state.moves].name;
 
   const body = 
     state.board.map((row, y) => (<tr key={y}>
