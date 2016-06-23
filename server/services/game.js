@@ -1,7 +1,7 @@
 const console = require('../lib/console')('game', 'magenta');
 import { v4 } from 'node-uuid'
 import * as fromConnection from '../../common/reducers/connection';
-const gameReducers = require('../games');
+const gameDefs = require('../games');
 const {
   INIT,
   GAME,
@@ -11,29 +11,43 @@ const {
   GAME_WATCH,
   GAME_STATE,
   GAME_JOIN,
-  GAME_MOVE
+  JOIN_GAME,
+  GAME_MOVE,
+  GAME_RESTART
 } = require('../../common/constants');
 const chat = require('./chat');
 
 let socketApp;
 const setSocketApp = (app) => { socketApp = app; };
 
-const games = {};
-
 const createGame = (connection, type) => ({
   from: connection.getUsername(),
   id: v4(),
+  data: {},
   type
 });
 
+const getData = (id) => socketApp.getState().games[id].data;
+
+const updateGame = (game, state) => ({
+  ...game,
+  players: state.players
+});
+
+const games = {};
+
 const startGame = (connection, type) => {
-  const reducer = gameReducers[type].reducer;
+  const gameDef = gameDefs[type];
+  const reducer = gameDef.reducer;
+  const getData = gameDef.getData;
+
   const state = reducer(undefined, { type: INIT });
   const game = createGame(connection, type);
 
   games[game.id] = {
     state,
-    reducer
+    reducer,
+    getData
   };
   chat.sendGame(game);
 };
@@ -61,6 +75,10 @@ const gameAction = (connection, action) => {
   const newState = game.reducer(game.state, action);
 
   if (newState !== game.state) {
+    const newData = game.getData(newState);
+    if (getData(id) != newData) {
+      chat.sendGameData(id, newData);
+    }
     games[id].state = newState;
     socketApp.io.to(id).emit(ACTION, gameState(id));
   }
@@ -80,6 +98,7 @@ const handler = (connection, action) => {
 
     case GAME_JOIN:
     case GAME_MOVE:
+    case GAME_RESTART:
       gameAction(connection, action);
       break;
   }

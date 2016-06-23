@@ -1,8 +1,8 @@
-const { all } = require('../../common/utils');
 const {
   INIT,
   GAME_JOIN,
-  GAME_MOVE
+  GAME_MOVE,
+  GAME_RESTART
 } = require('../../common/constants');
 
 const initialPlayer = (sign, next) => ({
@@ -25,13 +25,25 @@ const initState = () => ({
   moves: -1
 });
 
+const getPlayer = (state, { name }) => (
+  state.players.reduce(
+    (prev, player, index) => {
+      if (prev === false && player.name === name) {
+        return index;
+      }
+      return prev;
+    },
+    false
+  )
+);
+
 const join = (state, { user, player }) => {
   if (state.players[player].name) return;
-  const name = user.name || 'guest';
+  if (!user.auth) return;
   let newState = { ...state };
 
-  newState.players[player].name = name;
-  if (all(newState.players, p => p.name)) {
+  newState.players[player].name = user.name;
+  if (newState.players.every(p => p.name)) {
     newState.moves = player;
   }
 
@@ -61,11 +73,26 @@ const reducer = (state, action) => {
     case GAME_MOVE:
       return move(state, action) || state;
 
+    case GAME_RESTART:
+      const player = getPlayer(state, action.user);
+      if (player === false) return state;
+
+      return {
+        ...initState(),
+        players: state.players,
+        moves: player
+      };
+
     default:
       return state;
   }
 };
 
+const getData = ({ players }) => ({
+  text: players.filter(p => p.name).map(p => p.name).join(', ')
+});
+
 module.exports = {
+  getData,
   reducer
 };

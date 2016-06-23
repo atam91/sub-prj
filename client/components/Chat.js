@@ -18,9 +18,9 @@ export default class Chat extends ScrollingContent {
     const game = (id) => {
       if (!games[id]) return null;
 
-      const { from, type } = games[id];
+      const { from, type, data } = games[id];
       return <span>
-        <b>{from}:</b> <a onClick={this.watchGame(id)}>[{type} game]</a>
+        <b>{from}:</b> <a onClick={this.watchGame(id)}>[{type} game]</a> {data.text}
       </span>;
     }
 
@@ -33,8 +33,6 @@ export default class Chat extends ScrollingContent {
           return game(item.id);
       }
     };
-
-    console.log('list', list);
 
     const items = list.map(i => (<li key={i.id}>{item(i)}</li>));
 

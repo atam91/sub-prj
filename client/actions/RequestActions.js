@@ -6,7 +6,8 @@ import {
   GAME_START,
   GAME_WATCH,
   GAME_JOIN,
-  GAME_MOVE
+  GAME_MOVE,
+  GAME_RESTART
 } from '../../common/constants';
 
 export const login = (name) => ({
@@ -50,4 +51,10 @@ export const moveGame = (id, move) => ({
   SOCKET_REQUEST,
   id,
   move
+})
+
+export const restartGame = (id) => ({
+  type: GAME_RESTART,
+  SOCKET_REQUEST,
+  id
 })

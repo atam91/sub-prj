@@ -8,32 +8,51 @@ export default class Header extends Component {
       resetError: false
     };
   }
+
   submit(e) {
     e.preventDefault();
     this.props.login(this.refs.username.value);
     this.setState({ resetError: false });
   }
+
   change() {
     this.setState({ resetError: true });
   }
+
   logout() {
     this.props.logout();
   }
+
   startXo() {
     this.props.startGame('xo');
   }
+
+  doRestartGame(id) {
+    return () => {
+      this.props.restartGame(id);
+    };
+  }
+  
   render() {
-    const { name } = this.props.user;
+    const { user, gameId, gameState } = this.props;
     const error = !this.state.resetError && this.props.loginError;
 
-    var panel,loginForm;
-    if (name) {
+    let gamePanel;
+    if (gameId && gameState && gameState.players.some(p => p.name === user.name)) {
+      gamePanel = <div className="left">
+        <a className="btn btn-default sep-r" onClick={this.doRestartGame(gameId)}>Restart</a>
+      </div>;
+    }
+
+    let panel,loginForm;
+    if (user.auth) {
       panel = <div>
         <div className="left">
-          <a className="btn btn-default" onClick={::this.startXo}>Xo</a>
+          <a className="btn btn-default sep-r" onClick={::this.startXo}>Start Xo</a>
         </div>
+        {gamePanel}
         <div className="right">
-          <span className="sep-r">Привет, {name}!</span>
+          <span className="sep-r">Привет, {user.name}!</span>
           <a className="btn btn-default" onClick={::this.logout}>Выйти</a>
         </div>
       </div>;

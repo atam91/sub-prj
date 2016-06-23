@@ -2,7 +2,8 @@ import { v4 } from 'node-uuid'
 
 const {
   MESSAGE,
-  GAME
+  GAME,
+  GAME_DATA
 } = require('../../common/constants');
 
 let socketApp;
@@ -33,8 +34,17 @@ const sendGame = (game) => {
   });
 };
 
+const sendGameData = (id, data) => {
+  socketApp.dispatch({
+    type: GAME_DATA,
+    id,
+    data
+  });
+};
+
 module.exports = {
   setSocketApp,
   sendMessage,
-  sendGame
+  sendGame,
+  sendGameData
 };

@@ -24,8 +24,14 @@ const all = (list, cond) => list.reduce(
   true
 );
 
+const have = (list, cond) => list.reduce(
+  (prev, item) => prev || cond(item),
+  false
+);
+
 export {
   all,
+  have,
   date,
   forEachKey,
   objectFilterKey,
