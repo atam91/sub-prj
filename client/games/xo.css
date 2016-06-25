@@ -16,3 +16,7 @@
 #xo-game table td.available:hover {
   background: rgba(0, 255, 0, .2);
 }
+
+#xo-game table td.strike {
+  background: rgba(0, 255, 0, .1);
+}
