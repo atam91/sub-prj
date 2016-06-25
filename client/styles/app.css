@@ -20,6 +20,7 @@ body {
 }
 
 .app, .column-area {
+  height: 100%;
   display: flex;
   flex-direction: column;
   
@@ -105,6 +106,10 @@ ul#chat {
   margin: 0px;
 }
 
+span.label {
+  cursor: default;
+}
+
 #participants {
   display: flex;
   flex-flow: row wrap;
@@ -116,3 +121,13 @@ ul#chat {
   max-height: 80px;
 }
 
+#game-manager {
+  display: flex;
+  flex-flow: row wrap;
+
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+  
+  height: 80px;
+}

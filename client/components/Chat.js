@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import * as fromGames from '../games';
 import ScrollingContent from './ScrollingContent'
 
 export default class Chat extends ScrollingContent {
@@ -6,7 +7,7 @@ export default class Chat extends ScrollingContent {
     return () => this.props.watchGame(id);
   }
   render() {
-    const { list, messages, games } = this.props;
+    const { list, messages, games, activeGames } = this.props;
 
     const message = (id) => {
       if (!messages[id]) return null;
@@ -17,10 +18,12 @@ export default class Chat extends ScrollingContent {
 
     const game = (id) => {
       if (!games[id]) return null;
-
       const { from, type, data } = games[id];
+      const name = fromGames.names[type];
+      const bold = (activeGames.indexOf(id) === -1) && 'bold';
+      
       return <span>
-        <b>{from}:</b> <a onClick={this.watchGame(id)}>[{type} game]</a> {data.text}
+        <b>{from}:</b> <a className={bold} onClick={this.watchGame(id)}>[{name} game]</a> {data.text}
       </span>;
     }
 

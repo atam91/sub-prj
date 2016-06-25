@@ -7,17 +7,21 @@ const initPlayer = (sign) => ({
   sign
 });
 
-const initBoard = () => ({
-  board: [
+const initBoard = () => {
+  const board = [
     [null, null, null],
     [null, null, null],
     [null, null, null]
-  ],
-  wins: null
-});
+  ];
+
+  return {
+    board,
+    marks: board,
+    wins: null
+  };
+};
 
 const initState = () => {
-  const { board:marks } = initBoard();
   return {
     ...initBoard(),
     players: [
@@ -25,13 +29,12 @@ const initState = () => {
       initPlayer('O')
     ],
     moves: -1,
-    marks
   };
 };
 
 const checkPosition = (newState) => {
   const rows = newState.board;
-  const { board:marks } = initBoard();
+  const { marks } = initBoard();
   let wins = null;
 
   for (let i = 0; i <= 2; i++ ) {
@@ -91,8 +94,8 @@ const move = (state, { user, move }) => {
 const restart = (state) => ({ ...state, ...initBoard() });
 
 const getData = ({ players }) => ({
-  text: players.map(p => {
-    const score = (p.score && ' ' + p.score) || '';
+  text: players.filter(p => p.name).map(p => {
+    const score = p.score && (' ' + p.score) || '';
     return p.name + score;
   }).join(', ')
 });

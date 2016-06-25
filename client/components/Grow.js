@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-export default class Column extends Component {
+export default class Grow extends Component {
   render() {
-    return <div className="column-area">
+    return <div className="flexbox-item-grow">
       { this.props.children }
     </div>;
   }

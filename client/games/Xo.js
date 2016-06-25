@@ -36,7 +36,7 @@ const Player = (state, join, number) => {
 
   return <div className="text-center">
     <span className={classNames({ bold: wins ? wins : active })}>
-      {active}{player.sign}:{name} {wins} {score}
+      {active}{player.sign}: {name} {wins} {score}
     </span>
   </div>;
 };
@@ -44,9 +44,7 @@ const Player = (state, join, number) => {
 export default class Xo extends Component {
   render() {
     const { user, state, join, move } = this.props;
-
-
-    return <div id="xo-game" className="block content" style={{width: '300px', height: '300px'}}>
+    return <div id="xo-game" className="block content sep-b" style={{width: '300px', height: '300px'}}>
       {Player(state, join, 0)}
       {Board(state, move, user)}
       {Player(state, join, 1)}
