@@ -27,6 +27,7 @@ define('GAME_STATE');
 
 define('GAME_JOIN');
 define('JOIN_GAME');
+define('GAME_LEAVE');
 
 define('GAME_MOVE');
 define('GAME_RESTART');
