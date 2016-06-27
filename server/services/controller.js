@@ -3,7 +3,8 @@ const bold = console.bold;
 
 const {
   RELOAD,
-  CLEAR
+  CLEAR,
+  SILENT_DISPATCH
 } = require('../../common/constants');
 
 let socketApp;
@@ -20,7 +21,7 @@ const cmd = (connection, text) => {
 
     case '/do clear':
       console.log(bold(CLEAR));
-      socketApp.dispatchSilent({ type: CLEAR });
+      socketApp.dispatch({ SILENT_DISPATCH, type: CLEAR });
       break;
 
     case '/do force clear':
