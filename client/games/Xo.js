@@ -26,9 +26,13 @@ const Board = (state, move, user) => {
   </table>
 };
 
-const Player = (state, join, number) => {
+const Player = (state, user, joinAction, number) => {
   const player = state.players[number];
-  const name = player.name || <a className="bold" onClick={join(number)}>(join)</a>;
+
+  const join = user.auth ?
+    <a className="bold" onClick={joinAction(number)}>(join)</a> :
+    '(join)';
+  const name = player.name || join;
   const wins = state.wins === player.sign && '*wins*';
   const active = !state.wins && number === state.moves && '*';
   const score = player.score || null;
@@ -44,10 +48,11 @@ const Player = (state, join, number) => {
 export default class Xo extends Component {
   render() {
     const { user, state, join, move } = this.props;
+
     return <div id="xo-game" className="block content sep-b" style={{width: '300px', height: '300px'}}>
-      {Player(state, join, 0)}
+      {Player(state, user, join, 0)}
       {Board(state, move, user)}
-      {Player(state, join, 1)}
+      {Player(state, user, join, 1)}
     </div>;
   }
 }

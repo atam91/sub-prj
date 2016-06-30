@@ -17,27 +17,28 @@ export default class GameManager extends Component {
     } = this.props;
 
     const items = activeGames.map((id) => {
-      let label = 'label-default';
-      
       const state = gameStates[id];
-      if (state.players.some(p => p.name === user.name)) {
+      let label = 'label-default';
+
+      if (id === gameId) {
+        label = 'label-primary';
+      } else if (state.players.some(p => p.name === user.name)) {
         label = 'label-warning';
         if (state.moves !== -1 && !state.wins
           && user.name === state.players[state.moves].name
         ) {
           label = 'label-success';
         }
+      } else if (!state.players.every(p => p.name)) {
+        label = 'label-info';
       }
-      if (id === gameId) label = 'label-primary';
-
-      const name = fromGames.names[games[id].type];
 
       return <span 
         key={id}
         className={classNames('sep label', label)}
         onClick={this.watchGame(id)}
         >
-        {name}
+        {fromGames.names[games[id].type]}
       </span>;
     });
 
