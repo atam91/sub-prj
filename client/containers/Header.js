@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Header from '../components/Header'
-import * as requestActions from '../actions/RequestActions'
+import actions from '../actions'
 
 class HeaderContainer extends Component {
   render() {
@@ -17,4 +16,4 @@ const mapStateToProps = (state) => ({
   loginError: state.requestErrors.login
 });
 
-export default connect(mapStateToProps, requestActions)(HeaderContainer)
+export default connect(mapStateToProps, actions)(HeaderContainer)

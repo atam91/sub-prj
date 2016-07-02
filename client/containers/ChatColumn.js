@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import * as requestActions from '../actions/RequestActions'
+import actions from '../actions'
 import ChatManager from '../components/ChatManager'
 import Chat from '../components/Chat'
 
 class ChatColumn extends Component {
   render() {
     const {
-      watchGame,
+      watchGameRequest,
       users,
       chat,
       messages,
@@ -22,7 +22,7 @@ class ChatColumn extends Component {
         games={games}
         activeGames={activeGames}
         messages={messages}
-        watchGame={watchGame} />
+        watchGame={watchGameRequest} />
     </div>
   }
 }
@@ -35,4 +35,4 @@ const mapStateToProps = (state) => ({
   users: state.main.participants
 });
 
-export default connect(mapStateToProps, requestActions)(ChatColumn)
+export default connect(mapStateToProps, actions)(ChatColumn)

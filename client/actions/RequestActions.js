@@ -33,7 +33,7 @@ export const startGame = (game) => ({
   game
 })
 
-export const watchGame = (id) => ({
+export const watchGameRequest = (id) => ({
   type: GAME_WATCH,
   SOCKET_REQUEST,
   id

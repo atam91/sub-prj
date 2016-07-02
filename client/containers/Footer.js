@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Footer from '../components/Footer'
-import * as requestActions from '../actions/RequestActions'
+import actions from '../actions'
 
 class FooterContainer extends Component {
   render() {
@@ -16,4 +16,4 @@ const mapStateToProps = (state) => ({
   user: state.connection.user
 });
 
-export default connect(mapStateToProps, requestActions)(FooterContainer)
+export default connect(mapStateToProps, actions)(FooterContainer)

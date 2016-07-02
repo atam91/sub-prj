@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import * as requestActions from '../actions/RequestActions'
+import actions from '../actions'
 import connection, * as fromConnection from '../../common/reducers/connection'
 import Xo from '../games/Xo'
 import GameManager from '../components/GameManager'
@@ -47,4 +47,4 @@ const mapStateToProps = (state) => ({
   activeGames: state.connection.games
 });
 
-export default connect(mapStateToProps, requestActions)(GameColumn)
+export default connect(mapStateToProps, actions)(GameColumn)

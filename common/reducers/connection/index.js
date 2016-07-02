@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import user, * as fromUser from './connection/user'
-import games, { currentGame } from './connection/games'
+import user, * as fromUser from './user'
+import games, { currentGame } from './games'
 
 export default combineReducers({ user, currentGame, games })
 
