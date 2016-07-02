@@ -3,7 +3,7 @@ const bold = console.bold;
 import SocketIO from 'socket.io';
 import { SocketApp } from './lib/SocketApp';
 import { PARTICIPANTS } from '../common/constants';
-import stateReducer from '../common/reducers/state';
+import reducer from '../common/reducers/main';
 import services from './services';
 import Connection from './Connection';
 
@@ -21,7 +21,7 @@ module.exports = function(server) {
     io,
     Connection,
     services,
-    stateReducer,
+    reducer,
     logger
   );
 

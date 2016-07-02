@@ -47,3 +47,15 @@ export default class GameManager extends Component {
     </div>;
   }
 }
+
+GameManager.propTypes = {
+  user: React.PropTypes.shape({
+    auth: React.PropTypes.bool.isRequired,
+    name: React.PropTypes.string.isRequired
+  }),
+  games: React.PropTypes.object.isRequired,
+  gameId: React.PropTypes.string,
+  gameStates: React.PropTypes.object.isRequired,
+  activeGames: React.PropTypes.arrayOf(React.PropTypes.string),
+  watchGame: React.PropTypes.func.isRequired
+}

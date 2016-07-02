@@ -29,7 +29,7 @@ const Board = (state, move, user) => {
 const Player = (state, user, joinAction, number) => {
   const player = state.players[number];
 
-  const join = user.auth ?
+  const join = user.name ?
     <a className="bold" onClick={joinAction(number)}>(join)</a> :
     '(join)';
   const name = player.name || join;

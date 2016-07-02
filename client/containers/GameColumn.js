@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as requestActions from '../actions/RequestActions'
+import connection, * as fromConnection from '../../common/reducers/connection'
 import Xo from '../games/Xo'
 import GameManager from '../components/GameManager'
 
@@ -41,7 +42,7 @@ class GameColumn extends Component {
 const mapStateToProps = (state) => ({
   user: state.connection.user,
   games: state.main.games,
-  gameId: state.connection.activeGame,
+  gameId: state.connection.currentGame,
   gameStates: state.games,
   activeGames: state.connection.games
 });
