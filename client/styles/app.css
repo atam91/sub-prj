@@ -106,11 +106,15 @@ ul#chat {
   margin: 0px;
 }
 
-span.label {
-  cursor: default;
+a {
+  cursor: pointer;
 }
 
-#participants {
+span.label {
+  cursor: pointer;
+}
+
+#chat-manager {
   display: flex;
   flex-flow: row wrap;
 

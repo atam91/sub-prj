@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as requestActions from '../actions/RequestActions'
-import Participants from '../components/Participants'
+import ChatManager from '../components/ChatManager'
 import Chat from '../components/Chat'
 
 class ChatColumn extends Component {
   render() {
     const {
       watchGame,
-      participants,
+      users,
       chat,
       messages,
       games,
@@ -16,7 +16,7 @@ class ChatColumn extends Component {
     } = this.props;
 
     return <div className="flexbox-item-grow column-area">
-      <Participants list={participants} />
+      <ChatManager users={users} />
       <Chat
         list={chat}
         games={games}
@@ -32,7 +32,7 @@ const mapStateToProps = (state) => ({
   games: state.main.games,
   activeGames: state.connection.games,
   messages: state.main.messages,
-  participants: state.main.participants
+  users: state.main.participants
 });
 
 export default connect(mapStateToProps, requestActions)(ChatColumn)
