@@ -40,11 +40,10 @@ class GameColumn extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  games: state.games,
   user: state.connection.user,
-  games: state.main.games,
-  gameId: state.connection.currentGame,
-  gameStates: state.games,
-  activeGames: state.connection.games
+  activeGames: state.connection.games,
+  gameId: state.connection.currentGame
 });
 
 export default connect(mapStateToProps, actions)(GameColumn)

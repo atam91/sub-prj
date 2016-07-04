@@ -24,7 +24,7 @@ export default class Header extends Component {
   }
 
   startXo() {
-    this.props.startGame('xo');
+    this.props.startGame('xo', this.props.ui.currentChannel);
   }
 
   doRestartGame(id) {
@@ -75,6 +75,9 @@ export default class Header extends Component {
 Header.propTypes = {
   user: React.PropTypes.shape({
     name: PropTypes.string.isRequired
+  }),
+  ui: PropTypes.shape({
+    currentChannel: PropTypes.string.isRequired
   }),
   login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,

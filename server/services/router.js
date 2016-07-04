@@ -1,5 +1,6 @@
 const {
-  SEND
+  SEND,
+  PRIVATE
 } = require('../../common/constants');
 
 const controller = require('./controller');
@@ -10,9 +11,15 @@ const handler = (connection, action) => {
     case SEND:
       const text = action.payload;
 
-      text.startsWith('/do') ?
-        controller.cmd(connection, text) :
-        chat.sendMessage(connection, text);
+      if (text.startsWith('/do')) {
+        controller.cmd(connection, text);
+      } else {
+        chat.send(connection, chat.createMessage(text), action.to);
+      }
+      break;
+
+    case PRIVATE:
+      chat.private(connection, action);
       break;
   }
 };

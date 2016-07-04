@@ -11,6 +11,10 @@ define('PARTICIPANTS');
 
 // CHAT
 define('SEND');
+define('GET');
+define('GET_DATA');
+
+define('PRIVATE');
 define('MESSAGE');
 
 define('CLEAR');

@@ -3,36 +3,38 @@ import { connect } from 'react-redux'
 import actions from '../actions'
 import ChatManager from '../components/ChatManager'
 import Chat from '../components/Chat'
+import { MAIN } from '../../common/constants'
 
 class ChatColumn extends Component {
   render() {
     const {
-      watchGameRequest,
-      users,
+      ui,
       chat,
-      messages,
+      users,
       games,
-      activeGames
+      watchGameRequest,
+      setChannel
     } = this.props;
 
     return <div className="flexbox-item-grow column-area">
-      <ChatManager users={users} />
+      <ChatManager 
+        users={users}
+        setChannel={setChannel}
+        currentChannel={ui.currentChannel} />
       <Chat
-        list={chat}
+        ui={ui}
+        chat={chat}
         games={games}
-        activeGames={activeGames}
-        messages={messages}
         watchGame={watchGameRequest} />
     </div>
   }
 }
 
 const mapStateToProps = (state) => ({
-  chat: state.main.chat,
-  games: state.main.games,
-  activeGames: state.connection.games,
-  messages: state.main.messages,
-  users: state.main.participants
+  ui: state.ui,
+  chat: state.common.chat,
+  users: state.common.users,
+  games: state.connection.games
 });
 
 export default connect(mapStateToProps, actions)(ChatColumn)

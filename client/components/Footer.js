@@ -5,7 +5,7 @@ export default class Footer extends Component {
   submit(e) {
     e.preventDefault();
     if (this.refs.message.value) {
-      this.props.send(this.refs.message.value);
+      this.props.send(this.refs.message.value, this.props.ui.currentChannel);
       this.refs.message.value = '';
       scrollDown('chat');
     }
@@ -21,5 +21,8 @@ export default class Footer extends Component {
 }
 
 Footer.propTypes = {
-  send: PropTypes.func.isRequired
+  send: PropTypes.func.isRequired,
+  ui: PropTypes.shape({
+    currentChannel: PropTypes.string.isRequired
+  })
 }

@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux'
 
-import main from '../../common/reducers/main'
+import common from '../../common/reducers/common'
 import connection from '../../common/reducers/connection'
 import requestErrors from './requestErrors'
 import games from './games'
+import ui from './ui'
 
 export default combineReducers({
-  main,
-  games,
+  common,
   connection,
-  requestErrors
+  requestErrors,
+  games,
+  ui
 })

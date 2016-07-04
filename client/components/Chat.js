@@ -1,52 +1,102 @@
 import React, { PropTypes } from 'react'
 import * as fromGames from '../games';
 import ScrollingContent from './ScrollingContent'
+import {
+  GAME,
+  MESSAGE
+} from '../../common/constants'
 
 export default class Chat extends ScrollingContent {
   watchGame(id) {
     return () => this.props.watchGame(id);
   }
+
+  message(id) {
+    const { chat } = this.props;
+
+    if (!chat.objects[id]) return null;
+    const { from, text } = chat.objects[id];
+
+    return <span><b>{from}:</b> {text}</span>;
+  }
+
+  game(id) {
+    const { chat, games } = this.props;
+
+    const { from, game, data } = chat.objects[id];
+    const name = fromGames.names[game];
+    const bold = (games.indexOf(id) === -1) && 'bold';
+    
+    return <span>
+      <b>{from}:</b> <a className={bold} onClick={this.watchGame(id)}>[{name} game]</a> {data.text}
+    </span>;
+
+  }
+
+  item(id) {
+    const { chat } = this.props;
+    console.log(chat, id, chat.objects[id]);
+    if (!chat.objects[id]) return null;
+
+    switch (chat.objects[id].type) {
+      case MESSAGE:
+        return this.message(id);
+
+      case GAME:
+        return this.game(id);
+
+      default:
+        return null;
+    }
+  }
+
   render() {
-    const { list, messages, games, activeGames } = this.props;
+    const { chat } = this.props;
+    const { currentChannel } = this.props.ui;
 
-    const message = (id) => {
-      if (!messages[id]) return null;
+    /*const message = (id) => {
+      if (!chat.objects[id]) return null;
 
-      const { from, text } = messages[id];
+      const { from, text } = chat.objects[id];
       return <span><b>{from}:</b> {text}</span>;
     }
 
     const game = (id) => {
-      if (!games[id]) return null;
-      const { from, type, data } = games[id];
+      if (!chat.objects[id]) return null;
+      const { from, type, data } = chat.objects[id];
       const name = fromGames.names[type];
-      const bold = (activeGames.indexOf(id) === -1) && 'bold';
+      const bold = (games.indexOf(id) === -1) && 'bold';
       
       return <span>
         <b>{from}:</b> <a className={bold} onClick={this.watchGame(id)}>[{name} game]</a> {data.text}
       </span>;
     }
 
-    const item = (item) => {
-      switch (item.type) {
+    const item = (id) => {
+      switch (chat.objects[id].type) {
         case 'message':
-          return message(item.id);
+          return message(id);
 
         case 'game':
-          return game(item.id);
+          return game(id);
       }
-    };
+    };*/
 
-    const items = list.map(i => (<li key={i.id}>{item(i)}</li>));
+    const channel = chat.channels[currentChannel] || [];
+    const items = channel.map(id => (<li key={id}>{this.item(id)}</li>));
 
     return <ul id="chat" className="block content" ref="content">{items}</ul>;
   }
 }
 
 Chat.propTypes = {
-  list: React.PropTypes.arrayOf(React.PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired
-  })),
+  ui: React.PropTypes.shape({
+    currentChannel: PropTypes.string.isRequired
+  }),
+  games: React.PropTypes.arrayOf(PropTypes.string.isRequired),
+  chat: React.PropTypes.shape({
+    objects: PropTypes.object.isRequired,
+    channels: PropTypes.object.isRequired
+  }),
   watchGame: PropTypes.func.isRequired
 }

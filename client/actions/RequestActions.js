@@ -21,16 +21,18 @@ export const logout = () => ({
   SOCKET_REQUEST
 })
 
-export const send = (payload) => ({
+export const send = (payload, to) => ({
   type: SEND,
   SOCKET_REQUEST,
-  payload
+  payload,
+  to
 })
 
-export const startGame = (game) => ({
+export const startGame = (game, to) => ({
   type: GAME_START,
   SOCKET_REQUEST,
-  game
+  game,
+  to
 })
 
 export const watchGameRequest = (id) => ({

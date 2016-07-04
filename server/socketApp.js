@@ -3,7 +3,7 @@ const bold = console.bold;
 import SocketIO from 'socket.io';
 import { SocketApp } from './lib/SocketApp';
 import { PARTICIPANTS } from '../common/constants';
-import reducer from '../common/reducers/main';
+import reducer from '../common/reducers/common';
 import services from './services';
 import Connection from './Connection';
 
@@ -13,7 +13,7 @@ module.exports = function(server) {
   const logger = (action) => {
     switch (action.type) {
       case PARTICIPANTS:
-        console.log(PARTICIPANTS, bold(action.participants));
+        console.log(PARTICIPANTS, bold(action.users));
     }
   };
   

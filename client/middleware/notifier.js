@@ -17,7 +17,8 @@ export default (store) => (next) => (action) => {
 
     case GAME_STATE:
       const username = fromConnection.getUsername(store.getState().connection);
-      if (action.state.players[action.state.moves].name === username) {
+      const currentPlayer = action.state.players[action.state.moves];
+      if (currentPlayer && (currentPlayer.name === username)) {
         tick();
       }
       break;

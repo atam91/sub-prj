@@ -28,7 +28,7 @@ const initState = () => {
       initPlayer('X'),
       initPlayer('O')
     ],
-    moves: -1,
+    moves: -1
   };
 };
 

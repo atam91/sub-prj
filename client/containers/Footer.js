@@ -13,7 +13,8 @@ class FooterContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.connection.user
+  user: state.connection.user,
+  ui: state.ui
 });
 
 export default connect(mapStateToProps, actions)(FooterContainer)

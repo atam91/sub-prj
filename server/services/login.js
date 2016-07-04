@@ -13,9 +13,11 @@ const setSocketApp = (app) => { socketApp = app; };
 
 const users = {};
 
+const getUserSocket = (name) => users[name];
+
 const participants = () => ({ 
   type: PARTICIPANTS,
-  participants: Object.keys(users)
+  users: Object.keys(users)
 });
 
 const loginFailure = (error) => ({
@@ -63,6 +65,7 @@ const disconnect = (connection) => {
 
 module.exports = {
   setSocketApp,
+  getUserSocket,
   handler,
   disconnect
 };

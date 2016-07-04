@@ -42,12 +42,12 @@ const watchGame = (id) => ({
 
 const gamesStore = {};
 
-const startGame = (connection, type) => {
+const startGame = (connection, type, to) => {
   const state = games[type].initState();
-  const game = createGame(connection, type);
+  const game = chat.createGame(type);
 
   gamesStore[game.id] = { state, type };
-  chat.sendGame(game);
+  chat.send(connection, game, to);
 };
 
 const gameAction = (connection, action) => {
@@ -94,7 +94,7 @@ const gameReducer = (type, state, action) => {
 const handler = (connection, action) => {
   switch (action.type) {
     case GAME_START:
-      startGame(connection, action.game);
+      startGame(connection, action.game, action.to);
       break;
 
     case GAME_WATCH:

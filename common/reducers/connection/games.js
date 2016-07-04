@@ -1,7 +1,6 @@
 import {
   WATCH_GAME,
-  DISCONNECT,
-  LOGOUT_EVENT
+  DISCONNECT
 } from '../../constants'
 
 const games = (state = [], action) => {
@@ -19,18 +18,5 @@ const games = (state = [], action) => {
       return state;
   }
 }
-
-export const currentGame = (state = null, action) => {
-  switch (action.type) {
-    case WATCH_GAME:
-      return action.id;
-
-    case DISCONNECT:
-      return null;
-
-    default:
-      return state;
-  }
-};
 
 export default games
