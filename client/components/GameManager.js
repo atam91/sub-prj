@@ -6,44 +6,57 @@ export default class GameManager extends Component {
   watchGame(id) {
     return () => this.props.watchGame(id);
   }
-  render() {
+
+  labelName(id) {
     const {
       user,
       games,
-      gameId,
-      gameStates,
-      activeGames,
+      gameId
+    } = this.props;
+
+    const state = games[id];
+    let label = 'label-default';
+
+    if (id === gameId) {
+      label = 'label-primary';
+    } else if (state.players.some(p => p.name === user.name)) {
+      label = 'label-warning';
+      if (state.moves !== -1 && !state.wins
+        && user.name === state.players[state.moves].name
+      ) {
+        label = 'label-success';
+      }
+    } else if (!state.players.every(p => p.name)) {
+      label = 'label-info';
+    }
+
+    return label;
+  }
+
+  item(id) {
+    const {
+      chat,
       watchGame
     } = this.props;
 
-    const items = activeGames.map((id) => {
-      const state = gameStates[id];
-      let label = 'label-default';
+    if (!chat.objects[id]) return null;
+    const labelName = this.labelName(id);
 
-      if (id === gameId) {
-        label = 'label-primary';
-      } else if (state.players.some(p => p.name === user.name)) {
-        label = 'label-warning';
-        if (state.moves !== -1 && !state.wins
-          && user.name === state.players[state.moves].name
-        ) {
-          label = 'label-success';
-        }
-      } else if (!state.players.every(p => p.name)) {
-        label = 'label-info';
-      }
+    return <span 
+      key={id}
+      className={classNames('sep label', labelName)}
+      onClick={this.watchGame(id)}
+      >
+      {fromGames.names[chat.objects[id].game]}
+    </span>;
 
-      return <span 
-        key={id}
-        className={classNames('sep label', label)}
-        onClick={this.watchGame(id)}
-        >
-        {fromGames.names[games[id].type]}
-      </span>;
-    });
+  }
+
+  render() {
+    const { activeGames } = this.props;
 
     return <div id="game-manager" className="block content">
-      {items}
+      {activeGames.map(id => this.item(id))}
     </div>;
   }
 }
@@ -53,9 +66,11 @@ GameManager.propTypes = {
     auth: React.PropTypes.bool.isRequired,
     name: React.PropTypes.string.isRequired
   }),
+  chat: React.PropTypes.shape({
+    objects: React.PropTypes.object.isRequired
+  }),
   games: React.PropTypes.object.isRequired,
-  gameId: React.PropTypes.string,
-  gameStates: React.PropTypes.object.isRequired,
+  gameId: React.PropTypes.string.isRequired,
   activeGames: React.PropTypes.arrayOf(React.PropTypes.string),
   watchGame: React.PropTypes.func.isRequired
 }

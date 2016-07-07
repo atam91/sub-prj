@@ -35,7 +35,6 @@ export default class Chat extends ScrollingContent {
 
   item(id) {
     const { chat } = this.props;
-    console.log(chat, id, chat.objects[id]);
     if (!chat.objects[id]) return null;
 
     switch (chat.objects[id].type) {
@@ -53,34 +52,6 @@ export default class Chat extends ScrollingContent {
   render() {
     const { chat } = this.props;
     const { currentChannel } = this.props.ui;
-
-    /*const message = (id) => {
-      if (!chat.objects[id]) return null;
-
-      const { from, text } = chat.objects[id];
-      return <span><b>{from}:</b> {text}</span>;
-    }
-
-    const game = (id) => {
-      if (!chat.objects[id]) return null;
-      const { from, type, data } = chat.objects[id];
-      const name = fromGames.names[type];
-      const bold = (games.indexOf(id) === -1) && 'bold';
-      
-      return <span>
-        <b>{from}:</b> <a className={bold} onClick={this.watchGame(id)}>[{name} game]</a> {data.text}
-      </span>;
-    }
-
-    const item = (id) => {
-      switch (chat.objects[id].type) {
-        case 'message':
-          return message(id);
-
-        case 'game':
-          return game(id);
-      }
-    };*/
 
     const channel = chat.channels[currentChannel] || [];
     const items = channel.map(id => (<li key={id}>{this.item(id)}</li>));

@@ -10,10 +10,10 @@ class HeaderContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  ui: state.ui,
+  channel: state.ui.currentChannel,
   user: state.connection.user,
-  gameId: state.connection.currentGame,
-  gameState: state.games[state.connection.currentGame],
+  gameId: state.ui.currentGame,
+  gameState: state.games[state.ui.currentGame],
   loginError: state.requestErrors.login
 });
 

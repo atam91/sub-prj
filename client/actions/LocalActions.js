@@ -1,6 +1,7 @@
 import {
   WATCH_GAME,
-  CHANNEL
+  CHANNEL,
+  UNREAD
 } from '../../common/constants';
 
 export const watchGame = (id) => ({
@@ -10,5 +11,10 @@ export const watchGame = (id) => ({
 
 export const setChannel = (channel) => ({
   type: CHANNEL,
+  channel
+})
+
+export const markUnread = (channel) => ({
+  type: UNREAD,
   channel
 })

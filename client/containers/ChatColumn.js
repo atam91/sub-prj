@@ -12,6 +12,7 @@ class ChatColumn extends Component {
       chat,
       users,
       games,
+      manager,
       watchGameRequest,
       setChannel
     } = this.props;
@@ -19,6 +20,7 @@ class ChatColumn extends Component {
     return <div className="flexbox-item-grow column-area">
       <ChatManager 
         users={users}
+        manager={manager}
         setChannel={setChannel}
         currentChannel={ui.currentChannel} />
       <Chat
@@ -34,7 +36,8 @@ const mapStateToProps = (state) => ({
   ui: state.ui,
   chat: state.common.chat,
   users: state.common.users,
-  games: state.connection.games
+  games: state.connection.games,
+  manager: state.chatManager
 });
 
 export default connect(mapStateToProps, actions)(ChatColumn)

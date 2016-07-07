@@ -24,7 +24,7 @@ export default class Header extends Component {
   }
 
   startXo() {
-    this.props.startGame('xo', this.props.ui.currentChannel);
+    this.props.startGame('xo', this.props.channel);
   }
 
   doRestartGame(id) {
@@ -65,7 +65,6 @@ export default class Header extends Component {
     }
 
     return <div className="header">
-
       {loginForm}
       {panel}
     </div>;
@@ -76,9 +75,7 @@ Header.propTypes = {
   user: React.PropTypes.shape({
     name: PropTypes.string.isRequired
   }),
-  ui: PropTypes.shape({
-    currentChannel: PropTypes.string.isRequired
-  }),
+  channel: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   startGame: PropTypes.func.isRequired,

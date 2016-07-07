@@ -3,11 +3,11 @@ const login = require('./login');
 
 const {
   GET,
+  GET_DATA,
   MAIN,
   GAME,
   ACTION,
-  MESSAGE,
-  GAME_DATA
+  MESSAGE
 } = require('../../common/constants');
 
 let socketApp;
@@ -27,7 +27,7 @@ const createGame = (game) => ({
   type: GAME
 });
 
-const action = (payload, to) => ({
+const getAction = (payload, to) => ({
   to,
   payload,
   id: payload.id,
@@ -39,71 +39,34 @@ const send = (connection, object, to = MAIN) => {
   
   if (to === MAIN) {
     object.from = username;
-    socketApp.dispatch(action(object, to));
+    socketApp.dispatch(getAction(object, to));
   } else {
     object.from = username + ' > ' + to;
-    connection.dispatch(action(object, to));
-    socketApp.io
+    connection.dispatch(getAction(object, to));
+    if (to !== username) {
+      socketApp.io
       .to(login.getUserSocket(to))
-      .emit(ACTION, action(object, username));
+      .emit(ACTION, getAction(object, username));
+    }
   }
 };
 
-
-
-
-/*
-
-const createMessage = (connection, text) => ({
-  from: connection.getUsername(),
-  id: v4(),
-  text
+const getDataAction = (id, data, to) => ({
+  type: GET_DATA,
+  data,
+  to,
+  id
 });
 
-const sendMessage = (connection, text) => {
-  const message = createMessage(connection, text);
-
-  socketApp.dispatch({
-    type: MESSAGE,
-    id: message.id,
-    payload: message
-  });
+const sendData = (id, data, to = MAIN) => {
+  //TODO PRIVATE
+  socketApp.dispatch(getDataAction(id, data, to));
 };
-
-const sendGame = (game) => {
-  socketApp.dispatch({
-    type: GAME,
-    id: game.id,
-    payload: game
-  });
-};
-
-const sendGameData = (id, data) => {   ////////TODODOD!!!!
-  socketApp.dispatch({
-    type: GAME_DATA,
-    id,
-    data
-  });
-};*/
 
 module.exports = {
   setSocketApp,
   createMessage,
   createGame,
-  send/*
-  sendMessage,
-  sendGame,
-  sendGameData*/
+  send,
+  sendData
 };
-
-
-
-
-/*
-const send = (action, to = '#main') => {
-  if (to === '#main') {
-    socketApp.dispatch(action);
-  } else {
-    socketApp.io.to(id).emit(ACTION, action);
-  }
-};*/

@@ -1,18 +1,21 @@
-import { tick } from '../services/notifier'
 import connection, * as fromConnection from '../../common/reducers/connection'
+import { tick } from '../services/notifier'
+import actions from '../actions'
 
 import {
-  MESSAGE,
+  GET,
   GAME_STATE
 } from '../../common/constants';
-
 
 export default (store) => (next) => (action) => {
   const result = next(action);
 
   switch (action.type) {
-    case MESSAGE:
+    case GET:
       tick();
+      if (action.to !== store.getState().ui.currentChannel) {
+        store.dispatch(actions.markUnread(action.to));
+      }
       break;
 
     case GAME_STATE:

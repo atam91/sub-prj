@@ -19,7 +19,8 @@ const chat = require('./chat');
 
 let socketApp;
 const setSocketApp = (app) => { socketApp = app; };
-const getGameData = (id) => socketApp.getState().games[id].data;
+
+const getGameData = (id) => gamesStore[id].data;
 
 const createGame = (connection, type) => ({
   from: connection.getUsername(),
@@ -70,7 +71,8 @@ const gameAction = (connection, action) => {
 
     const newData = games[type].getData(newState);
     if (getGameData(id) !== newData) {
-      chat.sendGameData(id, newData);
+      gamesStore[id].data = newData;
+      chat.sendData(id, newData);
     }
   }
 };

@@ -11,15 +11,13 @@ class GameColumn extends Component {
       user,
       games,
       gameId,
-      gameStates,
       joinGame,
-      moveGame,
-      activeGames
+      moveGame
     } = this.props;
 
     if (!gameId) return null;
     
-    const state = gameStates[gameId];
+    const state = games[gameId];
     if (!state) return null;
 
     const join = (player) => () => {
@@ -30,8 +28,6 @@ class GameColumn extends Component {
       moveGame(gameId, move);
     };
 
-
-
     return <div className="column-area sep-r">
       <Xo key={gameId} user={user} state={state} join={join} move={move} />
       <GameManager { ...this.props } />
@@ -40,10 +36,11 @@ class GameColumn extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  chat: state.common.chat,
   games: state.games,
   user: state.connection.user,
   activeGames: state.connection.games,
-  gameId: state.connection.currentGame
+  gameId: state.ui.currentGame
 });
 
 export default connect(mapStateToProps, actions)(GameColumn)

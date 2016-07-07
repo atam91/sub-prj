@@ -10,6 +10,8 @@ export default class ChatManager extends Component {
 
     if (name === this.props.currentChannel) {
       type = 'primary';
+    } else if (this.props.manager.unread.indexOf(name) !== -1) {
+      type = 'success';
     }
 
     return <span 
