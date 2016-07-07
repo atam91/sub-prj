@@ -3,8 +3,7 @@ import { v4 } from 'node-uuid'
 import * as fromConnection from '../../common/reducers/connection';
 const games = require('../games');
 const {
-  INIT,
-  GAME,
+  MAIN,
   WATCH_GAME,
   ACTION,
   GAME_START,
@@ -42,6 +41,7 @@ const watchGame = (id) => ({
 
 
 const gamesStore = {};
+const gameDataRecipients = {};
 
 const startGame = (connection, type, to) => {
   const state = games[type].initState();
@@ -49,6 +49,12 @@ const startGame = (connection, type, to) => {
 
   gamesStore[game.id] = { state, type };
   chat.send(connection, game, to);
+
+  if (to === MAIN) {
+    gameDataRecipients[game.id] = MAIN;
+  } else {
+    gameDataRecipients[game.id] = [to, connection.getUsername()];
+  }
 };
 
 const gameAction = (connection, action) => {
@@ -72,7 +78,7 @@ const gameAction = (connection, action) => {
     const newData = games[type].getData(newState);
     if (getGameData(id) !== newData) {
       gamesStore[id].data = newData;
-      chat.sendData(id, newData);
+      chat.sendData(id, newData, gameDataRecipients[id]);
     }
   }
 };

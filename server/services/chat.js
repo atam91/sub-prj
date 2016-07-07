@@ -45,22 +45,28 @@ const send = (connection, object, to = MAIN) => {
     connection.dispatch(getAction(object, to));
     if (to !== username) {
       socketApp.io
-      .to(login.getUserSocket(to))
-      .emit(ACTION, getAction(object, username));
+        .to(login.getUserSocket(to))
+        .emit(ACTION, getAction(object, username));
     }
   }
 };
 
-const getDataAction = (id, data, to) => ({
-  type: GET_DATA,
+const getDataAction = (id, data) => ({
+  id,
   data,
-  to,
-  id
+  type: GET_DATA
 });
 
 const sendData = (id, data, to = MAIN) => {
-  //TODO PRIVATE
-  socketApp.dispatch(getDataAction(id, data, to));
+  if (to === MAIN) {
+    socketApp.dispatch(getDataAction(id, data));
+  } else if (Array.isArray(to)) {
+    to.forEach(t => {
+      socketApp.io
+        .to(login.getUserSocket(t))
+        .emit(ACTION, getDataAction(id, data));
+    });
+  }
 };
 
 module.exports = {
