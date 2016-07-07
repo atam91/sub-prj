@@ -55,6 +55,7 @@
     "bootstrap-webpack": "0.0.5",
     "colors": "1.1.2",
     "cors": "2.7.1",
+    "lodash": "4.13.1",
     "node-constants": "0.0.2",
     "node-uuid": "1.4.7",
     "react": "^15.0.2",

@@ -14,6 +14,7 @@ class FooterContainer extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.connection.user,
+  users: state.common.users,
   ui: state.ui
 });
 

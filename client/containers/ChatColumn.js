@@ -18,7 +18,7 @@ class ChatColumn extends Component {
     } = this.props;
 
     return <div className="flexbox-item-grow column-area">
-      <ChatManager 
+      <ChatManager
         users={users}
         manager={manager}
         setChannel={setChannel}

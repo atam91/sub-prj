@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import {
-  PARTICIPANTS,
   CHANNEL,
   MAIN,
   WATCH_GAME,
@@ -11,12 +10,6 @@ const currentChannel = (state = MAIN, action) => {
   switch (action.type) {
     case CHANNEL:
       return action.channel;
-
-    case PARTICIPANTS:
-      if (state !== MAIN && action.users.indexOf(state) === -1) {
-        return MAIN;
-      }
-      return state;
 
     default:
       return state;

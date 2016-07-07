@@ -1,4 +1,6 @@
 import React, { PropTypes, Component } from 'react'
+import array from 'lodash/array'
+import { MAIN } from '../../common/constants'
 
 export default class ChatManager extends Component {
   setChannel(id) {
@@ -6,12 +8,17 @@ export default class ChatManager extends Component {
   }
 
   label(name) {
-    let type = 'default';
+    let type = 'info';
 
     if (name === this.props.currentChannel) {
       type = 'primary';
     } else if (this.props.manager.unread.indexOf(name) !== -1) {
       type = 'success';
+    } else if (this.props.manager.channels.some(n => n === name)) {
+      type = 'warning';
+      if (name !== MAIN  && this.props.users.every(n => n !== name)) {
+        type = 'default';
+      }
     }
 
     return <span 
@@ -22,15 +29,11 @@ export default class ChatManager extends Component {
   }
 
   render() {
-    const { users } = this.props;
-
-    if (!users.length) return null;
-
-    const items = users.map(::this.label);
+    const { users, manager } = this.props;
+    const items = array.union([MAIN], users, manager.channels);
 
     return <div id="chat-manager" className="block content sep-b">
-      {::this.label('#main')}
-      {items}
+      {items.map(::this.label)}
     </div>;
   }
 }
