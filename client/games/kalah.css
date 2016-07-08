@@ -1,0 +1,19 @@
+#kalah-gam222e table td {
+  border: 2px solid #000000;
+}
+
+#kalah-game table td {
+  cursor: default;
+  width: 85px;
+  height: 85px;
+  text-align: center;
+}
+
+#kalah-game table td.available {
+  cursor: pointer;
+  background: rgba(0, 255, 0, .1);
+}
+
+#kalah-game table td.available:hover {
+  background: rgba(0, 255, 0, .2);
+}

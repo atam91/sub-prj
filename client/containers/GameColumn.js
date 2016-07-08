@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import actions from '../actions'
 import connection, * as fromConnection from '../../common/reducers/connection'
-import Xo from '../games/Xo'
+import gameComponents from '../games'
 import GameManager from '../components/GameManager'
 
 class GameColumn extends Component {
   render() {
     const {
       user,
+      chat,
       games,
       gameId,
       joinGame,
@@ -28,8 +29,10 @@ class GameColumn extends Component {
       moveGame(gameId, move);
     };
 
+    const game = gameComponents[chat.objects[gameId].game];
+
     return <div className="column-area sep-r">
-      <Xo key={gameId} user={user} state={state} join={join} move={move} />
+      {game(gameId, user, state, join, move)}
       <GameManager { ...this.props } />
     </div>;
   }

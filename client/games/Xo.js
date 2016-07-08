@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import classNames from 'classnames'
 import './xo.css'
 
@@ -55,4 +55,13 @@ export default class Xo extends Component {
       {Player(state, user, join, 1)}
     </div>;
   }
+}
+
+Xo.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired
+  }),
+  state: PropTypes.object.isRequired,
+  join: PropTypes.func.isRequired,
+  move: PropTypes.func.isRequired
 }

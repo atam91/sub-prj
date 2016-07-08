@@ -23,8 +23,8 @@ export default class Header extends Component {
     this.props.logout();
   }
 
-  startXo() {
-    this.props.startGame('xo', this.props.channel);
+  start(game) {
+    return () => this.props.startGame(game, this.props.channel);
   }
 
   doRestartGame(id) {
@@ -48,7 +48,13 @@ export default class Header extends Component {
     if (user.auth) {
       panel = <div>
         <div className="left">
-          <a className="btn btn-default sep-r" onClick={::this.startXo}>Start Xo</a>
+          <div className="dropdown">
+            <a className="btn btn-default sep-r">Start</a>
+            <div className="dropdown-content">
+              <a onClick={::this.start('xo')}>Xo</a>
+              <a onClick={::this.start('kalah')}>Kalah</a>
+            </div>
+          </div>
         </div>
         {gamePanel}
         <div className="right">
