@@ -79,6 +79,7 @@ const move = (state, { user, move }) => {
   let newState = { ...state };
 
   const { x, y } = move;
+  if (state.board[y][x]) return;
   newState.board[y][x] = activePlayer.sign;
   newState = checkPosition(newState);
 

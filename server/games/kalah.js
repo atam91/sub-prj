@@ -1,10 +1,10 @@
 const { join, getActivePlayer, nextPlayerMove } = require('./base');
 const { getIndex } = require('../../common/utils');
 
-const initPlayer = (position) => ({
+const initPlayer = (sign) => ({
   name: null,
   score: 0,
-  position
+  sign
 });
 
 const initBoard = () => {
@@ -13,20 +13,32 @@ const initBoard = () => {
     0, 6, 6, 6, 6, 6, 6
   ];
 
+  const animation = {
+    counter: null,
+    position: null
+  };
+
   return {
     board,
+    animation,
     wins: null
   };
 };
 
 const initState = () => {
+  const map = [
+    null, 'S', 'S', 'S', 'S', 'S', 'S',
+    null, 'N', 'N', 'N', 'N', 'N', 'N'
+  ];
+
   return {
     ...initBoard(),
     players: [
       initPlayer('N'),
       initPlayer('S')
     ],
-    moves: -1
+    moves: -1,
+    map
   };
 };
 
@@ -68,27 +80,28 @@ const initState = () => {
   newState.wins = wins;
   return newState;
 };*/
-/*
+
 const getWinner = (state) => getIndex(state.players, p => p.sign === state.wins);
 
 const move = (state, { user, move }) => {
   const activePlayer = getActivePlayer(state);
   if (activePlayer.name !== user.name) return;
+
+  const { index } = move;
+  if (state.map[index] !== activePlayer.sign) return;
+  if (!state.board[index]) return;
+  if (state.animation.counter) return;
+
   let newState = { ...state };
 
-  const { x, y } = move;
-  newState.board[y][x] = activePlayer.sign;
-  newState = checkPosition(newState);
-
-  if (newState.wins) {
-    const winner = getWinner(newState);
-    newState.players[winner].score++;
-  }
+  newState.animation.counter = state.board[index];
+  newState.animation.position = index + 1;
+  newState.board[index] = 0;
 
   nextPlayerMove(newState);
   return newState;
 };
-*/
+
 
 const restart = (state) => ({ ...state, ...initBoard() });
 
@@ -102,7 +115,7 @@ const getData = ({ players }) => ({
 module.exports = {
   initState,
   join,
-  //move,
+  move,
   restart,
   getData
 };

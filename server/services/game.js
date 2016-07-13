@@ -57,6 +57,10 @@ const startGame = (connection, type, to) => {
   }
 };
 
+const differentObjects = (obj1, obj2) => (
+  JSON.stringify(obj1) !== JSON.stringify(obj2)
+);
+
 const gameAction = (connection, action) => {
   const user = connection.getUser();
   if (!user.auth) return;
@@ -76,7 +80,7 @@ const gameAction = (connection, action) => {
     socketApp.io.to(id).emit(ACTION, gameState(id));
 
     const newData = games[type].getData(newState);
-    if (getGameData(id) !== newData) {
+    if (differentObjects(getGameData(id), newData)) {
       gamesStore[id].data = newData;
       chat.sendData(id, newData, gameDataRecipients[id]);
     }
