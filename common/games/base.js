@@ -1,3 +1,5 @@
+const { getIndex } = require('../../common/utils');
+
 const join = (state, { user, player }) => {
   if (state.players[player].name) return;
   const newState = { ...state };
@@ -19,8 +21,11 @@ const nextPlayerMove = (newState) => {
 
 const getActivePlayer = (state) => state.players[state.moves];
 
+const getWinner = (state) => getIndex(state.players, p => p.sign === state.wins);
+
 module.exports = {
   join,
   nextPlayerMove,
-  getActivePlayer
+  getActivePlayer,
+  getWinner
 }

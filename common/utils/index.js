@@ -31,8 +31,16 @@ const getIndex = (list, cond) => (
   )
 );
 
+const deepCopy = (object) => JSON.parse(JSON.stringify(object));
+
+const deepEqual = (obj1, obj2) => (
+  JSON.stringify(obj1) === JSON.stringify(obj2)
+);
+
 export {
   date,
+  deepCopy,
+  deepEqual,
   forEachKey,
   objectFilterKey,
   notFilter,

@@ -1,7 +1,7 @@
 const console = require('../lib/console')('game', 'magenta');
 import { v4 } from 'node-uuid'
 import * as fromConnection from '../../common/reducers/connection';
-const games = require('../games');
+const games = require('../../common/games');
 const {
   MAIN,
   WATCH_GAME,
@@ -14,6 +14,7 @@ const {
   GAME_MOVE,
   GAME_RESTART
 } = require('../../common/constants');
+const { deepCopy, deepEqual } = require('../../common/utils');
 const chat = require('./chat');
 
 let socketApp;
@@ -28,9 +29,9 @@ const createGame = (connection, type) => ({
   type
 });
 
-const gameState = (id) => ({
+const gameState = (id, state) => ({
   type: GAME_STATE,
-  state: gamesStore[id].state,
+  state: state || gamesStore[id].state,
   id
 });
 
@@ -57,10 +58,6 @@ const startGame = (connection, type, to) => {
   }
 };
 
-const differentObjects = (obj1, obj2) => (
-  JSON.stringify(obj1) !== JSON.stringify(obj2)
-);
-
 const gameAction = (connection, action) => {
   const user = connection.getUser();
   if (!user.auth) return;
@@ -76,11 +73,22 @@ const gameAction = (connection, action) => {
   const newState = gameReducer(type, state, action);
 
   if (newState !== state) {
-    gamesStore[id].state = newState;
-    socketApp.io.to(id).emit(ACTION, gameState(id));
+    let afterState;
+    if (newState.animation.active) {
+      const game = getGameService(type);
+      afterState = deepCopy(newState);
 
-    const newData = games[type].getData(newState);
-    if (differentObjects(getGameData(id), newData)) {
+      while (afterState.animation.active) {
+        afterState = game.animate(afterState);
+      }
+      afterState = game.afterAnimation(afterState);
+      newState.animation.afterState = afterState;
+    }
+    gamesStore[id].state = afterState || newState;
+    socketApp.io.to(id).emit(ACTION, gameState(id, newState));
+
+    const newData = games[type].getData(gamesStore[id].state);
+    if (!deepEqual(getGameData(id), newData)) {
       gamesStore[id].data = newData;
       chat.sendData(id, newData, gameDataRecipients[id]);
     }
@@ -102,6 +110,7 @@ const gameReducer = (type, state, action) => {
   }
 };
 
+const getGameService = (type) => games[type];
 
 const handler = (connection, action) => {
   switch (action.type) {

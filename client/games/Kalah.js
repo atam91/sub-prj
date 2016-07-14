@@ -73,7 +73,7 @@ export default class Kalah extends Component {
         &&
       state.map[index] === state.players[state.moves].sign
         &&
-      !state.animation.counter && state.board[index];
+      state.animation.finished && state.board[index];
 
     let onClick;
     if (available) {
@@ -81,7 +81,7 @@ export default class Kalah extends Component {
     }
 
     return <td key={index} className={classNames({ available })} onClick={onClick}>
-      {Pit(/*state.board[index]*/ index*2)}
+      {Pit(state.board[index])}
     </td>;
   }
 

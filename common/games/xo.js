@@ -1,4 +1,4 @@
-const { join, getActivePlayer, nextPlayerMove } = require('./base');
+const { join, getActivePlayer, getWinner, nextPlayerMove } = require('./base');
 const { getIndex } = require('../../common/utils');
 
 const initPlayer = (sign) => ({
@@ -70,8 +70,6 @@ const checkPosition = (newState) => {
   newState.wins = wins;
   return newState;
 };
-
-const getWinner = (state) => getIndex(state.players, p => p.sign === state.wins);
 
 const move = (state, { user, move }) => {
   const activePlayer = getActivePlayer(state);
