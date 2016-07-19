@@ -74,7 +74,7 @@ const gameAction = (connection, action) => {
 
   if (newState !== state) {
     let afterState;
-    if (newState.animation.active) {
+    if (newState.animation && newState.animation.active) {
       const game = getGameService(type);
       afterState = deepCopy(newState);
 
