@@ -1,7 +1,8 @@
 # sub-prj
-React\Redux Socket.IO Application
+React\Redux Socket.IO Application.
 
-Experimental space
+Chat with private messaging & Games: Kalah, Gomoku.
+![screenshot](https://cloud.githubusercontent.com/assets/4473491/17136402/a4c9aa5a-5324-11e6-8fdf-3f2781c03069.png)
 
 ## Use Guide
 At first `npm install`
