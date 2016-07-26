@@ -24,7 +24,7 @@ export default class Footer extends Component {
           type="submit" 
           className="btn btn-default" 
           disabled={disabled}>
-            Отправить
+            Send
         </button>
       </form>
     </div>;

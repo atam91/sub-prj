@@ -58,15 +58,15 @@ export default class Header extends Component {
         </div>
         {gamePanel}
         <div className="right">
-          <span className="sep-r">Привет, {user.name}!</span>
-          <a className="btn btn-default" onClick={::this.logout}>Выйти</a>
+          <span className="sep-r">Hi, {user.name}!</span>
+          <a className="btn btn-default" onClick={::this.logout}>Logout</a>
         </div>
       </div>;
     } else {
       loginForm = <form className={classNames('form-signin', 'login-form', { 'has-error': error })} onSubmit={::this.submit}>
         <input ref="username"  onChange={::this.change} type="text" className="form-control" placeholder="nickname" />
         <span id="helpBlock" className="help-block">{error}</span>
-        <button className="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+        <button className="btn btn-lg btn-primary btn-block" type="submit">Login</button>
       </form>;
     }
 
