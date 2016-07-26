@@ -28,7 +28,7 @@ export default class Chat extends ScrollingContent {
     const bold = (games.indexOf(id) === -1) && 'bold';
     
     return <span>
-      <b>{from}:</b> <a className={bold} onClick={this.watchGame(id)}>[{name} game]</a> {data.text}
+      <b>{from}:</b> <a className={bold} onClick={this.watchGame(id)}>[{name}]</a> {data.text}
     </span>;
 
   }

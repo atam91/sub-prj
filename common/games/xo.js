@@ -1,4 +1,4 @@
-const { join, getActivePlayer, getWinner, nextPlayerMove } = require('./base');
+const { join, getActivePlayer, getWinner, nextPlayerMove, getData } = require('./base');
 const { getIndex } = require('../../common/utils');
 
 const initPlayer = (sign) => ({
@@ -91,13 +91,6 @@ const move = (state, { user, move }) => {
 };
 
 const restart = (state) => ({ ...state, ...initBoard() });
-
-const getData = ({ players }) => ({
-  text: players.filter(p => p.name).map(p => {
-    const score = p.score && (' ' + p.score) || '';
-    return p.name + score;
-  }).join(', ')
-});
 
 module.exports = {
   initState,

@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import classNames from 'classnames'
+import { boardMap } from '../../common/games/kalah'
 import './kalah.css'
 
 const Pit = (count) => {
@@ -71,7 +72,7 @@ export default class Kalah extends Component {
         &&
       user.name === state.players[state.moves].name
         &&
-      state.map[index] === state.players[state.moves].sign
+      boardMap[index] === state.players[state.moves].sign
         &&
       state.animation.finished && state.board[index];
 

@@ -23,8 +23,16 @@ const getActivePlayer = (state) => state.players[state.moves];
 
 const getWinner = (state) => getIndex(state.players, p => p.sign === state.wins);
 
+const getData = ({ players }) => ({
+  text: players.filter(p => p.name).map(p => {
+    const score = p.score && (' ' + p.score) || '';
+    return p.name + score;
+  }).join(', ')
+});
+
 module.exports = {
   join,
+  getData,
   nextPlayerMove,
   getActivePlayer,
   getWinner
