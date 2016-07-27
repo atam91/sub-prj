@@ -1,5 +1,11 @@
 const { getIndex } = require('../../common/utils');
 
+const initPlayer = (sign) => ({
+  name: null,
+  score: 0,
+  sign
+});
+
 const join = (state, { user, player }) => {
   if (state.players[player].name) return;
   const newState = { ...state };
@@ -31,6 +37,7 @@ const getData = ({ players }) => ({
 });
 
 module.exports = {
+  initPlayer,
   join,
   getData,
   nextPlayerMove,

@@ -1,16 +1,24 @@
 const { initPlayer, join, getActivePlayer, getWinner, nextPlayerMove, getData } = require('./base');
-const { getIndex } = require('../../common/utils');
+const { getIndex, deepCopy } = require('../../common/utils');
+
+const SIZE = 15;
+const BLACK = 'BLACK';
+const WHITE = 'WHITE';
 
 const initBoard = () => {
-  const board = [
-    [null, null, null],
-    [null, null, null],
-    [null, null, null]
-  ];
+  const emptyRow = [];
+  for (let i = 0; i < SIZE; i++) {
+    emptyRow.push(null);
+  }
+
+  const board = [];
+  for (let i = 0; i < SIZE; i++) {
+    board.push(deepCopy(emptyRow));
+  }
 
   return {
     board,
-    marks: board,
+    marks: deepCopy(board),
     wins: null
   };
 };
@@ -19,15 +27,15 @@ const initState = () => {
   return {
     ...initBoard(),
     players: [
-      initPlayer('X'),
-      initPlayer('O')
+      initPlayer(WHITE),
+      initPlayer(BLACK)
     ],
     moves: -1
   };
 };
 
 const checkPosition = (newState) => {
-  const rows = newState.board;
+  /*const rows = newState.board;
   const { marks } = initBoard();
   let wins = null;
 
@@ -62,7 +70,7 @@ const checkPosition = (newState) => {
 
   newState.marks = marks;
   newState.wins = wins;
-  return newState;
+  return newState;*/
 };
 
 const move = (state, { user, move }) => {
@@ -73,7 +81,7 @@ const move = (state, { user, move }) => {
   const { x, y } = move;
   if (state.board[y][x]) return;
   newState.board[y][x] = activePlayer.sign;
-  newState = checkPosition(newState);
+  //newState = checkPosition(newState);
 
   if (newState.wins) {
     const winner = getWinner(newState);

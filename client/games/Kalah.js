@@ -129,13 +129,15 @@ export default class Kalah extends Component {
   render() {
     const { user, state, join, move } = this.props;
 
-    return <div id="kalah-game" className="block content sep-b" style={{width: '300px', height: '600px'}}>
+    return <div id="kalah-game" className="block content sep-b">
       {this.player(0)}
       {this.board()}
       {this.player(1)}
     </div>;
   }
 }
+
+Kalah.width = '300px';
 
 Kalah.propTypes = {
   user: PropTypes.shape({

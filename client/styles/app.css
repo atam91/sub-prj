@@ -46,8 +46,11 @@ body {
   background: rgba(0, 0, 0, .3);
   border: 2px solid #000000;
   overflow: auto; 
-  height: 100%;
   width: 100%;
+}
+
+.height-stretch {
+  height: 100%;
 }
 
 .block {
@@ -132,8 +135,6 @@ span.label {
   justify-content: flex-start;
   align-content: flex-start;
   align-items: flex-start;
-  
-  height: 80px;
 }
 
 

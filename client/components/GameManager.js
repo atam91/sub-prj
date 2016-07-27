@@ -53,9 +53,9 @@ export default class GameManager extends Component {
   }
 
   render() {
-    const { activeGames } = this.props;
+    const { activeGames, widthStyle } = this.props;
 
-    return <div id="game-manager" className="block content">
+    return <div id="game-manager" className="block content" style={widthStyle}>
       {activeGames.map(id => this.item(id))}
     </div>;
   }
@@ -72,5 +72,6 @@ GameManager.propTypes = {
   games: React.PropTypes.object.isRequired,
   gameId: React.PropTypes.string.isRequired,
   activeGames: React.PropTypes.arrayOf(React.PropTypes.string),
-  watchGame: React.PropTypes.func.isRequired
+  watchGame: React.PropTypes.func.isRequired,
+  widthStyle: React.PropTypes.object.isRequired
 }

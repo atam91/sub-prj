@@ -1,4 +1,4 @@
-const { join, getActivePlayer, getWinner, nextPlayerMove, getData } = require('./base');
+const { initPlayer, join, getActivePlayer, getWinner, nextPlayerMove, getData } = require('./base');
 const { deepCopy } = require('../../common/utils');
 
 const ONE = 1;
@@ -19,12 +19,6 @@ const playerOptions = {
     skip: NORTH_HOME
   }
 };
-
-const initPlayer = (sign) => ({
-  name: null,
-  score: 0,
-  sign
-});
 
 const initBoard = () => {
   const board = [

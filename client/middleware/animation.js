@@ -8,6 +8,7 @@ export default (store) => next => action => {
   switch (action.type) {
     case GAME_STATE:
       let { state } = action;
+      if (!state.animation) break;
 
       if (state.animation.active) {
         state = animate(state);

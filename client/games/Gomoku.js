@@ -1,8 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import classNames from 'classnames'
-import './xo.css'
+import './gomoku.css'
 
-export default class Xo extends Component {
+export default class Gomoku extends Component {
   player(number) {
     const { state, user, join } = this.props;
     const player = state.players[number];
@@ -49,14 +49,14 @@ export default class Xo extends Component {
     if (active && !value) {
       return <td key={x} className="available" onClick={move({x, y})}></td>;
     } else {
-      return <td key={x} className={classNames({strike: state.marks[y][x]})}>{value}</td>;
+      return <td key={x} className={classNames({strike: state.marks[y][x]}, 'color-' + value)}></td>;
     }
   }
 
   render() {
     const { user, state, join, move } = this.props;
 
-    return <div id="xo-game" className="block content sep-b">
+    return <div id="gomoku-game" className="block content sep-b" style={{width: '500px'/*, height: '520px'*/}}>
       {this.player(0)}
       {this.board()}
       {this.player(1)}
@@ -64,9 +64,7 @@ export default class Xo extends Component {
   }
 }
 
-Xo.width = '300px';
-
-Xo.propTypes = {
+Gomoku.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired
   }),

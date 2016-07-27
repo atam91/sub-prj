@@ -1,0 +1,34 @@
+#gomoku-game {
+  height: auto;
+}
+
+#gomoku-game table td {
+  border: 1px solid #222;
+}
+
+#gomoku-game table td {
+  cursor: default;
+  width: 30px;
+  height: 30px;
+}
+
+#gomoku-game table td.available {
+  cursor: pointer;
+  background: rgba(0, 255, 0, .1);
+}
+
+#gomoku-game table td.available:hover {
+  background: rgba(0, 255, 0, .2);
+}
+
+#gomoku-game table td.color-WHITE {
+  background-color: #fcf8e3;
+}
+
+#gomoku-game table td.color-BLACK {
+  background-color: #6c6873;
+}
+
+#gomoku-game table td.strike {
+  background: rgba(0, 255, 0, .1);
+}

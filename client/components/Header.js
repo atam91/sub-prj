@@ -53,6 +53,7 @@ export default class Header extends Component {
             <div className="dropdown-content">
               <a onClick={::this.start('xo')}>Xo</a>
               <a onClick={::this.start('kalah')}>Kalah</a>
+              <a onClick={::this.start('gomoku')}>Gomoku</a>
             </div>
           </div>
         </div>
