@@ -30,5 +30,5 @@
 }
 
 #gomoku-game table td.strike {
-  background: rgba(0, 255, 0, .1);
+  background-color: yellowgreen;
 }
