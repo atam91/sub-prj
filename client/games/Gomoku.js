@@ -56,7 +56,7 @@ export default class Gomoku extends Component {
   render() {
     const { user, state, join, move } = this.props;
 
-    return <div id="gomoku-game" className="block content sep-b" style={{width: '500px'/*, height: '520px'*/}}>
+    return <div id="gomoku-game" className="block content sep-b">
       {this.player(0)}
       {this.board()}
       {this.player(1)}

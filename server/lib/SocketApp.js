@@ -1,10 +1,12 @@
 const console = require('./console')('SocketApp', 'bold');
 const bold = console.bold;
+
 const {
   forEachKey,
   objectFilterKey,
   notFilter
 } = require('../../common/utils');
+
 const {
   INIT,
   STATE,

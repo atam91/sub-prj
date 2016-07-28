@@ -45,11 +45,10 @@ body {
 .content {
   background: rgba(0, 0, 0, .3);
   border: 2px solid #000000;
-  overflow: auto; 
-  width: 100%;
+  overflow: auto;
 }
 
-.height-stretch {
+.height100 {
   height: 100%;
 }
 
@@ -117,6 +116,10 @@ span.label {
   cursor: pointer;
 }
 
+#chat {
+  height: 100%;
+}
+
 #chat-manager {
   display: flex;
   flex-flow: row wrap;
@@ -125,6 +128,7 @@ span.label {
   align-content: flex-start;
   align-items: flex-start;
 
+  height: 100%;
   max-height: 80px;
 }
 

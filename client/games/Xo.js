@@ -64,8 +64,6 @@ export default class Xo extends Component {
   }
 }
 
-Xo.width = '300px';
-
 Xo.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired

@@ -1,5 +1,8 @@
-#kalah-gam222e table td {
-  border: 2px solid #000000;
+#kalah-game, #kalah-game + #game-manager {
+  width: 300px;
+}
+#kalah-game {
+  min-height: 600px;
 }
 
 #kalah-game table td {

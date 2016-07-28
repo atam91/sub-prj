@@ -1,5 +1,5 @@
-#gomoku-game {
-  height: auto;
+#gomoku-game, #gomoku-game + #game-manager {
+  width: 500px;
 }
 
 #gomoku-game table td {

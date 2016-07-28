@@ -1,3 +1,7 @@
+#xo-game, #xo-game + #game-manager {
+  width: 300px;
+}
+
 #xo-game table td {
   border: 2px solid #000000;
 }

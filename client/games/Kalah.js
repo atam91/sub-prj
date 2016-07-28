@@ -137,8 +137,6 @@ export default class Kalah extends Component {
   }
 }
 
-Kalah.width = '300px';
-
 Kalah.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired

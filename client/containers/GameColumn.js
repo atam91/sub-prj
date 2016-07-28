@@ -30,14 +30,17 @@ class GameColumn extends Component {
     };
 
     const game = gameComponents[chat.objects[gameId].game];
+    const gameProps = {
+      key: gameId,
+      state,
+      user,
+      join,
+      move
+    };
 
-    console.log('!!game', game);
-
-    const widthStyle = {width: game.width};
-
-    return <div className="column-area sep-r" style={widthStyle}>
-      {game(gameId, user, state, join, move)}
-      <GameManager { ...this.props } widthStyle={widthStyle} />
+    return <div className="column-area sep-r">
+      {game(gameProps)}
+      <GameManager { ...this.props } />
     </div>;
   }
 }
