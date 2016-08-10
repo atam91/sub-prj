@@ -17,7 +17,7 @@ export default class Footer extends Component {
 
     const disabled = (channel !== MAIN) && (users.indexOf(channel) === -1);
 
-    return <div className="footer">
+    return <div id="footer">
       <form className="form row-area" onSubmit={::this.submit}>
         <input ref="message" type="text" className="form-control sep-r" placeholder="Message" />
         <button 

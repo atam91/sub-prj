@@ -1,8 +1,8 @@
 html, body, #root {
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
+  /*margin: 0;
+  padding: 0;*/
 }
 
 body {
@@ -12,14 +12,13 @@ body {
   font-family: Courier monospace;
 }
 
-.app {
+#app {
   width: 100%;
   height: 100%;
-
   background: rgba(255, 255, 255, .1);
 }
 
-.app, .column-area {
+.column-area {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -27,6 +26,11 @@ body {
   justify-content: flex-start;
   align-items: stretch;
   align-content: stretch;
+}
+
+#app > .column-area {
+  height: auto;
+  min-height: 100%;
 }
 
 .row-area {
@@ -92,7 +96,7 @@ body {
   font-weight: bold;
 }
 
-.header, .footer {
+#header, #footer {
   background: rgba(255, 255, 255, .8);
   color: #333;
   padding: 10px;
@@ -103,7 +107,7 @@ body {
   margin: 0 auto;
 }
 
-ul#chat {
+#chat ul {
   list-style-type: none;
   margin: 0px;
 }
@@ -140,6 +144,29 @@ span.label {
   align-content: flex-start;
   align-items: flex-start;
 }
+
+#main {
+  padding-bottom: 50px;  /* отступ должен быть равен высоте футера */
+}
+
+#footer {
+  position: relative;
+  margin-top: -50px; /* отрицательное значение высоты футера */
+  height: 50px;
+  clear: both;
+}
+
+
+.clearfix:after {content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;}
+.clearfix {display: inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix { height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
 
 
 

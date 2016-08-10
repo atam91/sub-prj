@@ -71,7 +71,7 @@ export default class Header extends Component {
       </form>;
     }
 
-    return <div className="header">
+    return <div id="header">
       {loginForm}
       {panel}
     </div>;

@@ -56,7 +56,9 @@ export default class Chat extends ScrollingContent {
     const channel = chat.channels[currentChannel] || [];
     const items = channel.map(id => (<li key={id}>{this.item(id)}</li>));
 
-    return <ul id="chat" className="block content" ref="content">{items}</ul>;
+    return <div id="chat" className="sep-b">
+      <ul className="block content" ref="content">{items}</ul>
+    </div>
   }
 }
 
