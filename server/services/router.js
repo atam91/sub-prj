@@ -1,6 +1,5 @@
 const {
-  SEND,
-  PRIVATE
+  SEND
 } = require('../../common/constants');
 
 const controller = require('./controller');
@@ -16,10 +15,6 @@ const handler = (connection, action) => {
       } else {
         chat.send(connection, chat.createMessage(text), action.to);
       }
-      break;
-
-    case PRIVATE:
-      chat.private(connection, action);
       break;
   }
 };
