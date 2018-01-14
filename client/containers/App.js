@@ -7,7 +7,7 @@ import ChatColumn from './ChatColumn'
 
 export default class App extends Component {
   render() {
-    return <div id="app">
+    return <div className="app column-area">
       <Header />
       <View>
         <GameColumn />
