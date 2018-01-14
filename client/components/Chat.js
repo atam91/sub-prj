@@ -56,8 +56,8 @@ export default class Chat extends ScrollingContent {
     const channel = chat.channels[currentChannel] || [];
     const items = channel.map(id => (<li key={id}>{this.item(id)}</li>));
 
-    return <div id="chat" className="sep-b">
-      <ul className="block content" ref="content">{items}</ul>
+    return <div id="chat" className="sep-b flexbox-item-grow">
+      <ul className="block content height100" ref="content">{items}</ul>
     </div>
   }
 }
