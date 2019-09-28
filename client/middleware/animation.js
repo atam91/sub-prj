@@ -1,6 +1,6 @@
 import { GAME_STATE } from '../../common/constants'
-import { animate } from '../../common/games/kalah'
-const TICK_TIME = 400;
+import { animate } from '../../common/games/kalah'     //// FIXME   gc!!!!
+const TICK_TIME = 400;          //// todo to strategy tooo!!!
 
 export default (store) => next => action => {
   const result = next(action);
@@ -11,7 +11,7 @@ export default (store) => next => action => {
       if (!state.animation) break;
 
       if (state.animation.active) {
-        state = animate(state);
+        state = animate(state);                         //// FIXME   gc!!!!
 
         setTimeout(() => {
           store.dispatch({ ...action, state });

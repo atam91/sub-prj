@@ -88,6 +88,7 @@ const move = (state, { user, move }) => {
 const animate = (state) => {
   const { animation, board } = state;
   if (!animation.active) return state;
+
   const activePlayer = getActivePlayer(state);
 
   const next = () => nextPosition(animation.position, board.length);
@@ -150,12 +151,7 @@ const checkPosition = (state) => {
   if (countFreeSeeds(state, sign) === 0) {
     const north = state.board[NORTH_HOME] + countFreeSeeds(state, NORTH);
     const south = state.board[SOUTH_HOME] + countFreeSeeds(state, SOUTH);
-
-    if (north > south) {
-      state.wins = NORTH;
-    } else if (south > north) {
-      state.wins = SOUTH;
-    }
+    state.wins = (north > south) ? NORTH : SOUTH;
 
     if (state.wins) {
       const winner = getWinner(state);

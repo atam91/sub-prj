@@ -72,26 +72,26 @@ const gameAction = (connection, action) => {
   const { state, type } = gamesStore[id];
   const newState = gameReducer(type, state, action);
 
-  if (newState !== state) {
-    let afterState;
-    if (newState.animation && newState.animation.active) {
-      const game = getGameService(type);
-      afterState = deepCopy(newState);
+  if (newState === state) return;
 
-      while (afterState.animation.active) {
-        afterState = game.animate(afterState);
-      }
-      afterState = game.afterAnimation(afterState);
-      newState.animation.afterState = afterState;
-    }
-    gamesStore[id].state = afterState || newState;
-    socketApp.io.to(id).emit(ACTION, gameState(id, newState));
+  let afterState;
+  if (newState.animation && newState.animation.active) {
+    const game = getGameService(type);
+    afterState = deepCopy(newState);
 
-    const newData = games[type].getData(gamesStore[id].state);
-    if (!deepEqual(getGameData(id), newData)) {
-      gamesStore[id].data = newData;
-      chat.sendData(id, newData, gameDataRecipients[id]);
+    while (afterState.animation.active) {
+      afterState = game.animate(afterState);
     }
+    afterState = game.afterAnimation(afterState);
+    newState.animation.afterState = afterState;
+  }
+  gamesStore[id].state = afterState || newState;
+  socketApp.io.to(id).emit(ACTION, gameState(id, newState));
+
+  const newData = games[type].getData(gamesStore[id].state);
+  if (!deepEqual(getGameData(id), newData)) {
+    gamesStore[id].data = newData;
+    chat.sendData(id, newData, gameDataRecipients[id]);
   }
 };
 
