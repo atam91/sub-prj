@@ -15,7 +15,7 @@ const users = {};
 
 const getUserSocket = (name) => users[name];
 
-const participants = () => ({ 
+const participants = () => ({
   type: PARTICIPANTS,
   users: Object.keys(users)
 });
@@ -41,7 +41,7 @@ const handler = (connection, action) => {
       if (!name) {
         connection.dispatch(loginFailure('Empty name'));
       } else if (name in users) {
-        connection.dispatch(loginFailure('Name alredy in use'));
+        connection.dispatch(loginFailure('Name already in use'));
       } else {
         users[name] = connection.getSocket().id;
         connection.dispatch(loginSuccess(name));

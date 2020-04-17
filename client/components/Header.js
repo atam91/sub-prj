@@ -32,7 +32,7 @@ export default class Header extends Component {
       this.props.restartGame(id);
     };
   }
-  
+
   render() {
     const { user, gameId, gameState } = this.props;
     const error = !this.state.resetError && this.props.loginError;
@@ -54,6 +54,7 @@ export default class Header extends Component {
               <a onClick={::this.start('xo')}>Xo</a>
               <a onClick={::this.start('kalah')}>Kalah</a>
               <a onClick={::this.start('gomoku')}>Gomoku</a>
+              <a onClick={::this.start('goban')}>Goban</a>
             </div>
           </div>
         </div>
