@@ -18,13 +18,13 @@ The project provides a platform for implementing small multiplayer games without
 At first `npm install`
 
 ### Development
-    npm run dev
-    npm run dev-server
+    npm run dev                     ## for development app server
+    npm run dev-server              ## for development app client
 Browse `localhost:3333`
 
 ### Production
-    npm run build
-    PORT=80 npm start
+    npm run build                   ## to build app client
+    PORT=80 npm start               ## to run app server (client hosted thru this app server)
 Browse `localhost:80`
 
 
